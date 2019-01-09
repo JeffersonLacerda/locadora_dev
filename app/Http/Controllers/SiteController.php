@@ -12,12 +12,72 @@ use App\Models\Movie;
 use App\Models\Item;
 use App\Models\Holder;
 use App\Models\Client;
+use App\Models\Genre;
+use App\Models\Media;
+use App\Models\Type;
+use Illuminate\Support\Facades\DB;
 
 class SiteController extends Controller
 {
     public function index()
     {
-        return view('index');
+        $movies = Movie::all();
+        return view('index', compact('movies'));
+    }
+
+    public function movie_details($id)
+    {
+        $movie = Movie::findOrFail($id);
+        return view('movie_details', compact('movie'));
+    }
+
+    public function advanced_search_view()
+    {
+        $genres = Genre::all();
+        $medias = Media::all();
+        $types = Type::all();
+        $movies = Movie::select('country')->groupBy('country')->get();
+        $countries = array();
+        foreach ($movies as $m){
+            $array = explode(", ", $m->country);
+            foreach ($array as $c){
+                if (!in_array($c, $countries)){
+                    array_push($countries, $c);
+                } 
+            }  
+        }
+        return view('advanced_search', compact('genres', 'medias', 'types', 'countries'));
+    }
+
+    public function advanced_search(Request $request){
+        $movies = DB::table('movies');
+        $search = array();
+        if ($request->filled('title')) {
+            $title = $request->title;
+            array_push($search, ['title' => $title]);
+            $movies = $movies->where('title', 'like', "%$title%");
+        }
+        if ($request->filled('original_title')) {
+            $original_title = $request->original_title;
+            array_push($search, ['original_title' => $original_title]);
+            $movies = $movies->where('original_title', 'like', "%$original_title%");
+        }
+        if ($request->filled('genres')) {
+            $genres = $request->genres;
+            array_push($search, ['genres' => implode("|", $genres)]);
+            $movies = $movies->where(function ($query) {
+                $genres = $request->genres;
+                for ($i = 0; $i < count($genres); $i++){
+                    $genre = $genres[$i];
+                    if ($i == 0) {
+                        $query->where('available_genres','like',"%$genre%");
+                    } else {
+                        $query = $query->orWhere('available_genres','like',"%$genre%");
+                    }
+                }
+            });
+        }
+        dd($movies->get());
     }
 
     public function serial_number(){

@@ -13,12 +13,17 @@
 
 /* Rotas da área pública */
 Route::get('/', 'SiteController@index')->name('index');
+Route::get('/filme/{id}', 'SiteController@movie_details')->name('movie_details');
+Route::get('/buscar', 'SiteController@advanced_search_view')->name('advanced_search');
+Route::post('/buscar', 'SiteController@advanced_search');
+/* 
 Route::get('/test', 'SiteController@test');
 Route::get('/seedGenres', 'SiteController@seedGenres');
 Route::get('/seedMovies', 'SiteController@seedMovies');
 Route::get('/seedItems', 'SiteController@seedItems');
 Route::get('/sn', 'SiteController@serial_number');
 Route::get('/seedPerson', 'SiteController@seedPerson');
+*/
 
 /* Rotas da área administrativa */
 Route::get('/locadora', 'HomeController@index')->name('home');
