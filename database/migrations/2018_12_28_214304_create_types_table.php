@@ -15,7 +15,8 @@ class CreateTypesTable extends Migration
     {
         Schema::create('types', function (Blueprint $table) {
             $table->increments('id');
-            $table->enum('description', ['Catálogo','Lançamento']);
+            /* $table->enum('description', ['Catálogo','Lançamento']); */
+            $table->string('description');
             $table->integer('return_deadline')->unsigned();
             $table->double('increase', 8, 2);
             $table->timestamps();

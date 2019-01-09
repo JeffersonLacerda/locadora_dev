@@ -134,17 +134,19 @@ return [
             'text' => 'Gênero',
             'icon' => 'tags',
             'can'  => 'administrator',
+            'route'=> 'genre.index',
         ],
         [
             'text' => 'Tipo',
             'icon' => 'flag',
             'can'  => 'administrator',
+            'route'=> 'type.index',
         ],
         [
             'text' => 'Mídia',
             'icon' => 'compact-disc',
             'can'  => 'administrator',
-            'route'  => 'media.index',
+            'route'=> 'media.index',
         ],
         [
             'text' => 'Distribuidora',

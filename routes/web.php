@@ -34,6 +34,22 @@ Route::get('/senha/recuperar/{token}', 'Auth\ResetPasswordController@showResetFo
 Route::get('/senha/alterar', 'HomeController@change_password')->name('password.change');
 Route::put('/senha/alterar', 'HomeController@update_password');
 
+/* Rotas do model Genre */
+Route::get('/genero','GenreController@index')->name('genre.index');
+Route::get('/genero/adicionar','GenreController@create')->name('genre.create');
+Route::post('/genero/adicionar','GenreController@store');
+Route::get('/genero/{id}/editar','GenreController@edit')->name('genre.edit');
+Route::put('/genero/{id}/editar','GenreController@update');
+Route::delete('/genero/{id}/remover','GenreController@destroy')->name('genre.destroy');
+
+/* Rotas do model Type */
+Route::get('/tipo','TypeController@index')->name('type.index');
+Route::get('/tipo/adicionar','TypeController@create')->name('type.create');
+Route::post('/tipo/adicionar','TypeController@store');
+Route::get('/tipo/{id}/editar','TypeController@edit')->name('type.edit');
+Route::put('/tipo/{id}/editar','TypeController@update');
+Route::delete('/tipo/{id}/remover','TypeController@destroy')->name('type.destroy');
+
 /* Rotas do model Media */
 Route::get('/midia','MediaController@index')->name('media.index');
 Route::get('/midia/adicionar','MediaController@create')->name('media.create');
