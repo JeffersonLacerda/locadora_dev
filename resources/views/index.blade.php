@@ -15,6 +15,11 @@
         .select2 input {
             width: 100% !important;
         }
+
+        .select2-search, .select2-search--inline{
+            width: 300px!important;
+        }
+
         a {
             cursor: pointer;
         }
@@ -30,12 +35,19 @@
         </div>
         <div class="row">
             <div class="col-md-12">
-                <span><input type="radio" name="radioSearch" value="1" id="radioBS" checked > Busca simples</span>
-                &nbsp;&nbsp;
-                <span><input type="radio" name="radioSearch" value="2"  id="radioBA" > Busca avançada</span>
-                <div class="pull-right" id="divSearch">
-                    <a id="btnSearch" style="display: none;" chave="{{ route('advanced_search') }}" class="btn btn-primary"><i class="fas fa-search"></i> &nbsp; &nbsp; Busca avançada </a>
-                </div>
+                @if (count($search) > 0)
+                    <p id="linkBS"><input type="radio" name="radioSearch" value="1" id="radioBS" > <a>Busca simples</a></p>
+                    <p id="linkBA"><input type="radio" name="radioSearch" value="2"  id="radioBA" checked > <a id='lblBA'>Busca avançada (modificar parâmetros)</a></p>
+                    <ol class="breadcrumb">
+                        @foreach ($search as $key => $value)
+                            <li><b>{{$key}}:</b> {{$value}}</li>
+                        @endforeach
+                    </ol>
+                @else 
+                    <p id="linkBS"><input type="radio" name="radioSearch" value="1" id="radioBS" checked > <a>Busca simples</a></p>
+                    <p id="linkBA"><input type="radio" name="radioSearch" value="2"  id="radioBA" > <a id='lblBA'>Busca avançada</a></p>
+                @endif
+                
             </div>
         </div>
         <br>
@@ -73,7 +85,7 @@
             </div>
         </div>
     </div>
-    <!-- Modal -->
+    <!-- Modal exibir filme-->
     <div class="modal fade" id="dialog_exibir">
         <div class="modal-dialog" role="document" style="width:80vw;">
             <div class="modal-content">
@@ -162,7 +174,11 @@
 
         $(document).ready( function () {
             
-            var tabela = startDatatablesWithSearch();
+            @if (count($search) > 0)
+                var tabela = startDatatablesWithoutSearch();
+            @else
+                var tabela = startDatatablesWithSearch();
+            @endif
 
             $('input').iCheck({
                 checkboxClass: 'icheckbox_square-blue',
@@ -176,23 +192,37 @@
                 });
             });
 
-            $("#divSearch").on("click", "#btnSearch", function() {
-                var key = $(this).attr('chave');
-                $("#dialog_exibir .modal-body").load(key, function(){
-                    $("#dialog_exibir").modal({show:true});
-                });
-            });
-
             $('#radioBS').on('ifChecked', function(event){
                 tabela.destroy();
                 tabela = startDatatablesWithSearch();
-                $('#btnSearch').hide();
             });
 
             $('#radioBA').on('ifChecked', function(event){
                 tabela.destroy();
                 tabela = startDatatablesWithoutSearch();
-                $('#btnSearch').show();
+                $('#lblBA').html('Busca avançada (modificar parâmetros)');
+            });
+
+            $('#radioBS').on('ifClicked', function(){
+                location.href = "/";
+            });
+
+            $('#radioBA').on('ifClicked', function(){
+                var key = "{{ route('advanced_search') }}";
+                $("#dialog_exibir .modal-body").load(key, function(){
+                    $("#dialog_exibir").modal({show:true});
+                });
+            });
+
+            $('#linkBS').click(function (){
+                location.href = "/";
+            });
+
+            $('#linkBA').click(function (){
+                var key = "{{ route('advanced_search') }}";
+                $("#dialog_exibir .modal-body").load(key, function(){
+                    $("#dialog_exibir").modal({show:true});
+                });
             });
 
         });

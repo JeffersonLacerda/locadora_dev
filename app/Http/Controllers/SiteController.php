@@ -19,10 +19,97 @@ use Illuminate\Support\Facades\DB;
 
 class SiteController extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
-        $movies = Movie::all();
-        return view('index', compact('movies'));
+        $movies = Movie::with('genres', 'medias', 'type');
+        $search = array();
+        // Buscar por título
+        if ($request->filled('title')) {
+            $title = $request->title;
+            $search["Titulo"] = $title;
+            $movies = $movies->where('title', 'like', "%$title%");
+        }
+        // Buscar por título original
+        if ($request->filled('original_title')) {
+            $original_title = $request->original_title;
+            $search["Titulo original"] = $original_title;
+            $movies = $movies->where('original_title', 'like', "%$original_title%");
+        }
+        // Busca por Gêneros
+        if ($request->filled('genres')) {
+            $genres = $request->genres;
+            $search["Gênero"] = implode("|", $genres);
+            $movies = $movies->whereHas('genres', function ($query) use ($genres) {
+                for ($i = 0; $i < count($genres); $i++){
+                    $genre = $genres[$i];
+                    if ($i == 0) {
+                        $query->where('description',"$genre");
+                    } else {
+                        $query = $query->orWhere('description',"$genre");
+                    }
+                }
+            });
+        }
+        // Busca por Mídias
+        if ($request->filled('medias')) {
+            $medias = $request->medias;
+            $search["Mídia"] = implode("|", $medias);
+            $movies = $movies->whereHas('medias', function ($query) use ($medias) {
+                for ($i = 0; $i < count($medias); $i++){
+                    $media = $medias[$i];
+                    if ($i == 0) {
+                        $query->where('description',"$media");
+                    } else {
+                        $query = $query->orWhere('description',"$media");
+                    }
+                }
+            });
+        }
+        // Buscar por elenco
+        if ($request->filled('cast')) {
+            $cast = $request->cast;
+            $search["Elenco"] = $cast;
+            $movies = $movies->where('cast', 'like', "%$cast%");
+        }
+        // Buscar por direção
+        if ($request->filled('direction')) {
+            $direction = $request->direction;
+            $search["Direção"] = $direction;
+            $movies = $movies->where('direction', 'like', "%$direction%");
+        }
+        // Busca por Nacionalidade
+        if ($request->filled('countries')) {
+            $countries = $request->countries;
+            $search["Nacionalidade"] = implode("|", $countries);
+            $movies = $movies->where( function ($query) use ($countries) {
+                for ($i = 0; $i < count($countries); $i++){
+                    $country = $countries[$i];
+                    if ($i == 0) {
+                        $query->where('country', 'like', "%$country%");
+                    } else {
+                        $query = $query->orWhere('country', 'like', "%$country%");
+                    }
+                }
+            });
+        }
+        // Busca por Tipo (Catálogo ou Lançamento)
+        if ($request->filled('types')) {
+            $types = $request->types;
+            $search["Tipo"] = implode("|", $types);
+            $movies = $movies->whereHas('type', function ($query) use ($types) {
+                for ($i = 0; $i < count($types); $i++){
+                    $type = $types[$i];
+                    if ($i == 0) {
+                        $query->where('description',"$type");
+                    } else {
+                        $query = $query->orWhere('description',"$type");
+                    }
+                }
+            });
+        }
+        //Retonar a tela do catálogo
+        $movies = $movies->get();
+        return view('index', compact('movies', 'search'));
     }
 
     public function movie_details($id)
@@ -50,34 +137,99 @@ class SiteController extends Controller
     }
 
     public function advanced_search(Request $request){
-        $movies = DB::table('movies');
+        
+        $movies = Movie::with('genres', 'medias', 'type');
         $search = array();
+        // Buscar por título
         if ($request->filled('title')) {
             $title = $request->title;
-            array_push($search, ['title' => $title]);
+            $search["Titulo"] = $title;
             $movies = $movies->where('title', 'like', "%$title%");
         }
+        // Buscar por título original
         if ($request->filled('original_title')) {
             $original_title = $request->original_title;
-            array_push($search, ['original_title' => $original_title]);
+            $search["Titulo original"] = $original_title;
             $movies = $movies->where('original_title', 'like', "%$original_title%");
         }
+        // Busca por Gêneros
         if ($request->filled('genres')) {
             $genres = $request->genres;
-            array_push($search, ['genres' => implode("|", $genres)]);
-            $movies = $movies->where(function ($query) {
-                $genres = $request->genres;
+            $search["Gênero"] = implode("|", $genres);
+            $movies = $movies->whereHas('genres', function ($query) use ($genres) {
                 for ($i = 0; $i < count($genres); $i++){
                     $genre = $genres[$i];
                     if ($i == 0) {
-                        $query->where('available_genres','like',"%$genre%");
+                        $query->where('description',"$genre");
                     } else {
-                        $query = $query->orWhere('available_genres','like',"%$genre%");
+                        $query = $query->orWhere('description',"$genre");
                     }
                 }
             });
         }
-        dd($movies->get());
+        // Busca por Mídias
+        if ($request->filled('medias')) {
+            $medias = $request->medias;
+            $search["Mídia"] = implode("|", $medias);
+            $movies = $movies->whereHas('medias', function ($query) use ($medias) {
+                for ($i = 0; $i < count($medias); $i++){
+                    $media = $medias[$i];
+                    if ($i == 0) {
+                        $query->where('description',"$media");
+                    } else {
+                        $query = $query->orWhere('description',"$media");
+                    }
+                }
+            });
+        }
+        // Buscar por elenco
+        if ($request->filled('cast')) {
+            $cast = $request->cast;
+            $search["Elenco"] = $cast;
+            $movies = $movies->where('cast', 'like', "%$cast%");
+        }
+        // Buscar por direção
+        if ($request->filled('direction')) {
+            $direction = $request->direction;
+            $search["Direção"] = $direction;
+            $movies = $movies->where('direction', 'like', "%$direction%");
+        }
+        // Busca por Nacionalidade
+        if ($request->filled('countries')) {
+            $countries = $request->countries;
+            $search["Nacionalidade"] = implode("|", $countries);
+            $movies = $movies->where( function ($query) use ($countries) {
+                for ($i = 0; $i < count($countries); $i++){
+                    $country = $countries[$i];
+                    if ($i == 0) {
+                        $query->where('country', 'like', "%$country%");
+                    } else {
+                        $query = $query->orWhere('country', 'like', "%$country%");
+                    }
+                }
+            });
+        }
+        // Busca por Tipo (Catálogo ou Lançamento)
+        if ($request->filled('types')) {
+            $types = $request->types;
+            $search["Tipo"] = implode("|", $types);
+            $movies = $movies->whereHas('type', function ($query) use ($types) {
+                for ($i = 0; $i < count($types); $i++){
+                    $type = $types[$i];
+                    if ($i == 0) {
+                        $query->where('description',"$type");
+                    } else {
+                        $query = $query->orWhere('description',"$type");
+                    }
+                }
+            });
+        }
+        //Retonar para tela do catálogo
+        //dd($movies->toSql());
+        //dd($search);
+        $movies = $movies->get();
+        return Redirect::route('index')->with( ['data' => $data] );
+        return view('index', compact('movies', 'search'));
     }
 
     public function serial_number(){

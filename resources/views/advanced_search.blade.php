@@ -2,7 +2,7 @@
     <div class="col-md-12">
         <h2>Busca avançada:</h2>
         <p>Você pode realizar consultas por título, título original, gênero, tipo de mídia disponível, elenco, direção, nacionalidade e lançamentos, bem como combinações dessas informações.</p>
-        <form action="{{ route('advanced_search') }}" method="POST" id="formSearch">
+        <form action="{{ route('index') }}" method="POST" id="formSearch">
             {{ csrf_field() }}
             {{-- Título --}}
             <div class="form-group {{ $errors->has('title') ? 'has-error' : '' }}">
@@ -45,7 +45,7 @@
                 {{-- <label for="medias">Tipo de Mídia:</label> --}}
                 <select class="form-control" name="medias[]" id="selectMedias" multiple="multiple" style="width: 100%;">
                 @foreach($medias as $m)
-                    <option value="{{ $m->id }}">
+                    <option value="{{ $m->description }}">
                         {{ $m->description}} 
                     </option>
                 @endforeach
@@ -97,7 +97,7 @@
                 {{-- <label for="types">Tipo (Catálogo ou Lançamento):</label> --}}
                 <select class="form-control" name="types[]" id="selectTypes" multiple="multiple" style="width: 100%;">
                 @foreach($types as $t)
-                    <option value="{{ $t->id }}">
+                    <option value="{{ $t->description }}">
                         {{ $t->description}} 
                     </option>
                 @endforeach
@@ -138,4 +138,8 @@
     $('#btnAdvancedSearch').click(function (){
         $('#formSearch').submit();
     });
+    $(document).ready( function () {
+        
+    });
+
 </script>
