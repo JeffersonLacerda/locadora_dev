@@ -102,6 +102,24 @@
             </div>
         </div>
     </div>
+    <!-- Modal busca avançada -->
+    <div class="modal fade" id="dialog_search">
+        <div class="modal-dialog" role="document" style="width:80vw;">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    <h4 class="modal-title"></h4>
+                </div>
+                <div class="modal-body">
+                    @include('advanced_search')
+                </div>
+                <div class="modal-footer">
+                    <a class="btn btn-danger" data-dismiss="modal" aria-label="Close"><i class="fas fa-times"></i> Fechar</a>
+                </div>
+            </div>
+        </div>
+    </div>
+    
 @stop
 
 @section('js')
@@ -176,6 +194,13 @@
             
             @if (count($search) > 0)
                 var tabela = startDatatablesWithoutSearch();
+                @if (array_key_exists('Titulo', $search))
+                    $('#title').val("{{ $search['Titulo'] }}");
+                @endif
+                @if (array_key_exists('Titulo original', $search))
+                    $('#original_title').val("{{ $search['Titulo original'] }}");
+                @endif
+                
             @else
                 var tabela = startDatatablesWithSearch();
             @endif
@@ -183,6 +208,27 @@
             $('input').iCheck({
                 checkboxClass: 'icheckbox_square-blue',
                 radioClass: 'iradio_square-blue'
+            });
+
+            $('#selectGenres').select2({
+                placeholder: "Selecione o gênero"
+            });
+            $('#selectMedias').select2({
+                placeholder: "Selecione o tipo de Mídia"
+            });
+            $('#selectCountries').select2({
+                placeholder: "Selecione a nacionalidade"
+            });
+            $('#selectTypes').select2({
+                placeholder: "Selecione o tipo (Catálogo ou Lançamento)"
+            });
+            $('#btnClear').click(function (){
+                $('#formSearch')[0].reset();
+                $('.select2').val(null).trigger('change');
+                $('input[name="title"]').focus();
+            });
+            $('#btnAdvancedSearch').click(function (){
+                $('#formSearch').submit();
             });
 
             $("#tb_filmes").on("click", ".btn-exibir", function() {
@@ -208,10 +254,7 @@
             });
 
             $('#radioBA').on('ifClicked', function(){
-                var key = "{{ route('advanced_search') }}";
-                $("#dialog_exibir .modal-body").load(key, function(){
-                    $("#dialog_exibir").modal({show:true});
-                });
+                $("#dialog_search").modal({show:true});
             });
 
             $('#linkBS').click(function (){
@@ -219,10 +262,7 @@
             });
 
             $('#linkBA').click(function (){
-                var key = "{{ route('advanced_search') }}";
-                $("#dialog_exibir .modal-body").load(key, function(){
-                    $("#dialog_exibir").modal({show:true});
-                });
+                $("#dialog_search").modal({show:true});
             });
 
         });

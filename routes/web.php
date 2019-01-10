@@ -15,7 +15,6 @@
 Route::get('/', 'SiteController@index')->name('index');
 Route::post('/', 'SiteController@index');
 Route::get('/filme/{id}', 'SiteController@movie_details')->name('movie_details');
-Route::get('/buscar', 'SiteController@advanced_search_view')->name('advanced_search');
 
 /* 
 Route::get('/test', 'SiteController@test');
