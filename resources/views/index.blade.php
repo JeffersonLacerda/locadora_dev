@@ -194,13 +194,6 @@
             
             @if (count($search) > 0)
                 var tabela = startDatatablesWithoutSearch();
-                @if (array_key_exists('Titulo', $search))
-                    $('#title').val("{{ $search['Titulo'] }}");
-                @endif
-                @if (array_key_exists('Titulo original', $search))
-                    $('#original_title').val("{{ $search['Titulo original'] }}");
-                @endif
-                
             @else
                 var tabela = startDatatablesWithSearch();
             @endif
