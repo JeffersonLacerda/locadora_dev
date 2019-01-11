@@ -29,7 +29,7 @@
             <table class="table table-striped table-remove-modal">
                 <thead>
                     <tr>
-                        <th style="text-align: center;">Cód.</th>
+                        <th style="text-align: center;">Código TMDb</th>
                         <th style="text-align: center;">Descrição</th>
                         <th style="text-align: center;">Ações</th>
                     </tr>

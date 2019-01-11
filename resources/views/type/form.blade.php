@@ -56,8 +56,8 @@
                     @endif
                 </div>
                 <div class="form-group {{ $errors->has('increase') ? 'has-error' : '' }}">
-                    <label for="increase">Valor da multa</label>
-                    <input type="number" step="0.01" class="form-control" id="increase" name="increase" placeholder="Valor da multa por passar do prazo de devolução" value="{{ isset($type) ? old('increase', $type->increase) : old('increase') }}">
+                    <label for="increase">Acrécimo</label>
+                    <input type="number" step="0.01" class="form-control" id="increase" name="increase" placeholder="Valor do acrécimo deste tipo" value="{{ isset($type) ? old('increase', $type->increase) : old('increase') }}">
                     @if ($errors->has('increase'))
                         <span class="help-block">
                             <strong>{{ $errors->first('increase') }}</strong>

@@ -38,8 +38,8 @@
             @endisset
                 {{ csrf_field() }}
                 <div class="form-group {{ $errors->has('tmdb_id') ? 'has-error' : '' }}">
-                    <label for="tmdb_id">Código</label>
-                    <input type="number" class="form-control" id="tmdb_id" name="tmdb_id" placeholder="Código deste tipo de gênero" value="{{ isset($genre) ? old('tmdb_id', $genre->tmdb_id) : old('tmdb_id') }}">
+                    <label for="tmdb_id">Código TMDb</label>
+                    <input type="number" class="form-control" id="tmdb_id" name="tmdb_id" placeholder="Código TMDb deste tipo de gênero" value="{{ isset($genre) ? old('tmdb_id', $genre->tmdb_id) : old('tmdb_id') }}">
                     @if ($errors->has('tmdb_id'))
                         <span class="help-block">
                             <strong>{{ $errors->first('tmdb_id') }}</strong>
