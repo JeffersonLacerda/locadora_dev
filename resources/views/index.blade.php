@@ -57,6 +57,7 @@
                     <thead>
                         <tr>
                             <th>TÍTULO</th>
+                            <th>TÍTULO ORIGINAL</th>
                             <th>GÊNERO</th>
                             <th>ANO</th>
                             <th>TIPO</th>
@@ -68,6 +69,7 @@
                         @foreach ($movies as $m) 
                         <tr>
                             <td>{{$m->title}}</td>
+                            <td>{{$m->original_title}}</td>
                             <td>{{$m->available_genres}}</td>
                             <td>{{$m->year}}</td>
                             <td>{{$m->available_type}}</td>
@@ -149,10 +151,9 @@
                         "previous":   "Anterior"
                     },  
                 },
-                "columnDefs": [ {
-                    "targets": 5,
-                    "orderable": false
-                    } 
+                "columnDefs": [ 
+                    { targets: [1], visible: false, searchable: true },
+                    { targets: [6], orderable: false} 
                 ]
             });
             return tabela;
@@ -181,10 +182,9 @@
                         "previous":   "Anterior"
                     },  
                 },
-                "columnDefs": [ {
-                    "targets": 5,
-                    "orderable": false
-                    } 
+                "columnDefs": [ 
+                    { targets: [1], visible: false, searchable: true },
+                    { targets: [6], orderable: false}  
                 ]
             });
             return tabela;
