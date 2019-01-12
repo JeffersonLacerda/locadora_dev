@@ -7,7 +7,7 @@ use Laravel\Dusk\Browser;
 use Illuminate\Foundation\Testing\DatabaseMigrations;
 use App\User;
 
-class Us002Test extends DuskTestCase
+class Us003Test extends DuskTestCase
 {
 
     public static $texto = "
@@ -29,60 +29,61 @@ class Us002Test extends DuskTestCase
      * @return void
      */
 
-    public function testAddMediaBtn()
+    public function testEditMediaBtn()
     {
         $this->browse(function (Browser $browser) {
-            $href = route('media.create');
+            $href = route('media.edit', 5);
             $browser->loginAs(User::find(1))
                     ->visit('/midia')
                     ->waitForText('Mídias')
                     ->click("a[href='$href']")
-                    ->waitForText('Adicionar Mídia')
-                    ->assertPathIs('/midia/adicionar');
+                    ->waitForText('Modificar Mídia')
+                    ->assertPathIs('/midia/5/editar');
         });
     }
 
-    public function testAddMediaOK()
+    public function testEditMediaOK()
     {
         $this->browse(function (Browser $browser) {
             $browser->loginAs(User::find(1))
-                    ->visit('/midia/adicionar')
-                    ->type('description', 'Streaming Digital')
-                    ->type('rental_price', '8.50')
+                    ->visit('/midia/5/editar')
+                    ->waitForText('Modificar Mídia')
+                    ->type('description', 'Flash Drive')
+                    ->type('rental_price', '8')
                     ->click('button[type=submit]')
                     ->waitForText('Adicionar Mídia')
                     ->assertPathIs('/midia');
         });
         $this->assertDatabaseHas('media', 
         [
-            'description' => 'Streaming Digital',
-            'rental_price' => 8.5,
+            'description' => 'Flash Drive',
+            'rental_price' => 8,
         ]);
     }
 
-    public function testAddMediaFail()
+    public function testEditMediaFail()
     {
         $this->browse(function (Browser $browser) {
-            $texto = Us002Test::$texto;
+            $texto = Us003Test::$texto;
             $browser->loginAs(User::find(1))
-                    ->visit('/midia/adicionar')
-                    ->waitForText('Adicionar Mídia')
+                    ->visit('/midia/5/editar')
+                    ->waitForText('Modificar Mídia')
                     ->type('description', '')
                     ->type('rental_price', '')
                     ->click('button[type=submit]')
-                    ->waitForText('Adicionar Mídia')
+                    ->waitForText('Modificar Mídia')
                     ->assertSee('O campo descrição é obrigatório.')
                     ->assertSee('O campo valor da locação é obrigatório.')
                     ->type('description', $texto)
                     ->type('rental_price', '0')
                     ->click('button[type=submit]')
-                    ->waitForText('Adicionar Mídia')
+                    ->waitForText('Modificar Mídia')
                     ->assertSee('O campo descrição não pode ser superior a 255 caracteres.')
                     ->assertSee('O valor da locação tem que ser maior que 0.')
-                    ->type('description', 'Streaming Digital')
+                    ->type('description', 'DVD')
                     ->type('rental_price', 'A')
                     ->click('button[type=submit]')
-                    ->waitForText('Adicionar Mídia')
+                    ->waitForText('Modificar Mídia')
                     ->assertSee('O campo descrição já está sendo utilizado.')
                     ->assertSee('O campo valor da locação é obrigatório.');
         });
@@ -100,16 +101,16 @@ class Us002Test extends DuskTestCase
         
         $this->assertDatabaseMissing('media', 
         [
-            'description' => 'Streaming Digital',
+            'description' => 'Steaming Digital',
             'rental_price' => 'A',
         ]);
     }
 
-    public function testAddMediaForbidden()
+    public function testEditMediaForbidden()
     {
         $this->browse(function (Browser $browser) {
             $browser->loginAs(User::find(2))
-                    ->visit('/midia/adicionar')
+                    ->visit('/midia/5/editar')
                     ->assertSee('Acesso Negado.');
         });
     }
