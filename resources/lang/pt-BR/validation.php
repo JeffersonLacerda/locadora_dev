@@ -87,7 +87,13 @@ return [
     'unique'               => 'O campo :attribute já está sendo utilizado.',
     'uploaded'             => 'Ocorreu uma falha no upload do campo :attribute.',
     'url'                  => 'O campo :attribute tem um formato inválido.',
-
+    'gt' => [
+        'numeric' => 'O :attribute tem que ser maior que :value.',
+        'file' => 'O :attribute tem que ser maior que :value kilobytes.',
+        'string' => 'O :attribute tem que ser maior que :value caracteres.',
+        'array' => 'O :attribute tem que ter mais que :value itens.',
+    ],
+    
     /*
     |--------------------------------------------------------------------------
     | Custom Validation Language Lines
@@ -123,6 +129,8 @@ return [
         'old_password'              => 'senha atual',
         'new_password'              => 'nova senha',
         'password_confirmation'     => 'confirmação da nova senha',
+        'description'               => 'descrição',
+        'rental_price'              => 'valor da locação',
     ],
 
 ];

@@ -25,8 +25,8 @@ class MediaController extends Controller
     {
 
         $request->validate([
-            'description' => 'required|unique:media',
-            'rental_price' => 'required|numeric',
+            'description' => 'required|unique:media|max:255',
+            'rental_price' => 'required|numeric|gt:0',
         ]);
         Media::create($request->all());
         return redirect()->route('media.index');
