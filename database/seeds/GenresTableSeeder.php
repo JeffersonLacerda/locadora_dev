@@ -78,7 +78,7 @@ class GenresTableSeeder extends Seeder
         ]);
         Genre::create([
             'tmdb_id' => 53,
-            'description' => 'Thriller',
+            'description' => 'Suspense',
         ]);
         Genre::create([
             'tmdb_id' => 10752,

@@ -131,6 +131,7 @@ return [
         'password_confirmation'     => 'confirmação da nova senha',
         'description'               => 'descrição',
         'rental_price'              => 'valor da locação',
+        'tmdb_id'                   => 'código TMDb',
     ],
 
 ];
