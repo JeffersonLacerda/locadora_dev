@@ -152,6 +152,7 @@ return [
             'text' => 'Distribuidora',
             'icon' => 'boxes',
             'can'  => 'administrator',
+            'route'  => 'distributor.index',
         ],
         [
             'text' => 'Filme',

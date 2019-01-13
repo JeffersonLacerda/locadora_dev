@@ -62,3 +62,11 @@ Route::post('/midia/adicionar','MediaController@store');
 Route::get('/midia/{id}/editar','MediaController@edit')->name('media.edit');
 Route::put('/midia/{id}/editar','MediaController@update');
 Route::delete('/midia/{id}/remover','MediaController@destroy')->name('media.destroy');
+
+/* Rotas do model Distributor */
+Route::get('/distribuidor','DistributorController@index')->name('distributor.index');
+Route::get('/distribuidor/adicionar','DistributorController@create')->name('distributor.create');
+Route::post('/distribuidor/adicionar','DistributorController@store');
+Route::get('/distribuidor/{id}/editar','DistributorController@edit')->name('distributor.edit');
+Route::put('/distribuidor/{id}/editar','DistributorController@update');
+Route::delete('/distribuidor/{id}/remover','DistributorController@destroy')->name('distributor.destroy');
