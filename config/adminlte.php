@@ -157,6 +157,7 @@ return [
             'text' => 'Filme',
             'icon' => 'film',
             'can'  => 'administrator',
+            'route' => 'movie.index',
         ],
         [
             'text' => 'Item',
