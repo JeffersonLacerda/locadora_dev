@@ -56,8 +56,13 @@
                     @endif
                 </div>
                 <div class="form-group {{ $errors->has('increase') ? 'has-error' : '' }}">
+<<<<<<< HEAD
+                    <label for="increase">Acrécimo</label>
+                    <input type="number" step="0.01" class="form-control" id="increase" name="increase" placeholder="Valor do acrécimo deste tipo" value="{{ isset($type) ? old('increase', $type->increase) : old('increase') }}">
+=======
                     <label for="increase">Acréscimo ao valor de locação (%)</label>
                     <input type="number" step="0.01" class="form-control" id="increase" name="increase" placeholder="Informe o percentual de acréscimo no valor da locação" value="{{ isset($type) ? old('increase', $type->increase) : old('increase') }}">
+>>>>>>> 851130b88ca73e6b8bb406f8e7b0494d40ccb1ed
                     @if ($errors->has('increase'))
                         <span class="help-block">
                             <strong>{{ $errors->first('increase') }}</strong>

@@ -21,7 +21,7 @@ class CreateDistributorsTable extends Migration
             $table->string('contact_phone', 14);
             $table->string('place');
             $table->integer('number')->unsigned();
-            $table->string('complement');
+            $table->string('complement')->nullable();
             $table->string('district');
             $table->string('city');
             $table->string('state');

@@ -6,21 +6,17 @@
 @stop
 
 @section('content_header')
-    <h1>Tipos</h1>
+    <h1>Distribuidor</h1>
     <ol class="breadcrumb">
         <li><a href="{{ route('home') }}"><i class="fas fa-home"></i></a></li>
-        <li><a href="{{ route('type.index') }}">Tipos</a></li>
+        <li><a href="{{ route('distributor.index') }}">Distribuidor</a></li>
     </ol>
 @stop
 
 @section('content')
     <div class="box">
         <div class="box-header">
-<<<<<<< HEAD
-            <a href="{{ route('type.create') }}" class="btn btn-primary"><i class="fas fa-flag"></i> Adicionar Tipo</a>
-=======
-            <a href="{{ route('type.create') }}" class="btn btn-primary"><i class="fa fa-fw fa-flag "></i> Adicionar Tipo</a>
->>>>>>> 851130b88ca73e6b8bb406f8e7b0494d40ccb1ed
+            <a href="{{ route('distributor.create') }}" class="btn btn-primary"><i class="fas fa-boxes"></i> Adicionar Distribuidor</a>
         </div>
         <div class="box-body" style="min-height: 70vh">
             @if (session('erro'))
@@ -33,33 +29,26 @@
             <table class="table table-striped table-remove-modal">
                 <thead>
                     <tr>
-                        <th style="text-align: center;">Descrição</th>
-<<<<<<< HEAD
-                        <th style="text-align: center;">Tempo de devolução (Dias)</th>
-                        <th style="text-align: center;">Acréscimo</th>
-=======
-                        <th style="text-align: center;">Prazo para devolução (Dias)</th>
-                        <th style="text-align: center;">Acréscimo ao valor de locação (%)</th>
->>>>>>> 851130b88ca73e6b8bb406f8e7b0494d40ccb1ed
+                        <th style="text-align: center;">CNPJ</th>
+                        <th style="text-align: center;">Razão Social</th>
+                        <th style="text-align: center;">Pessoa de Contato</th>
+                        <th style="text-align: center;">Cidade</th>
                         <th style="text-align: center;">Ações</th>
                     </tr>
                 </thead>
                 <tbody>
-                    @foreach ($types as $t)
+                    @foreach ($distributors as $d)
                     <tr>
-                        <td>{{ $t->description }}</td>
-                        <td>{{ $t->return_deadline }}</td>
-<<<<<<< HEAD
-                        <td>{{ number_format($t->increase, 2) }} %</td>
-=======
-                        <td>{{ number_format($t->increase * 100, 2, ",","") }} %</td>
->>>>>>> 851130b88ca73e6b8bb406f8e7b0494d40ccb1ed
+                        <td>{{ $d->cnpj }}</td>
+                        <td>{{ $d->corporate_name }}</td>
+                        <td>{{ $d->contact_name }} - {{ $d->contact_phone }} </td>
+                        <td>{{ $d->city }}-{{ $d->state }}</td>
                         <td style="text-align: center;">
-                            <form action="{{ route('type.destroy', $t->id) }}" class="form-inline" method="POST" >
+                            <form action="{{ route('distributor.destroy', $d->id) }}" class="form-inline" method="POST" >
                                 {{ csrf_field() }}
                                 {{ method_field('DELETE')}}
                                 <div class="btn-group">
-                                    <abbr title="Modificar gênero"><a href="{{ route('type.edit', $t->id) }}" class="btn btn-default btn-sm" style="color: darkgreen"><i class="fas fa-edit"></i></a></abbr>
+                                    <abbr title="Modificar gênero"><a href="{{ route('distributor.edit', $d->id) }}" class="btn btn-default btn-sm" style="color: darkgreen"><i class="fas fa-edit"></i></a></abbr>
                                     <abbr title="Remover gênero"><button type="submit" class="btn btn-default btn-sm form-delete"><i class="fas fa-trash-alt" style="color: darkred"></i></button></abbr>
                                 </div>
                             </form>
@@ -76,10 +65,10 @@
             <div class="modal-content">
                 <div class="modal-header">
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                    <h4 class="modal-title">Remover o tipo?</h4>
+                    <h4 class="modal-title">Remover o gênero?</h4>
                 </div>
                 <div class="modal-body">
-                <p>Tem certeza que deseja remover este tipo?</p>
+                <p>Tem certeza que deseja remover este gênero?</p>
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-default" data-dismiss="modal">Cancelar</button>
@@ -98,13 +87,13 @@
             $('.table').DataTable({
                 language: {
                     "decimal":        "",
-                    "emptyTable":     "Nenhum tipo cadastrado.",
-                    "info":           "Exibindo _START_ até _END_ de _TOTAL_ tipos.",
-                    "infoEmpty":      "Nenhum tipo para exibir.",
-                    "infoFiltered":   "(filtrado de _MAX_ total de tipos.)",
+                    "emptyTable":     "Nenhum gênero cadastrado.",
+                    "info":           "Exibindo _START_ até _END_ de _TOTAL_ gêneros.",
+                    "infoEmpty":      "Nenhum gênero para exibir.",
+                    "infoFiltered":   "(filtrado de _MAX_ total de gêneros.)",
                     "infoPostFix":    "",
                     "thousands":      ",",
-                    "lengthMenu":     "Exibindo _MENU_ tipos.",
+                    "lengthMenu":     "Exibindo _MENU_ gêneros.",
                     "loadingRecords": "Carregando...",
                     "processing":     "Processando...",
                     "search":         "Buscar:",
@@ -119,9 +108,7 @@
                 pageLength: 10,
                 "bLengthChange" : true,
                 "order": [[ 0, "asc" ]],
-                "columnDefs": [ 
-                    { targets: [3], orderable: false} 
-                ]
+
             });
         });
         $('.table-remove-modal').on('click', '.form-delete', function(e){
