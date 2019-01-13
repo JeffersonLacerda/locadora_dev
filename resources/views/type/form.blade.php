@@ -47,8 +47,8 @@
                     @endif
                  </div>
                  <div class="form-group {{ $errors->has('return_deadline') ? 'has-error' : '' }}">
-                    <label for="return_deadline">Prazo de devolução (dia)</label>
-                    <input type="number" class="form-control" id="return_deadline" name="return_deadline" placeholder="Informe em dias o tempo de devolução" value="{{ isset($type) ? old('return_deadline', $type->return_deadline) : old('return_deadline') }}">
+                    <label for="return_deadline">Prazo para devolução (Dias)</label>
+                    <input type="number" class="form-control" id="return_deadline" name="return_deadline" placeholder="Informe em dias o prazo para devolução" value="{{ isset($type) ? old('return_deadline', $type->return_deadline) : old('return_deadline') }}">
                     @if ($errors->has('return_deadline'))
                         <span class="help-block">
                             <strong>{{ $errors->first('return_deadline') }}</strong>
@@ -56,8 +56,13 @@
                     @endif
                 </div>
                 <div class="form-group {{ $errors->has('increase') ? 'has-error' : '' }}">
+<<<<<<< HEAD
                     <label for="increase">Acrécimo</label>
                     <input type="number" step="0.01" class="form-control" id="increase" name="increase" placeholder="Valor do acrécimo deste tipo" value="{{ isset($type) ? old('increase', $type->increase) : old('increase') }}">
+=======
+                    <label for="increase">Acréscimo ao valor de locação (%)</label>
+                    <input type="number" step="0.01" class="form-control" id="increase" name="increase" placeholder="Informe o percentual de acréscimo no valor da locação" value="{{ isset($type) ? old('increase', $type->increase) : old('increase') }}">
+>>>>>>> 851130b88ca73e6b8bb406f8e7b0494d40ccb1ed
                     @if ($errors->has('increase'))
                         <span class="help-block">
                             <strong>{{ $errors->first('increase') }}</strong>

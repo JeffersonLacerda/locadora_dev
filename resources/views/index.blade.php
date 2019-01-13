@@ -57,6 +57,7 @@
                     <thead>
                         <tr>
                             <th>TÍTULO</th>
+                            <th>TÍTULO ORIGINAL</th>
                             <th>GÊNERO</th>
                             <th>ANO</th>
                             <th>TIPO</th>
@@ -68,6 +69,7 @@
                         @foreach ($movies as $m) 
                         <tr>
                             <td>{{$m->title}}</td>
+                            <td>{{$m->original_title}}</td>
                             <td>{{$m->available_genres}}</td>
                             <td>{{$m->year}}</td>
                             <td>{{$m->available_type}}</td>
@@ -141,7 +143,7 @@
                     "loadingRecords": "Carregando...",
                     "processing":     "Processando...",
                     "search":         "Buscar:",
-                    "zeroRecords":    "Nenhum regsitro encontrado",
+                    "zeroRecords":    "Nenhum registro encontrado",
                     "paginate": {
                         "first":      "Primeiro",
                         "last":       "Último",
@@ -149,10 +151,9 @@
                         "previous":   "Anterior"
                     },  
                 },
-                "columnDefs": [ {
-                    "targets": 5,
-                    "orderable": false
-                    } 
+                "columnDefs": [ 
+                    { targets: [1], visible: false, searchable: true },
+                    { targets: [6], orderable: false} 
                 ]
             });
             return tabela;
@@ -181,10 +182,9 @@
                         "previous":   "Anterior"
                     },  
                 },
-                "columnDefs": [ {
-                    "targets": 5,
-                    "orderable": false
-                    } 
+                "columnDefs": [ 
+                    { targets: [1], visible: false, searchable: true },
+                    { targets: [6], orderable: false}  
                 ]
             });
             return tabela;
@@ -194,13 +194,6 @@
             
             @if (count($search) > 0)
                 var tabela = startDatatablesWithoutSearch();
-                @if (array_key_exists('Titulo', $search))
-                    $('#title').val("{{ $search['Titulo'] }}");
-                @endif
-                @if (array_key_exists('Titulo original', $search))
-                    $('#original_title').val("{{ $search['Titulo original'] }}");
-                @endif
-                
             @else
                 var tabela = startDatatablesWithSearch();
             @endif
@@ -225,6 +218,10 @@
             $('#btnClear').click(function (){
                 $('#formSearch')[0].reset();
                 $('.select2').val(null).trigger('change');
+                $('input[name="title"]').val('');
+                $('input[name="original_title"]').val('');
+                $('input[name="cast"]').val('');
+                $('input[name="direction"]').val('');
                 $('input[name="title"]').focus();
             });
             $('#btnAdvancedSearch').click(function (){

@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Validation\Rule;
 use App\Models\Genre;
 
 class GenreController extends Controller
@@ -24,8 +25,8 @@ class GenreController extends Controller
     public function store(Request $request)
     {
         $request->validate([
-            'tmdb_id' => 'required|numeric',
-            'description' => 'required|unique:genres',
+            'tmdb_id' => 'required|numeric|gt:0|unique:genres',
+            'description' => 'required|unique:genres|max:255',
         ]);
         Genre::create($request->all());
         return redirect()->route('genre.index');
@@ -38,8 +39,9 @@ class GenreController extends Controller
     public function update(Request $request, $id)
     {
         $request->validate([
-            'tmdb_id' => 'required|numeric',
-            'description' => 'required',
+            'tmdb_id' => ['required', 'numeric', 'gt:0',Rule::unique('genres')->ignore($id)],
+            'description' => ['required', 'max:255', Rule::unique('genres')->ignore($id)],
+            
         ]);
         $genre = Genre::findOrFail($id);
         $genre->update($request->all());

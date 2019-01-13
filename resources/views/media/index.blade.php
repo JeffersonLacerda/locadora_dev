@@ -38,7 +38,7 @@
                     @foreach ($medias as $m)
                     <tr>
                         <td>{{ $m->description }}</td>
-                        <td>R$ {{ number_format($m->rental_price, 2) }}</td>
+                        <td>R$ {{ number_format($m->rental_price, 2, ",", "") }}</td>
                         <td style="text-align: center;">
                             <form action="{{ route('media.destroy', $m->id) }}" class="form-inline" method="POST" >
                                 {{ csrf_field() }}

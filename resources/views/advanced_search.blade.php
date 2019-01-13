@@ -7,7 +7,7 @@
             {{-- Título --}}
             <div class="form-group {{ $errors->has('title') ? 'has-error' : '' }}">
                 {{-- <label for="title">Título:</label> --}}
-                <input type="text" class="form-control" id="title" name="title" placeholder="Título" value="{{ isset($search) ? old('title', '') : old('title') }}">
+                <input type="text" class="form-control" id="title" name="title" placeholder="Título" value="{{ array_key_exists('Titulo', $search) ? old('title', $search['Titulo']) : old('title') }}">
                 @if ($errors->has('title'))
                     <span class="help-block">
                         <strong>{{ $errors->first('title') }}</strong>
@@ -17,7 +17,7 @@
             {{-- Título original --}}
             <div class="form-group {{ $errors->has('original_title') ? 'has-error' : '' }}">
                 {{-- <label for="original_title">Título:</label> --}}
-                <input type="text" class="form-control" id="original_title" name="original_title" placeholder="Título original" value="{{ isset($search) ? old('original_title', '') : old('original_title') }}">
+                <input type="text" class="form-control" id="original_title" name="original_title" placeholder="Título original" value="{{ array_key_exists('Titulo original', $search) ? old('original_title', $search['Titulo original']) : old('original_title') }}">
                 @if ($errors->has('original_title'))
                     <span class="help-block">
                         <strong>{{ $errors->first('original_title') }}</strong>
@@ -31,7 +31,7 @@
                 @foreach($genres as $g)
                     <option value="{{ $g->description }}" 
                         @if(array_key_exists('Gênero', $search))
-                            @if(strpos($search['Gênero'], $g->description) !== false)
+                            @if(in_array($g->description, explode('|', $search['Gênero'])))
                                 selected
                             @endif
                         @endif
@@ -51,13 +51,13 @@
                 {{-- <label for="medias">Tipo de Mídia:</label> --}}
                 <select class="form-control select2" name="medias[]" id="selectMedias" multiple="multiple" style="width: 100%;">
                 @foreach($medias as $m)
-                    <option value="{{ $m->description }}" 
-                            @if(array_key_exists('Mídia', $search))
-                                @if(strpos($search['Mídia'], $m->description) !== false)
-                                    selected
-                                @endif
+                    <option value="{{ $m->description }}"
+                        @if(array_key_exists('Mídia', $search))
+                            @if(in_array($m->description, explode('|', $search['Mídia'])))
+                                selected
                             @endif
-                            >
+                        @endif
+                        >
                         {{ $m->description}} 
                     </option>
                 @endforeach
@@ -71,7 +71,7 @@
             {{-- Elenco --}}
             <div class="form-group {{ $errors->has('cast') ? 'has-error' : '' }}">
                 {{-- <label for="cast">Elenco:</label> --}}
-                <input type="text" class="form-control" id="cast" name="cast" placeholder="Elenco" value="{{ isset($search) ? old('cast', '') : old('cast') }}">
+                <input type="text" class="form-control" id="cast" name="cast" placeholder="Elenco" value="{{ array_key_exists('Elenco', $search) ? old('cast', $search['Elenco']) : old('cast') }}">
                 @if ($errors->has('cast'))
                     <span class="help-block">
                         <strong>{{ $errors->first('cast') }}</strong>
@@ -81,7 +81,7 @@
             {{-- Direção --}}
             <div class="form-group {{ $errors->has('direction') ? 'has-error' : '' }}">
                 {{-- <label for="direction">Direção:</label> --}}
-                <input type="text" class="form-control" id="direction" name="direction" placeholder="Direção" value="{{ isset($search) ? old('direction', '') : old('direction') }}">
+                <input type="text" class="form-control" id="direction" name="direction" placeholder="Direção" value="{{ array_key_exists('Direção', $search) ? old('direction', $search['Direção']) : old('direction') }}">
                 @if ($errors->has('direction'))
                     <span class="help-block">
                         <strong>{{ $errors->first('direction') }}</strong>
@@ -93,7 +93,13 @@
                 {{-- <label for="medias">Tipo de Mídia:</label> --}}
                 <select class="form-control select2" name="countries[]" id="selectCountries" multiple="multiple" style="width: 100%;">
                 @foreach($countries as $c)
-                    <option value="{{ $c }}">
+                    <option value="{{ $c }}"
+                    @if(array_key_exists('Nacionalidade', $search))
+                        @if(in_array($c, explode('|', $search['Nacionalidade'])))
+                            selected
+                        @endif
+                    @endif
+                    >
                         {{ $c }} 
                     </option>
                 @endforeach
@@ -109,7 +115,13 @@
                 {{-- <label for="types">Tipo (Catálogo ou Lançamento):</label> --}}
                 <select class="form-control select2" name="types[]" id="selectTypes" multiple="multiple" style="width: 100%;">
                 @foreach($types as $t)
-                    <option value="{{ $t->description }}">
+                    <option value="{{ $t->description }}"
+                        @if(array_key_exists('Tipo', $search))
+                            @if(in_array($t->description, explode('|', $search['Tipo'])))
+                                selected
+                            @endif
+                        @endif
+                        >
                         {{ $t->description}} 
                     </option>
                 @endforeach

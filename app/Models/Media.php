@@ -9,4 +9,7 @@ class Media extends Model
     protected $fillable = [
         'description', 'rental_price'
     ];
+
+    
+
 }
