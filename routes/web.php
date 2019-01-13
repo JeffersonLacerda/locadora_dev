@@ -64,7 +64,6 @@ Route::put('/midia/{id}/editar','MediaController@update');
 Route::delete('/midia/{id}/remover','MediaController@destroy')->name('media.destroy');
 
 /* Rotas do model Distributor */
-<<<<<<< HEAD
 Route::get('/distribuidora','DistributorController@index')->name('distributor.index');
 Route::get('/distribuidora/adicionar','DistributorController@create')->name('distributor.create');
 Route::post('/distribuidora/adicionar','DistributorController@store');
@@ -79,11 +78,3 @@ Route::post('/filme/adicionar','MovieController@store');
 Route::get('/filme/{id}/editar','MovieController@edit')->name('movie.edit');
 Route::put('/filme/{id}/editar','MovieController@update');
 Route::delete('/filme/{id}/remover','MovieController@destroy')->name('movie.destroy');
-=======
-Route::get('/distribuidor','DistributorController@index')->name('distributor.index');
-Route::get('/distribuidor/adicionar','DistributorController@create')->name('distributor.create');
-Route::post('/distribuidor/adicionar','DistributorController@store');
-Route::get('/distribuidor/{id}/editar','DistributorController@edit')->name('distributor.edit');
-Route::put('/distribuidor/{id}/editar','DistributorController@update');
-Route::delete('/distribuidor/{id}/remover','DistributorController@destroy')->name('distributor.destroy');
->>>>>>> b76187420cbeb99da3595c2f0794f33358e731d0
