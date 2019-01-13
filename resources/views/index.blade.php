@@ -143,7 +143,7 @@
                     "loadingRecords": "Carregando...",
                     "processing":     "Processando...",
                     "search":         "Buscar:",
-                    "zeroRecords":    "Nenhum regsitro encontrado",
+                    "zeroRecords":    "Nenhum registro encontrado",
                     "paginate": {
                         "first":      "Primeiro",
                         "last":       "Último",
@@ -218,6 +218,10 @@
             $('#btnClear').click(function (){
                 $('#formSearch')[0].reset();
                 $('.select2').val(null).trigger('change');
+                $('input[name="title"]').val('');
+                $('input[name="original_title"]').val('');
+                $('input[name="cast"]').val('');
+                $('input[name="direction"]').val('');
                 $('input[name="title"]').focus();
             });
             $('#btnAdvancedSearch').click(function (){
