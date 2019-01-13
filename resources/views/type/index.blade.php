@@ -16,7 +16,7 @@
 @section('content')
     <div class="box">
         <div class="box-header">
-            <a href="{{ route('type.create') }}" class="btn btn-primary"><i class="fas fa-tags"></i> Adicionar Tipo</a>
+            <a href="{{ route('type.create') }}" class="btn btn-primary"><i class="fa fa-fw fa-flag "></i> Adicionar Tipo</a>
         </div>
         <div class="box-body" style="min-height: 70vh">
             @if (session('erro'))
@@ -30,8 +30,8 @@
                 <thead>
                     <tr>
                         <th style="text-align: center;">Descrição</th>
-                        <th style="text-align: center;">Tempo de devolução (Dias)</th>
-                        <th style="text-align: center;">Multa</th>
+                        <th style="text-align: center;">Prazo para devolução (Dias)</th>
+                        <th style="text-align: center;">Acréscimo ao valor de locação (%)</th>
                         <th style="text-align: center;">Ações</th>
                     </tr>
                 </thead>
@@ -40,7 +40,7 @@
                     <tr>
                         <td>{{ $t->description }}</td>
                         <td>{{ $t->return_deadline }}</td>
-                        <td>R$ {{ number_format($t->increase, 2) }}</td>
+                        <td>{{ number_format($t->increase * 100, 2, ",","") }} %</td>
                         <td style="text-align: center;">
                             <form action="{{ route('type.destroy', $t->id) }}" class="form-inline" method="POST" >
                                 {{ csrf_field() }}
@@ -85,13 +85,13 @@
             $('.table').DataTable({
                 language: {
                     "decimal":        "",
-                    "emptyTable":     "Nenhum gênero cadastrado.",
-                    "info":           "Exibindo _START_ até _END_ de _TOTAL_ gêneros.",
-                    "infoEmpty":      "Nenhum gênero para exibir.",
-                    "infoFiltered":   "(filtrado de _MAX_ total de gêneros.)",
+                    "emptyTable":     "Nenhum tipo cadastrado.",
+                    "info":           "Exibindo _START_ até _END_ de _TOTAL_ tipos.",
+                    "infoEmpty":      "Nenhum tipo para exibir.",
+                    "infoFiltered":   "(filtrado de _MAX_ total de tipos.)",
                     "infoPostFix":    "",
                     "thousands":      ",",
-                    "lengthMenu":     "Exibindo _MENU_ gêneros.",
+                    "lengthMenu":     "Exibindo _MENU_ tipos.",
                     "loadingRecords": "Carregando...",
                     "processing":     "Processando...",
                     "search":         "Buscar:",
@@ -106,7 +106,9 @@
                 pageLength: 10,
                 "bLengthChange" : true,
                 "order": [[ 0, "asc" ]],
-
+                "columnDefs": [ 
+                    { targets: [3], orderable: false} 
+                ]
             });
         });
         $('.table-remove-modal').on('click', '.form-delete', function(e){

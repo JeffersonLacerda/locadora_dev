@@ -93,7 +93,12 @@ return [
         'string' => 'O :attribute tem que ser maior que :value caracteres.',
         'array' => 'O :attribute tem que ter mais que :value itens.',
     ],
-    
+    'gte' => [
+        'numeric' => 'O :attribute tem que ser maior ou igual a :value.',
+        'file' => 'O :attribute tem que ser maior ou igual a :value kilobytes.',
+        'string' => 'O :attribute tem que ser maior ou igual a :value caracteres.',
+        'array' => 'O :attribute tem que ter mais ou igual a :value itens.',
+    ],
     /*
     |--------------------------------------------------------------------------
     | Custom Validation Language Lines
@@ -132,6 +137,8 @@ return [
         'description'               => 'descrição',
         'rental_price'              => 'valor da locação',
         'tmdb_id'                   => 'código TMDb',
+        'return_deadline'           => 'prazo para devolução',
+        'increase'                  => 'acréscimo ao valor de locação',
     ],
 
 ];
