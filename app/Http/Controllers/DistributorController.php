@@ -24,7 +24,7 @@ class DistributorController extends Controller
     public function store(Request $request)
     {
         $request->validate([
-            'cnpj'=> 'required|numeric|size:14|unique:distributors',
+            'cnpj'=> 'required|numeric|unique:distributors',
             'corporate_name'=> 'required', 
             'contact_name'=> 'required', 
             'contact_phone'=> 'required', 
@@ -47,7 +47,7 @@ class DistributorController extends Controller
     public function update(Request $request, $id)
     {
         $request->validate([
-            'cnpj'=> 'required|numeric|size:14',
+            'cnpj'=> 'required|numeric',
             'corporate_name'=> 'required', 
             'contact_name'=> 'required', 
             'contact_phone'=> 'required', 
@@ -59,6 +59,7 @@ class DistributorController extends Controller
             'country'=> 'required', 
             'cep'=> 'required|numeric',
         ]);
+        
         $distributor = Distributor::findOrFail($id);
         $distributor->update($request->all());
         return redirect()->route('distributor.index');

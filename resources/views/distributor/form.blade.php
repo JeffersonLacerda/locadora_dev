@@ -39,7 +39,7 @@
                 {{ csrf_field() }}
                 <div class="form-group {{ $errors->has('cnpj') ? 'has-error' : '' }}">
                     <label for="cnpj">CNPJ</label>
-                    <input type="number" class="form-control" id="cnpj" name="cnpj" placeholder="Informe o CNPJ do distribuidor" value="{{ isset($distributor) ? old('cnpj', $distributor->cnpj) : old('cnpj') }}">
+                    <input type="text" class="form-control" id="cnpj" name="cnpj" placeholder="Informe o CNPJ do distribuidor" value="{{ isset($distributor) ? old('cnpj', $distributor->cnpj) : old('cnpj') }}">
                     @if ($errors->has('cnpj'))
                         <span class="help-block">
                             <strong>{{ $errors->first('cnpj') }}</strong>
