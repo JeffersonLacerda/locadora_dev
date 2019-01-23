@@ -52,7 +52,9 @@ class UserController extends Controller
 
         $user = User::findOrFail($id);
         $dados = $request->all();
-        $dados['password'] = bcrypt($request->password);
+        if($user->password != $request->password){
+            $dados['password'] = bcrypt($request->password);
+        }
         $user->update($dados);
         return redirect()->route('user.index');
     }
