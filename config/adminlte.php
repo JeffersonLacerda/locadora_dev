@@ -174,6 +174,7 @@ return [
             'text' => 'Usuário',
             'icon' => 'user',
             'can'  => 'administrator',
+            'route' => 'user.index',
         ],
         'ACERVO',
         [

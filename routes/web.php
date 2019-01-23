@@ -16,7 +16,7 @@ Route::get('/', 'SiteController@index')->name('index');
 Route::post('/', 'SiteController@index');
 
 
-/* 
+/*
 Route::get('/test', 'SiteController@test');
 Route::get('/seedGenres', 'SiteController@seedGenres');
 Route::get('/seedMovies', 'SiteController@seedMovies');
@@ -79,3 +79,11 @@ Route::get('/filme/{id}/editar','MovieController@edit')->name('movie.edit');
 Route::put('/filme/{id}/editar','MovieController@update');
 Route::delete('/filme/{id}/remover','MovieController@destroy')->name('movie.destroy');
 Route::get('/filme/{id}', 'SiteController@movie_details')->name('movie_details');
+
+/* Rotas do model User */
+Route::get('/usuario','UserController@index')->name('user.index');
+Route::get('/usuario/adicionar','UserController@create')->name('user.create');
+Route::post('/usuario/adicionar','UserController@store');
+Route::get('/usuario/{id}/editar','UserController@edit')->name('user.edit');
+Route::put('/usuario/{id}/editar','UserController@update');
+Route::delete('/usuario/{id}/remover','UserController@destroy')->name('user.destroy');
