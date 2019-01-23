@@ -2,13 +2,13 @@
 
 @section('content_header')
     @isset($distributor)
-        <h1>Modificar Distribuidor</h1>
+        <h1>Modificar Distribuidora</h1>
     @else
-        <h1>Adicionar Distribuidor</h1>
+        <h1>Adicionar Distribuidora</h1>
     @endisset
     <ol class="breadcrumb">
         <li><a href="{{ route('home') }}"><i class="fas fa-home"></i></a></li>
-        <li><a href="{{ route('distributor.index') }}">Distribuidor</a></li>
+        <li><a href="{{ route('distributor.index') }}">Distribuidora</a></li>
         @isset($distributor)
             <li><a href="{{ route('distributor.index', $distributor->id) }}">Modificar</a></li>
         @else

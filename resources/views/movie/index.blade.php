@@ -16,7 +16,7 @@
 @section('content')
     <div class="box">
         <div class="box-header">
-            <a href="{{ route('type.create') }}" class="btn btn-primary"><i class="fa fa-fw fa-film"></i> Adicionar Filme</a>
+            <a href="{{ route('movie.create') }}" class="btn btn-primary"><i class="fa fa-fw fa-film"></i> Adicionar Filme</a>
         </div>
         <div class="box-body" style="min-height: 70vh">
             @if (session('erro'))

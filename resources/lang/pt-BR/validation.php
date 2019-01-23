@@ -139,6 +139,18 @@ return [
         'tmdb_id'                   => 'código TMDb',
         'return_deadline'           => 'prazo para devolução',
         'increase'                  => 'acréscimo ao valor de locação',
+        'cnpj'                      => 'CNPJ',
+        'corporate_name'            => 'razão social',
+        'contact_name'              => 'pessoa de contato',
+        'contact_phone'             => 'telefone de contato',
+        'place'                     => 'logradouro',
+        'number'                    => 'número',
+        'complement'                => 'complemento',
+        'district'                  => 'bairro',
+        'city'                      => 'cidade',
+        'state'                     => 'estado',
+        'country'                   => 'país',
+        'cep'                       => 'CEP',
     ],
 
 ];

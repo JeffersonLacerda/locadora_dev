@@ -14,7 +14,7 @@
 /* Rotas da área pública */
 Route::get('/', 'SiteController@index')->name('index');
 Route::post('/', 'SiteController@index');
-Route::get('/filme/{id}', 'SiteController@movie_details')->name('movie_details');
+
 
 /* 
 Route::get('/test', 'SiteController@test');
@@ -78,3 +78,4 @@ Route::post('/filme/adicionar','MovieController@store');
 Route::get('/filme/{id}/editar','MovieController@edit')->name('movie.edit');
 Route::put('/filme/{id}/editar','MovieController@update');
 Route::delete('/filme/{id}/remover','MovieController@destroy')->name('movie.destroy');
+Route::get('/filme/{id}', 'SiteController@movie_details')->name('movie_details');

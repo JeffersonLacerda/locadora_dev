@@ -18,9 +18,9 @@ class CreateDistributorsTable extends Migration
             $table->string('cnpj', 14)->unique();
             $table->string('corporate_name');
             $table->string('contact_name');
-            $table->string('contact_phone', 14);
+            $table->string('contact_phone', 15);
             $table->string('place');
-            $table->integer('number')->unsigned();
+            $table->integer('number')->unsigned()->nullable();
             $table->string('complement')->nullable();
             $table->string('district');
             $table->string('city');

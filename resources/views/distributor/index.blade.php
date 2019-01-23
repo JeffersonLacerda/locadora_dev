@@ -6,17 +6,17 @@
 @stop
 
 @section('content_header')
-    <h1>Distribuidor</h1>
+    <h1>Distribuidoras</h1>
     <ol class="breadcrumb">
         <li><a href="{{ route('home') }}"><i class="fas fa-home"></i></a></li>
-        <li><a href="{{ route('distributor.index') }}">Distribuidor</a></li>
+        <li><a href="{{ route('distributor.index') }}">Distribuidoras</a></li>
     </ol>
 @stop
 
 @section('content')
     <div class="box">
         <div class="box-header">
-            <a href="{{ route('distributor.create') }}" class="btn btn-primary"><i class="fas fa-boxes"></i> Adicionar Distribuidor</a>
+            <a href="{{ route('distributor.create') }}" class="btn btn-primary"><i class="fas fa-boxes"></i> Adicionar Distribuidora</a>
         </div>
         <div class="box-body" style="min-height: 70vh">
             @if (session('erro'))
@@ -65,10 +65,10 @@
             <div class="modal-content">
                 <div class="modal-header">
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                    <h4 class="modal-title">Remover o gênero?</h4>
+                    <h4 class="modal-title">Remover essa distribuidora?</h4>
                 </div>
                 <div class="modal-body">
-                <p>Tem certeza que deseja remover este gênero?</p>
+                <p>Tem certeza que deseja remover esta distribuidora?</p>
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-default" data-dismiss="modal">Cancelar</button>
