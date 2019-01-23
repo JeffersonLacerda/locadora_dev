@@ -25,12 +25,14 @@ class UserController extends Controller
     {
         $request->validate([
             'name' => 'required',
-            'email' => 'required|email|confirmed|unique:users',
-            'password' => 'required',
+            'email' => 'required|email|unique:users',
+            'password' => 'required|confirmed',
             'user' => 'required|unique:users',
             'profile' => 'required',
         ]);
-        User::create($request->all());
+        $dados = $request->all();
+        $dados['password'] = bcrypt($request->password);
+        User::create($dados);
         return redirect()->route('user.index');
     }
     public function edit($id)
@@ -42,14 +44,16 @@ class UserController extends Controller
     {
         $request->validate([
             'name' => 'required',
-            'email' => 'required|email|confirmed|unique:users',
-            'password' => 'required',
-            'user' => 'required|unique:users',
+            'email' => 'required|email',
+            'password' => 'required|confirmed',
+            'user' => 'required',
             'profile' => 'required',
         ]);
 
         $user = User::findOrFail($id);
-        $user->update($request->all());
+        $dados = $request->all();
+        $dados['password'] = bcrypt($request->password);
+        $user->update($dados);
         return redirect()->route('user.index');
     }
     public function destroy($id)

@@ -155,6 +155,8 @@ return [
         'purchase_date'             => 'data da compra',
         'movie_id'                  => 'filme',
         'media_id'                  => 'mídia',
+        'user'                      => 'usuário',
+        'profile'                   => 'perfil',
     ],
 
 ];

@@ -73,16 +73,36 @@
                         </span>
                     @endif
                  </div>
-                <div class="form-group {{ $errors->has('password_confirmation') ? 'has-error' : '' }}">
+                <div class="form-group {{ $errors->has('password') ? 'has-error' : '' }}">
                     <label for="password_confirmation">Confirme a senha</label>
                     <input type="password" class="form-control" id="password_confirmation" name="password_confirmation" placeholder="Confirme a senha" value="{{ isset($user) ? old('password', $user->password) : old('password') }}">
-                    @if ($errors->has('password_confirmation'))
+                    @if ($errors->has('password'))
                         <span class="help-block">
-                            <strong>{{ $errors->first('password_confirmation') }}</strong>
+                            <strong>{{ $errors->first('password') }}</strong>
                         </span>
                     @endif
                 </div>
-
+                <div class="form-group {{ $errors->has('profile') ? 'has-error' : '' }}">
+                    <label for="profile">Perfil</label>
+                    <select name="profile" id="profile" class="form-control">
+                        <option disabled selected value> -- selecione um perfil -- </option>
+                        <option value='Administração'
+                            {{ isset($user) &&  $user->profile == 'Administração' ? 'selected' : old('profile') == 'Administração' ? 'selected' : '' }}
+                            >
+                            Administração
+                        </option>
+                        <option value='Atendimento'
+                            {{ isset($user) &&  $user->profile == 'Atendimento' ? 'selected' : old('profile') == 'Atendimento' ? 'selected' : '' }}
+                            >
+                            Atendimento
+                        </option>
+                    </select>
+                    @if ($errors->has('profile'))
+                        <span class="help-block">
+                            <strong>{{ $errors->first('profile') }}</strong>
+                        </span>
+                    @endif
+                 </div>
                 <div class="col-md-2 col-md-offset-10">
                     <button type="submit" class="btn btn-success btn-block"><i class="fa fa-fw fa-save"></i> Salvar</button>
                 </div>
