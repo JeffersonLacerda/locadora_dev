@@ -9,18 +9,6 @@ use App\User;
 
 class Us014Test extends DuskTestCase
 {
-    public static $texto = "
-    O vídeo fornece uma maneira poderosa de ajudá-lo a provar seu argumento. 
-    Ao clicar em Vídeo Online, você pode colar o código de inserção do vídeo que deseja adicionar. 
-    Você também pode digitar uma palavra-chave para pesquisar online o vídeo mais adequado ao seu documento. 
-    Para dar ao documento uma aparência profissional, o Word fornece designs de cabeçalho, rodapé, 
-    folha de rosto e caixa de texto que se complementam entre si. 
-    Por exemplo, você pode adicionar uma folha de rosto, um cabeçalho e uma barra lateral correspondentes. 
-    Clique em Inserir e escolha os elementos desejados nas diferentes galerias. 
-    Temas e estilos também ajudam a manter seu documento coordenado. 
-    Quando você clica em Design e escolhe um novo tema, as imagens, gráficos e elementos gráficos SmartArt 
-    são alterados para corresponder ao novo tema. 
-    ";
     /**
      * A Dusk test example.
      *
@@ -62,7 +50,6 @@ class Us014Test extends DuskTestCase
     public function testAddTypeFail()
     {
         $this->browse(function (Browser $browser) {
-            $texto = Us014Test::$texto;
             $browser->loginAs(User::find(1))
                     ->visit('/tipo/adicionar')
                     ->waitForText('Adicionar Tipo')
@@ -74,7 +61,7 @@ class Us014Test extends DuskTestCase
                     ->assertSee('O campo descrição é obrigatório.')
                     ->assertSee('O campo prazo para devolução é obrigatório.')
                     ->assertSee('O campo acréscimo ao valor de locação é obrigatório.')
-                    ->type('description', $texto)
+                    ->type('description', 'aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa')
                     ->type('return_deadline', '0')
                     ->type('increase', '-10')
                     ->click('button[type=submit]')
@@ -100,7 +87,7 @@ class Us014Test extends DuskTestCase
         
         $this->assertDatabaseMissing('types', 
         [
-            'description' => Us002Test::$texto,
+            'description' => 'aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa',
             'return_deadline' => 0,
             'increase' => -0.1,
         ]);
