@@ -151,6 +151,10 @@ return [
         'state'                     => 'estado',
         'country'                   => 'país',
         'cep'                       => 'CEP',
+        'serial_number'             => 'número serial',
+        'purchase_date'             => 'data da compra',
+        'movie_id'                  => 'filme',
+        'media_id'                  => 'mídia',
     ],
 
 ];
