@@ -56,7 +56,7 @@
                     <p>{{ session('erro') }}</p>
                 </div>
             @endif
-            {{-- Formulário para adicionar ou modificar distribuidores --}}
+            {{-- Formulário para adicionar ou modificar filmes --}}
             @isset($movie)
             <form method="post" action="{{ route('movie.edit', $movie->id) }}" enctype="multipart/form-data">
                 {{ method_field('PUT')}}
@@ -64,7 +64,8 @@
             <form method="post" action="{{ route('movie.create') }}" enctype="multipart/form-data">
             @endisset
                 {{ csrf_field() }}
-                <div class="form-group {{ $errors->has('tmdb_id') ? 'has-error' : '' }}">
+                <input type="hidden" class="form-control" id="tmdb_id" name="tmdb_id" value="{{ isset($movie) ? old('tmdb_id', $movie->tmdb_id) : old('tmdb_id') }}">
+                {{-- <div class="form-group {{ $errors->has('tmdb_id') ? 'has-error' : '' }}">
                     <label for="tmdb_id">código TMDb:</label>
                     <input type="text" class="form-control" id="tmdb_id" name="tmdb_id" placeholder="Informe o código do filme conforme a THE MOVIE DB (https://www.themoviedb.org/)" value="{{ isset($movie) ? old('tmdb_id', $movie->tmdb_id) : old('tmdb_id') }}">
                     @if ($errors->has('tmdb_id'))
@@ -72,7 +73,24 @@
                             <strong>{{ $errors->first('tmdb_id') }}</strong>
                         </span>
                     @endif
+                </div> --}}
+                {{-- Imagem com laravel file manager --}}
+                <label for="holder">Capa</label>
+                <br>
+                {{-- <div class="col-md-3 col-xs-12" style="border: 2px solid black;"> --}}
+                    <img id="holder" style="margin-top:15px;max-height:100px;">
+                {{-- </div> --}}
+                <br><br>
+                <div class="input-group">
+                    <span class="input-group-btn">
+                      <a id="lfm" data-input="thumbnail" data-preview="holder" class="btn btn-primary">
+                        <i class="far fa-image"></i> Escolher imagem
+                      </a>
+                    </span>
+                    <input id="thumbnail" class="form-control" type="text" name="filepath">
                 </div>
+                <br>
+                {{-- Imagem com laravel file manager --}}
                 <div class="form-group {{ $errors->has('title') ? 'has-error' : '' }}">
                     <label for="title">Título</label>
                     <input type="text" class="form-control" id="title" name="title" placeholder="Informe o título" value="{{ isset($movie) ? old('title', $movie->title) : old('title') }}">
@@ -90,8 +108,8 @@
                             <strong>{{ $errors->first('original_title') }}</strong>
                         </span>
                     @endif
-                 </div>
-                 <div class="form-group {{ $errors->has('country') ? 'has-error' : '' }}">
+                </div>
+                <div class="form-group {{ $errors->has('country') ? 'has-error' : '' }}">
                     <label for="country">País</label>
                     <select class="form-control select2" name="country[]" id="selectCountries" multiple="multiple" style="width: 100%;">
                     @foreach($countries as $c)
@@ -99,13 +117,88 @@
                             {{ $c->sigla2 }} - {{ $c->nome }} 
                         </option>
                     @endforeach
+                    </select>
                     @if ($errors->has('country'))
                         <span class="help-block">
                             <strong>{{ $errors->first('country') }}</strong>
                         </span>
                     @endif
-                 </div>
-                 
+                </div>
+                <div class="form-group {{ $errors->has('year') ? 'has-error' : '' }}">
+                    <label for="year">Ano</label>
+                    <input type="text" class="form-control" id="year" name="year" placeholder="Informe o ano" value="{{ isset($movie) ? old('year', $movie->year) : old('year') }}">
+                    @if ($errors->has('year'))
+                        <span class="help-block">
+                            <strong>{{ $errors->first('year') }}</strong>
+                        </span>
+                    @endif
+                </div>
+                <div class="form-group {{ $errors->has('direction') ? 'has-error' : '' }}">
+                    <label for="direction">Direção</label>
+                    <textarea class="form-control" rows="5" id="direction" name="direction" placeholder="Informe a direção"></textarea>
+                    @if ($errors->has('direction'))
+                        <span class="help-block">
+                            <strong>{{ $errors->first('direction') }}</strong>
+                        </span>
+                    @endif
+                </div>
+                <div class="form-group {{ $errors->has('cast') ? 'has-error' : '' }}">
+                    <label for="cast">Elenco</label>
+                    <textarea class="form-control" rows="5" id="cast" name="cast" placeholder="Informe o elenco"></textarea>
+                    @if ($errors->has('cast'))
+                        <span class="help-block">
+                            <strong>{{ $errors->first('cast') }}</strong>
+                        </span>
+                    @endif
+                </div>
+                <div class="form-group {{ $errors->has('synopsis') ? 'has-error' : '' }}">
+                    <label for="synopsis">Sinopse</label>
+                    <textarea class="form-control" rows="5" id="synopsis" name="synopsis" placeholder="Informe a sinopse"></textarea>
+                    @if ($errors->has('synopsis'))
+                        <span class="help-block">
+                            <strong>{{ $errors->first('synopsis') }}</strong>
+                        </span>
+                    @endif
+                </div>
+                <div class="form-group {{ $errors->has('duraction') ? 'has-error' : '' }}">
+                    <label for="duraction">Duração</label>
+                    <input type="text" class="form-control" id="duraction" name="duraction" placeholder="Informe a duração" value="{{ isset($movie) ? old('duraction', $movie->duraction) : old('duraction') }}">
+                    @if ($errors->has('duraction'))
+                        <span class="help-block">
+                            <strong>{{ $errors->first('duraction') }}</strong>
+                        </span>
+                    @endif
+                </div>
+                <div class="form-group {{ $errors->has('type') ? 'has-error' : '' }}">
+                    <label for="type">Tipo</label>
+                    <select class="form-control select2" name="type" id="selectType" style="width: 100%;">
+                    @foreach($types as $t)
+                        <option value="{{ $t->id }}">
+                            {{ $t->description }} 
+                        </option>
+                    @endforeach
+                    </select>
+                    @if ($errors->has('type'))
+                        <span class="help-block">
+                            <strong>{{ $errors->first('type') }}</strong>
+                        </span>
+                    @endif
+                </div>
+                <div class="form-group {{ $errors->has('distributor') ? 'has-error' : '' }}">
+                    <label for="distributor">Distribuidora</label>
+                    <select class="form-control select2" name="distributor" id="selectDistributor" style="width: 100%;">
+                    @foreach($distributors as $d)
+                        <option value="{{ $d->id }}">
+                            {{ $d->corporate_name }} 
+                        </option>
+                    @endforeach
+                    </select>
+                    @if ($errors->has('distributor'))
+                        <span class="help-block">
+                            <strong>{{ $errors->first('distributor') }}</strong>
+                        </span>
+                    @endif
+                </div>
                 <div class="col-md-2 col-md-offset-10">
                     <button type="submit" class="btn btn-success btn-block"><i class="fa fa-fw fa-save"></i> Salvar</button>
                 </div>
@@ -116,11 +209,19 @@
 
 @section('js')
     <script src="{{ asset('vendor/select2-4.0.5/dist/js/select2.min.js')}}"></script>
+    <script src="{{ asset('vendor/laravel-filemanager/js/lfm.js')}}"></script>
     <script>
         $(document).ready( function () {
             $('#selectCountries').select2({
                 placeholder: "Selecione a nacionalidade"
             });
+            $('#selectType').select2({
+                placeholder: "Selecione o tipo"
+            });
+            $('#selectDistributor').select2({
+                placeholder: "Selecione a distribuidora"
+            });
+            $('#lfm').filemanager('image');
         });
     </script>
 @stop

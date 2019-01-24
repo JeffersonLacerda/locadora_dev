@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Validation\Rule;
 use App\Models\Movie;
+use App\Models\Type;
+use App\Models\Distributor;
 use App\Services\Util;
 
 class MovieController extends Controller
@@ -23,6 +25,8 @@ class MovieController extends Controller
     public function create()
     {
         $countries = Util::iso3166();
-        return view('movie.form', compact('countries'));
+        $types = Type::all();
+        $distributors = Distributor::all();
+        return view('movie.form', compact('countries','types','distributors'));
     }
 }
