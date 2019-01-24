@@ -46,6 +46,29 @@ class Us026Test extends DuskTestCase
         ]);
     }
 
+    public function testLoginUser()
+    {
+         /* Testar login com usuário existente e senha correta, e o usuário é Administrador */
+         $this->browse(function (Browser $browser) {
+            $browser->logout()
+                    ->visit('/')
+                    ->clickLink('Área restrita')
+                    ->waitForText('Entre para iniciar uma nova sessão')
+                    ->type('user', 'teste')
+                    ->type('password', '123456')
+                    ->click('button[type=submit]')
+                    ->assertPathIs('/locadora')
+                    ->assertSeeLink('Gênero')
+                    ->assertSeeLink('Tipo')
+                    ->assertSeeLink('Mídia')
+                    ->assertSeeLink('Distribuidora')
+                    ->assertSeeLink('Filme')
+                    ->assertSeeLink('Item')
+                    ->assertSeeLink('Usuário')
+                    ->clickLink('Sair');
+        });
+    }
+
     public function testAddUserFail()
     {
         $this->browse(function (Browser $browser) {

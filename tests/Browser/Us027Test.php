@@ -34,10 +34,8 @@ class Us027Test extends DuskTestCase
                     ->waitForText('Modificar Usuário')
                     ->type('name', 'Usuario Teste Modificado')
                     ->type('email', 'user1@teste.com')
-                    ->type('password', '123456')
-                    ->type('password_confirmation', '123456')
                     ->type('user', 'teste1')
-                    ->select('profile', 'Administração')
+                    ->select('profile', 'Atendimento')
                     ->click('button[type=submit]')
                     ->waitForText('Usuários')
                     ->assertPathIs('/usuario');
@@ -47,8 +45,25 @@ class Us027Test extends DuskTestCase
             'name' => 'Usuario Teste Modificado',
             'email' => 'user1@teste.com',
             'user' => 'teste1',
-            'profile' => 'Administração',
+            'profile' => 'Atendimento',
         ]);
+
+        $this->browse(function (Browser $browser) {
+            $browser->logout()
+                    ->visit('/')
+                    ->clickLink('Área restrita')
+                    ->waitForText('Entre para iniciar uma nova sessão')
+                    ->type('user', 'teste1')
+                    ->type('password', '123456')
+                    ->click('button[type=submit]')
+                    ->assertPathIs('/locadora')
+                    ->assertSeeLink('Locação')
+                    ->assertSeeLink('Reserva')
+                    ->assertSeeLink('Devolução')
+                    ->assertSeeLink('Cliente')
+                    ->clickLink('Sair');
+        });
+
         $this->browse(function (Browser $browser) {
             $user = User::where('email', 'user1@teste.com')->first();
             $browser->loginAs(User::find(1))
@@ -56,8 +71,8 @@ class Us027Test extends DuskTestCase
                     ->waitForText('Modificar Usuário')
                     ->type('name', 'Usuario Teste')
                     ->type('email', 'user@teste.com')
-                    ->type('password', '123456')
-                    ->type('password_confirmation', '123456')
+                    ->type('password', '654321')
+                    ->type('password_confirmation', '654321')
                     ->type('user', 'teste')
                     ->select('profile', 'Administração')
                     ->click('button[type=submit]')
@@ -71,6 +86,25 @@ class Us027Test extends DuskTestCase
             'user' => 'teste',
             'profile' => 'Administração',
         ]);
+
+        $this->browse(function (Browser $browser) {
+            $browser->logout()
+                    ->visit('/')
+                    ->clickLink('Área restrita')
+                    ->waitForText('Entre para iniciar uma nova sessão')
+                    ->type('user', 'teste')
+                    ->type('password', '654321')
+                    ->click('button[type=submit]')
+                    ->assertPathIs('/locadora')
+                    ->assertSeeLink('Gênero')
+                    ->assertSeeLink('Tipo')
+                    ->assertSeeLink('Mídia')
+                    ->assertSeeLink('Distribuidora')
+                    ->assertSeeLink('Filme')
+                    ->assertSeeLink('Item')
+                    ->assertSeeLink('Usuário')
+                    ->clickLink('Sair');
+        });
     }
 
     public function testEditUserFail()

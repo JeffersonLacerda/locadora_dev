@@ -14,6 +14,9 @@
 /* Rotas da área pública */
 Route::get('/', 'SiteController@index')->name('index');
 Route::post('/', 'SiteController@index');
+Route::get('/home', function(){
+    return redirect()->route('home');
+});
 
 
 /*
@@ -79,6 +82,14 @@ Route::get('/item/{id}/editar','ItemController@edit')->name('item.edit');
 Route::put('/item/{id}/editar','ItemController@update');
 Route::delete('/item/{id}/remover','ItemController@destroy')->name('item.destroy');
 
+/* Rotas do model User */
+Route::get('/usuario','UserController@index')->name('user.index');
+Route::get('/usuario/adicionar','UserController@create')->name('user.create');
+Route::post('/usuario/adicionar','UserController@store');
+Route::get('/usuario/{id}/editar','UserController@edit')->name('user.edit');
+Route::put('/usuario/{id}/editar','UserController@update');
+Route::delete('/usuario/{id}/remover','UserController@destroy')->name('user.destroy');
+
 /* Rotas do model Movie */
 Route::get('/filme','MovieController@index')->name('movie.index');
 Route::get('/filme/adicionar','MovieController@create')->name('movie.create');
@@ -87,11 +98,3 @@ Route::get('/filme/{id}/editar','MovieController@edit')->name('movie.edit');
 Route::put('/filme/{id}/editar','MovieController@update');
 Route::delete('/filme/{id}/remover','MovieController@destroy')->name('movie.destroy');
 Route::get('/filme/{id}', 'SiteController@movie_details')->name('movie_details');
-
-/* Rotas do model User */
-Route::get('/usuario','UserController@index')->name('user.index');
-Route::get('/usuario/adicionar','UserController@create')->name('user.create');
-Route::post('/usuario/adicionar','UserController@store');
-Route::get('/usuario/{id}/editar','UserController@edit')->name('user.edit');
-Route::put('/usuario/{id}/editar','UserController@update');
-Route::delete('/usuario/{id}/remover','UserController@destroy')->name('user.destroy');

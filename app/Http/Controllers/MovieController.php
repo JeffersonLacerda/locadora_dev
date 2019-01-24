@@ -29,4 +29,11 @@ class MovieController extends Controller
         $distributors = Distributor::all();
         return view('movie.form', compact('countries','types','distributors'));
     }
+
+    public function destroy($id)
+    {
+        $movie = Movie::findOrFail($id);
+        $movie->delete();
+        return redirect()->route('movie.index');
+    }
 }
