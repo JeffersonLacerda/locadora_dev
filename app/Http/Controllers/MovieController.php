@@ -33,7 +33,11 @@ class MovieController extends Controller
     public function destroy($id)
     {
         $movie = Movie::findOrFail($id);
-        $movie->delete();
+        try{
+            $movie->delete();
+        }catch (\Exception $e) {
+            return redirect()->route('movie.index')->with('erro', 'Este registro não pode ser removido afim de garantir a integridade do banco de dados.');
+        }
         return redirect()->route('movie.index');
     }
 }
