@@ -98,3 +98,11 @@ Route::get('/filme/{id}/editar','MovieController@edit')->name('movie.edit');
 Route::put('/filme/{id}/editar','MovieController@update');
 Route::delete('/filme/{id}/remover','MovieController@destroy')->name('movie.destroy');
 Route::get('/filme/{id}', 'SiteController@movie_details')->name('movie_details');
+
+/* Rotas do model Client/Holder */
+Route::get('/cliente','ClientController@index')->name('client.index');
+Route::get('/cliente/adicionar','ClientController@create')->name('client.create');
+Route::post('/cliente/adicionar','ClientController@store');
+Route::get('/cliente/{id}/editar','ClientController@edit')->name('client.edit');
+Route::put('/cliente/{id}/editar','ClientController@update');
+Route::delete('/cliente/{id}/remover','ClientController@destroy')->name('client.destroy');

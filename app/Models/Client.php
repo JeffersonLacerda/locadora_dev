@@ -14,4 +14,8 @@ class Client extends Model
         'type',
         'holder_id',
     ];
+
+    public function holder(){
+        return $this->belongsTo('App\Models\Holder');
+    }
 }

@@ -21,4 +21,8 @@ class Holder extends Model
         'work_phone',
         'client_id',
     ];
+
+    public function dependents(){
+        return $this->hasMany('App\Models\Client');
+    }
 }

@@ -21,7 +21,7 @@ class ClientsTableSeeder extends Seeder
             'birth_date' => '1969-08-12',
             'type' => 'Titular',
             'holder_id' => null,
-        ]);                
+        ]);
         $holder = Holder::create([
             'cpf' => '41687141444',
             'place' => 'Rua Oscar Mariano da Silva',
@@ -37,13 +37,15 @@ class ClientsTableSeeder extends Seeder
             'work_phone' => '8134989900',
             'client_id' => $client->id,
         ]);
+        $client->holder_id = $holder->id;
+        $client->save();
         // ---- Dependentes do titular 1:
         Client::create([
             'name' => 'Juan dos Santos',
             'email' => 'juanruancastro_@yahoo.se',
             'gender' => 'Masculino',
             'birth_date' => '1964-03-07',
-            'type' => 'Titular',
+            'type' => 'Dependente',
             'holder_id' => $holder->id,
         ]);
         Client::create([
@@ -51,7 +53,7 @@ class ClientsTableSeeder extends Seeder
             'email' => 'lleticiaclaudiamaludossantos@openlink.com.br',
             'gender' => 'Feminino',
             'birth_date' => '2002-12-15',
-            'type' => 'Titular',
+            'type' => 'Dependente',
             'holder_id' => $holder->id,
         ]);
         // -- Titular 2:
@@ -62,7 +64,7 @@ class ClientsTableSeeder extends Seeder
             'birth_date' => '1981-05-10',
             'type' => 'Titular',
             'holder_id' => null,
-        ]);                
+        ]);
         $holder = Holder::create([
             'cpf' => '75326389444',
             'place' => 'Rua Antônio Dias de Araújo',
@@ -78,13 +80,15 @@ class ClientsTableSeeder extends Seeder
             'work_phone' => '8132292000',
             'client_id' => $client->id,
         ]);
+        $client->holder_id = $holder->id;
+        $client->save();
         // ---- Dependentes do titular 2:
         Client::create([
             'name' => 'Manuela Isabelly Aparício',
             'email' => 'manuelaisabellylaradacosta_@randstad.com.br',
             'gender' => 'Feminino',
             'birth_date' => '1986-05-12',
-            'type' => 'Titular',
+            'type' => 'Dependente',
             'holder_id' => $holder->id,
         ]);
         // -- Titular 3:
@@ -95,7 +99,7 @@ class ClientsTableSeeder extends Seeder
             'birth_date' => '1962-04-17',
             'type' => 'Titular',
             'holder_id' => null,
-        ]);                
+        ]);
         $holder = Holder::create([
             'cpf' => '49520194460',
             'place' => 'Rua Cariri',
@@ -111,13 +115,15 @@ class ClientsTableSeeder extends Seeder
             'work_phone' => '8121377000',
             'client_id' => $client->id,
         ]);
+        $client->holder_id = $holder->id;
+        $client->save();
         // ---- Dependentes do titular 3:
         Client::create([
             'name' => 'Benedita Silveira',
             'email' => 'beneditabetinaferreira-99@temavonfeccaosjc.com.br',
             'gender' => 'Feminino',
             'birth_date' => '1960-01-19',
-            'type' => 'Titular',
+            'type' => 'Dependente',
             'holder_id' => $holder->id,
         ]);
         Client::create([
@@ -125,7 +131,7 @@ class ClientsTableSeeder extends Seeder
             'email' => 'nicolasrodrigolima-80@fiorecomunicacao.com.br',
             'gender' => 'Masculino',
             'birth_date' => '2001-01-06',
-            'type' => 'Titular',
+            'type' => 'Dependente',
             'holder_id' => $holder->id,
         ]);
         Client::create([
@@ -133,7 +139,7 @@ class ClientsTableSeeder extends Seeder
             'email' => 'fabianajulianamelo__fabianajulianamelo@tce.sp.gov.br',
             'gender' => 'Feminino',
             'birth_date' => '2004-10-17',
-            'type' => 'Titular',
+            'type' => 'Dependente',
             'holder_id' => $holder->id,
         ]);
         // -- Titular 4:
@@ -144,7 +150,7 @@ class ClientsTableSeeder extends Seeder
             'birth_date' => '1969-10-11',
             'type' => 'Titular',
             'holder_id' => null,
-        ]);                
+        ]);
         $holder = Holder::create([
             'cpf' => '99913129435',
             'place' => 'Rua Bulandy',
@@ -160,13 +166,15 @@ class ClientsTableSeeder extends Seeder
             'work_phone' => '8121272000',
             'client_id' => $client->id,
         ]);
+        $client->holder_id = $holder->id;
+        $client->save();
         // ---- Dependentes do titular 4:
         Client::create([
             'name' => 'Benedita Vinicius Assis',
             'email' => 'beneditaterezafarias__beneditaterezafarias@gdsambiental.com.br',
             'gender' => 'Feminino',
             'birth_date' => '1971-01-12',
-            'type' => 'Titular',
+            'type' => 'Dependente',
             'holder_id' => $holder->id,
         ]);
         Client::create([
@@ -174,7 +182,7 @@ class ClientsTableSeeder extends Seeder
             'email' => 'luanfabiocampos..luanfabiocampos@mpc.com.br',
             'gender' => 'Masculino',
             'birth_date' => '2001-09-26',
-            'type' => 'Titular',
+            'type' => 'Dependente',
             'holder_id' => $holder->id,
         ]);
         Client::create([
@@ -182,7 +190,7 @@ class ClientsTableSeeder extends Seeder
             'email' => 'mmarinarayssapeixoto@tradevalle.com.br',
             'gender' => 'Feminino',
             'birth_date' => '2010-10-04',
-            'type' => 'Titular',
+            'type' => 'Dependente',
             'holder_id' => $holder->id,
         ]);
         // -- Titular 5:
@@ -193,7 +201,7 @@ class ClientsTableSeeder extends Seeder
             'birth_date' => '1979-11-05',
             'type' => 'Titular',
             'holder_id' => null,
-        ]);                
+        ]);
         $holder = Holder::create([
             'cpf' => '90721444490',
             'place' => 'Rua Projetada',
@@ -209,13 +217,15 @@ class ClientsTableSeeder extends Seeder
             'work_phone' => '8130497171',
             'client_id' => $client->id,
         ]);
+        $client->holder_id = $holder->id;
+        $client->save();
         // ---- Dependentes do titular 5:
         Client::create([
             'name' => 'Emanuel Hugo da Silva',
             'email' => 'emanuelhugocarlosribeiro__emanuelhugocarlosribeiro@danielstrauch.com',
             'gender' => 'Masculino',
             'birth_date' => '1980-01-04',
-            'type' => 'Titular',
+            'type' => 'Dependente',
             'holder_id' => $holder->id,
         ]);
         // -- Titular 6:
@@ -226,7 +236,7 @@ class ClientsTableSeeder extends Seeder
             'birth_date' => '1972-09-06',
             'type' => 'Titular',
             'holder_id' => null,
-        ]);                
+        ]);
         $holder = Holder::create([
             'cpf' => '21780911483',
             'place' => 'Rua da Hematita',
@@ -242,13 +252,15 @@ class ClientsTableSeeder extends Seeder
             'work_phone' => '8134989900',
             'client_id' => $client->id,
         ]);
+        $client->holder_id = $holder->id;
+        $client->save();
         // ---- Dependentes do titular 6:
         Client::create([
             'name' => 'Amanda Rocha',
             'email' => 'amandaisabelmartins__amandaisabelmartins@petcamp.com.br',
             'gender' => 'Feminino',
             'birth_date' => '1968-12-09',
-            'type' => 'Titular',
+            'type' => 'Dependente',
             'holder_id' => $holder->id,
         ]);
         // -- Titular 7:
@@ -259,7 +271,7 @@ class ClientsTableSeeder extends Seeder
             'birth_date' => '1993-05-26',
             'type' => 'Titular',
             'holder_id' => null,
-        ]);                
+        ]);
         $holder = Holder::create([
             'cpf' => '97548263406',
             'place' => 'Rua Boa Sorte',
@@ -275,6 +287,8 @@ class ClientsTableSeeder extends Seeder
             'work_phone' => '8121272000',
             'client_id' => $client->id,
         ]);
+        $client->holder_id = $holder->id;
+        $client->save();
         // ---- Dependentes do titular 7:
         // -- Titular 8:
         $client = Client::create([
@@ -284,7 +298,7 @@ class ClientsTableSeeder extends Seeder
             'birth_date' => '1963-08-20',
             'type' => 'Titular',
             'holder_id' => null,
-        ]);                
+        ]);
         $holder = Holder::create([
             'cpf' => '38010595454',
             'place' => 'Rua Conselheiro Peretti',
@@ -300,13 +314,15 @@ class ClientsTableSeeder extends Seeder
             'work_phone' => '8138780000',
             'client_id' => $client->id,
         ]);
+        $client->holder_id = $holder->id;
+        $client->save();
         // ---- Dependentes do titular 8:
         Client::create([
             'name' => 'Allana Mirella Barbosa',
             'email' => 'allanamirellavitoriapires-84@dhl.com',
             'gender' => 'Feminino',
             'birth_date' => '1959-07-02',
-            'type' => 'Titular',
+            'type' => 'Dependente',
             'holder_id' => $holder->id,
         ]);
         Client::create([
@@ -314,7 +330,7 @@ class ClientsTableSeeder extends Seeder
             'email' => 'geraldohugoigormoraes..geraldohugoigormoraes@riguetti.com.br',
             'gender' => 'Masculino',
             'birth_date' => '2005-09-04',
-            'type' => 'Titular',
+            'type' => 'Dependente',
             'holder_id' => $holder->id,
         ]);
         Client::create([
@@ -322,7 +338,7 @@ class ClientsTableSeeder extends Seeder
             'email' => 'alessandralunalizdepaula-97@igi.com.br',
             'gender' => 'Feminino',
             'birth_date' => '2007-04-27',
-            'type' => 'Titular',
+            'type' => 'Dependente',
             'holder_id' => $holder->id,
         ]);
         // -- Titular 9:
@@ -333,7 +349,7 @@ class ClientsTableSeeder extends Seeder
             'birth_date' => '1996-10-20',
             'type' => 'Titular',
             'holder_id' => null,
-        ]);                
+        ]);
         $holder = Holder::create([
             'cpf' => '36408134483',
             'place' => 'Rua da Leoa',
@@ -349,13 +365,15 @@ class ClientsTableSeeder extends Seeder
             'work_phone' => '8130497171',
             'client_id' => $client->id,
         ]);
+        $client->holder_id = $holder->id;
+        $client->save();
         // ---- Dependentes do titular 9:
         Client::create([
             'name' => 'Fernando da Mota',
             'email' => 'ffernandojoaoaraujo@malosti.com.br',
             'gender' => 'Masculino',
             'birth_date' => '1996-09-03',
-            'type' => 'Titular',
+            'type' => 'Dependente',
             'holder_id' => $holder->id,
         ]);
         // -- Titular 10:
@@ -366,7 +384,7 @@ class ClientsTableSeeder extends Seeder
             'birth_date' => '1960-04-17',
             'type' => 'Titular',
             'holder_id' => null,
-        ]);                
+        ]);
         $holder = Holder::create([
             'cpf' => '11468923498',
             'place' => 'Rua São Francisco',
@@ -382,13 +400,15 @@ class ClientsTableSeeder extends Seeder
             'work_phone' => '8134989900',
             'client_id' => $client->id,
         ]);
+        $client->holder_id = $holder->id;
+        $client->save();
         // ---- Dependentes do titular 10:
         Client::create([
             'name' => 'Sarah Francisca da Rosa',
             'email' => 'ssarahfranciscalunaviana@salvagninigroup.com',
             'gender' => 'Feminino',
             'birth_date' => '1955-11-26',
-            'type' => 'Titular',
+            'type' => 'Dependente',
             'holder_id' => $holder->id,
         ]);
         Client::create([
@@ -396,7 +416,7 @@ class ClientsTableSeeder extends Seeder
             'email' => 'joaodiogocalebsales-88@marcofaria.com',
             'gender' => 'Masculino',
             'birth_date' => '2001-12-24',
-            'type' => 'Titular',
+            'type' => 'Dependente',
             'holder_id' => $holder->id,
         ]);
         Client::create([
@@ -404,7 +424,7 @@ class ClientsTableSeeder extends Seeder
             'email' => 'ninacarolinacarolinabarbosa-81@platinium.com.br',
             'gender' => 'Feminino',
             'birth_date' => '2007-06-01',
-            'type' => 'Titular',
+            'type' => 'Dependente',
             'holder_id' => $holder->id,
         ]);
         // -- Titular 11:
@@ -415,7 +435,7 @@ class ClientsTableSeeder extends Seeder
             'birth_date' => '1985-08-05',
             'type' => 'Titular',
             'holder_id' => null,
-        ]);                
+        ]);
         $holder = Holder::create([
             'cpf' => '63574952473',
             'place' => 'Rua Canadá',
@@ -431,13 +451,15 @@ class ClientsTableSeeder extends Seeder
             'work_phone' => '8132176000',
             'client_id' => $client->id,
         ]);
+        $client->holder_id = $holder->id;
+        $client->save();
         // ---- Dependentes do titular 11:
         Client::create([
             'name' => 'Isabelly Isabela Farias',
             'email' => 'isabellyisabeladarosa-99@agenciadbd.com',
             'gender' => 'Feminino',
             'birth_date' => '1982-01-25',
-            'type' => 'Titular',
+            'type' => 'Dependente',
             'holder_id' => $holder->id,
         ]);
         // -- Titular 12:
@@ -448,7 +470,7 @@ class ClientsTableSeeder extends Seeder
             'birth_date' => '1962-09-15',
             'type' => 'Titular',
             'holder_id' => null,
-        ]);                
+        ]);
         $holder = Holder::create([
             'cpf' => '85741516459',
             'place' => 'Rua Arquiteto Luiz Nunes',
@@ -464,13 +486,15 @@ class ClientsTableSeeder extends Seeder
             'work_phone' => '8140203538',
             'client_id' => $client->id,
         ]);
+        $client->holder_id = $holder->id;
+        $client->save();
         // ---- Dependentes do titular 12:
         Client::create([
             'name' => 'Carolina da Rosa',
             'email' => 'carolinavitoriavieira..carolinavitoriavieira@rafaelsouza.com.br',
             'gender' => 'Feminino',
             'birth_date' => '1957-10-05',
-            'type' => 'Titular',
+            'type' => 'Dependente',
             'holder_id' => $holder->id,
         ]);
         Client::create([
@@ -478,7 +502,7 @@ class ClientsTableSeeder extends Seeder
             'email' => 'diegodanilobarros..diegodanilobarros@salera.com.br',
             'gender' => 'Masculino',
             'birth_date' => '2001-06-04',
-            'type' => 'Titular',
+            'type' => 'Dependente',
             'holder_id' => $holder->id,
         ]);
         // -- Titular 13:
@@ -489,7 +513,7 @@ class ClientsTableSeeder extends Seeder
             'birth_date' => '1968-04-27',
             'type' => 'Titular',
             'holder_id' => null,
-        ]);                
+        ]);
         $holder = Holder::create([
             'cpf' => '16258565476',
             'place' => 'Rua Ibicare',
@@ -505,13 +529,15 @@ class ClientsTableSeeder extends Seeder
             'work_phone' => '8130497171',
             'client_id' => $client->id,
         ]);
+        $client->holder_id = $holder->id;
+        $client->save();
         // ---- Dependentes do titular 13:
         Client::create([
             'name' => 'Luan Yago de Paula',
             'email' => 'lluanyagohugoaragao@ceuazul.ind.br',
             'gender' => 'Masculino',
             'birth_date' => '1967-12-08',
-            'type' => 'Titular',
+            'type' => 'Dependente',
             'holder_id' => $holder->id,
         ]);
         Client::create([
@@ -519,7 +545,7 @@ class ClientsTableSeeder extends Seeder
             'email' => 'kkamillysophiastellamoura@osite.com.br',
             'gender' => 'Feminino',
             'birth_date' => '2008-09-17',
-            'type' => 'Titular',
+            'type' => 'Dependente',
             'holder_id' => $holder->id,
         ]);
         Client::create([
@@ -527,7 +553,7 @@ class ClientsTableSeeder extends Seeder
             'email' => 'carlosbernardocarloseduardodaconceicao_@effem.com',
             'gender' => 'Masculino',
             'birth_date' => '2005-10-03',
-            'type' => 'Titular',
+            'type' => 'Dependente',
             'holder_id' => $holder->id,
         ]);
         // -- Titular 14:
@@ -538,7 +564,7 @@ class ClientsTableSeeder extends Seeder
             'birth_date' => '1973-02-05',
             'type' => 'Titular',
             'holder_id' => null,
-        ]);                
+        ]);
         $holder = Holder::create([
             'cpf' => '09089374400',
             'place' => 'Rua Felisburgo',
@@ -554,13 +580,15 @@ class ClientsTableSeeder extends Seeder
             'work_phone' => '8138780000',
             'client_id' => $client->id,
         ]);
+        $client->holder_id = $holder->id;
+        $client->save();
         // ---- Dependentes do titular 14:
         Client::create([
             'name' => 'Vera Maya Oliveira',
             'email' => 'vveramayateresinhafreitas@agenciadbd.com',
             'gender' => 'Feminino',
             'birth_date' => '1968-07-27',
-            'type' => 'Titular',
+            'type' => 'Dependente',
             'holder_id' => $holder->id,
         ]);
         Client::create([
@@ -568,7 +596,7 @@ class ClientsTableSeeder extends Seeder
             'email' => 'osvaldoiagobarbosa_@aclnet.com.br',
             'gender' => 'Masculino',
             'birth_date' => '2006-01-05',
-            'type' => 'Titular',
+            'type' => 'Dependente',
             'holder_id' => $holder->id,
         ]);
         // -- Titular 15:
@@ -579,7 +607,7 @@ class ClientsTableSeeder extends Seeder
             'birth_date' => '1959-01-22',
             'type' => 'Titular',
             'holder_id' => null,
-        ]);                
+        ]);
         $holder = Holder::create([
             'cpf' => '36912034420',
             'place' => 'Rua Algaroba',
@@ -595,13 +623,15 @@ class ClientsTableSeeder extends Seeder
             'work_phone' => '8140625465',
             'client_id' => $client->id,
         ]);
+        $client->holder_id = $holder->id;
+        $client->save();
         // ---- Dependentes do titular 15:
         Client::create([
             'name' => 'Sophia Eloá Manoel Freitas',
             'email' => 'sophiaeloahadassadacosta__sophiaeloahadassadacosta@kantoferramentaria.com.br',
             'gender' => 'Feminino',
             'birth_date' => '1955-07-05',
-            'type' => 'Titular',
+            'type' => 'Dependente',
             'holder_id' => $holder->id,
         ]);
         Client::create([
@@ -609,7 +639,7 @@ class ClientsTableSeeder extends Seeder
             'email' => 'bbrenogiovanniianmartins@fulltransport.com.br',
             'gender' => 'Masculino',
             'birth_date' => '2009-02-21',
-            'type' => 'Titular',
+            'type' => 'Dependente',
             'holder_id' => $holder->id,
         ]);
         Client::create([
@@ -617,7 +647,7 @@ class ClientsTableSeeder extends Seeder
             'email' => 'tteresinhaoliviamoreira@jglima.com.br',
             'gender' => 'Feminino',
             'birth_date' => '2010-11-09',
-            'type' => 'Titular',
+            'type' => 'Dependente',
             'holder_id' => $holder->id,
         ]);
         // -- Titular 16:
@@ -628,7 +658,7 @@ class ClientsTableSeeder extends Seeder
             'birth_date' => '1997-07-01',
             'type' => 'Titular',
             'holder_id' => null,
-        ]);                
+        ]);
         $holder = Holder::create([
             'cpf' => '12160395420',
             'place' => 'Rua Padre Germano',
@@ -644,6 +674,8 @@ class ClientsTableSeeder extends Seeder
             'work_phone' => '8133511799',
             'client_id' => $client->id,
         ]);
+        $client->holder_id = $holder->id;
+        $client->save();
         // ---- Dependentes do titular 16:
         // -- Titular 17:
         $client = Client::create([
@@ -653,7 +685,7 @@ class ClientsTableSeeder extends Seeder
             'birth_date' => '1999-04-03',
             'type' => 'Titular',
             'holder_id' => null,
-        ]);                
+        ]);
         $holder = Holder::create([
             'cpf' => '36020922405',
             'place' => 'Rua Munhoz',
@@ -669,6 +701,8 @@ class ClientsTableSeeder extends Seeder
             'work_phone' => '8132292000',
             'client_id' => $client->id,
         ]);
+        $client->holder_id = $holder->id;
+        $client->save();
         // ---- Dependentes do titular 17:
         // -- Titular 18:
         $client = Client::create([
@@ -678,7 +712,7 @@ class ClientsTableSeeder extends Seeder
             'birth_date' => '1959-10-27',
             'type' => 'Titular',
             'holder_id' => null,
-        ]);                
+        ]);
         $holder = Holder::create([
             'cpf' => '38543554403',
             'place' => 'Avenida Pau-Brasil',
@@ -694,13 +728,15 @@ class ClientsTableSeeder extends Seeder
             'work_phone' => '8140625465',
             'client_id' => $client->id,
         ]);
+        $client->holder_id = $holder->id;
+        $client->save();
         // ---- Dependentes do titular 18:
         Client::create([
             'name' => 'Agatha Corte Real',
             'email' => 'agathaluanalopes_@obrativaengenharia.com.br',
             'gender' => 'Feminino',
             'birth_date' => '1959-07-16',
-            'type' => 'Titular',
+            'type' => 'Dependente',
             'holder_id' => $holder->id,
         ]);
         Client::create([
@@ -708,7 +744,7 @@ class ClientsTableSeeder extends Seeder
             'email' => 'bbeneditorafaeldrumond@lumavale.com.br',
             'gender' => 'Masculino',
             'birth_date' => '2001-02-04',
-            'type' => 'Titular',
+            'type' => 'Dependente',
             'holder_id' => $holder->id,
         ]);
         // -- Titular 19:
@@ -719,7 +755,7 @@ class ClientsTableSeeder extends Seeder
             'birth_date' => '1973-09-25',
             'type' => 'Titular',
             'holder_id' => null,
-        ]);                
+        ]);
         $holder = Holder::create([
             'cpf' => '96135346440',
             'place' => 'Rua Severino da Costa Gomes',
@@ -735,13 +771,15 @@ class ClientsTableSeeder extends Seeder
             'work_phone' => '8132724444',
             'client_id' => $client->id,
         ]);
+        $client->holder_id = $holder->id;
+        $client->save();
         // ---- Dependentes do titular 19:
         Client::create([
             'name' => 'Stefany da Rosa',
             'email' => 'stefanyalessandraaparicio__stefanyalessandraaparicio@dr.com',
             'gender' => 'Feminino',
             'birth_date' => '1968-07-24',
-            'type' => 'Titular',
+            'type' => 'Dependente',
             'holder_id' => $holder->id,
         ]);
         Client::create([
@@ -749,7 +787,7 @@ class ClientsTableSeeder extends Seeder
             'email' => 'cesarolivernoahcaldeira..cesarolivernoahcaldeira@accardoso.com.br',
             'gender' => 'Masculino',
             'birth_date' => '2007-03-24',
-            'type' => 'Titular',
+            'type' => 'Dependente',
             'holder_id' => $holder->id,
         ]);
         Client::create([
@@ -757,7 +795,7 @@ class ClientsTableSeeder extends Seeder
             'email' => 'milenadanielaelisafernandes__milenadanielaelisafernandes@cognis.com',
             'gender' => 'Feminino',
             'birth_date' => '2005-10-11',
-            'type' => 'Titular',
+            'type' => 'Dependente',
             'holder_id' => $holder->id,
         ]);
         // -- Titular 20:
@@ -768,7 +806,7 @@ class ClientsTableSeeder extends Seeder
             'birth_date' => '1973-08-14',
             'type' => 'Titular',
             'holder_id' => null,
-        ]);                
+        ]);
         $holder = Holder::create([
             'cpf' => '05298415415',
             'place' => 'Rua Antônio Conselheiro',
@@ -784,13 +822,15 @@ class ClientsTableSeeder extends Seeder
             'work_phone' => '8136777300',
             'client_id' => $client->id,
         ]);
+        $client->holder_id = $holder->id;
+        $client->save();
         // ---- Dependentes do titular 20:
         Client::create([
             'name' => 'Diogo Nelson da Mota',
             'email' => 'diogonelsonthalesassuncao-98@pozzer.net',
             'gender' => 'Masculino',
             'birth_date' => '1968-12-11',
-            'type' => 'Titular',
+            'type' => 'Dependente',
             'holder_id' => $holder->id,
         ]);
         Client::create([
@@ -798,7 +838,7 @@ class ClientsTableSeeder extends Seeder
             'email' => 'ccatarinaoliviaalmada@inforgel.com',
             'gender' => 'Feminino',
             'birth_date' => '2008-08-01',
-            'type' => 'Titular',
+            'type' => 'Dependente',
             'holder_id' => $holder->id,
         ]);
         Client::create([
@@ -806,7 +846,7 @@ class ClientsTableSeeder extends Seeder
             'email' => 'giovanninicolascarlospires-70@grupoitamaraty.com.br',
             'gender' => 'Masculino',
             'birth_date' => '2003-05-04',
-            'type' => 'Titular',
+            'type' => 'Dependente',
             'holder_id' => $holder->id,
         ]);
         // -- Titular 21:
@@ -817,7 +857,7 @@ class ClientsTableSeeder extends Seeder
             'birth_date' => '1981-01-03',
             'type' => 'Titular',
             'holder_id' => null,
-        ]);                
+        ]);
         $holder = Holder::create([
             'cpf' => '11636900402',
             'place' => 'Rua Padre Arruda',
@@ -833,13 +873,15 @@ class ClientsTableSeeder extends Seeder
             'work_phone' => '8132292000',
             'client_id' => $client->id,
         ]);
+        $client->holder_id = $holder->id;
+        $client->save();
         // ---- Dependentes do titular 21:
         Client::create([
             'name' => 'Silvana Alana Moreira',
             'email' => 'silvanaalanataniaaparicio_@fepextrusao.com.br',
             'gender' => 'Feminino',
             'birth_date' => '1984-08-15',
-            'type' => 'Titular',
+            'type' => 'Dependente',
             'holder_id' => $holder->id,
         ]);
         Client::create([
@@ -847,7 +889,7 @@ class ClientsTableSeeder extends Seeder
             'email' => 'ttiagoaugustopinto@iclud.com',
             'gender' => 'Masculino',
             'birth_date' => '2004-05-03',
-            'type' => 'Titular',
+            'type' => 'Dependente',
             'holder_id' => $holder->id,
         ]);
         // -- Titular 22:
@@ -858,7 +900,7 @@ class ClientsTableSeeder extends Seeder
             'birth_date' => '1999-11-04',
             'type' => 'Titular',
             'holder_id' => null,
-        ]);                
+        ]);
         $holder = Holder::create([
             'cpf' => '36235380437',
             'place' => 'Rua dos Abacateiros',
@@ -874,6 +916,8 @@ class ClientsTableSeeder extends Seeder
             'work_phone' => '8134989900',
             'client_id' => $client->id,
         ]);
+        $client->holder_id = $holder->id;
+        $client->save();
         // ---- Dependentes do titular 22:
         // -- Titular 23:
         $client = Client::create([
@@ -883,7 +927,7 @@ class ClientsTableSeeder extends Seeder
             'birth_date' => '1980-04-16',
             'type' => 'Titular',
             'holder_id' => null,
-        ]);                
+        ]);
         $holder = Holder::create([
             'cpf' => '86820435487',
             'place' => 'Rua Vinte e Oito',
@@ -899,13 +943,15 @@ class ClientsTableSeeder extends Seeder
             'work_phone' => '8134989900',
             'client_id' => $client->id,
         ]);
+        $client->holder_id = $holder->id;
+        $client->save();
         // ---- Dependentes do titular 23:
         Client::create([
             'name' => 'Amanda Nascimento',
             'email' => 'amandadanielamartins-98@prognum.com.br',
             'gender' => 'Feminino',
             'birth_date' => '1978-12-02',
-            'type' => 'Titular',
+            'type' => 'Dependente',
             'holder_id' => $holder->id,
         ]);
         Client::create([
@@ -913,7 +959,7 @@ class ClientsTableSeeder extends Seeder
             'email' => 'paulokaiquebarbosa__paulokaiquebarbosa@paginacom.com.br',
             'gender' => 'Masculino',
             'birth_date' => '2000-03-10',
-            'type' => 'Titular',
+            'type' => 'Dependente',
             'holder_id' => $holder->id,
         ]);
         // -- Titular 24:
@@ -924,7 +970,7 @@ class ClientsTableSeeder extends Seeder
             'birth_date' => '1997-07-07',
             'type' => 'Titular',
             'holder_id' => null,
-        ]);                
+        ]);
         $holder = Holder::create([
             'cpf' => '26326256453',
             'place' => 'Avenida Felipe Camarão',
@@ -940,6 +986,8 @@ class ClientsTableSeeder extends Seeder
             'work_phone' => '8132292000',
             'client_id' => $client->id,
         ]);
+        $client->holder_id = $holder->id;
+        $client->save();
         // ---- Dependentes do titular 24:
         // -- Titular 25:
         $client = Client::create([
@@ -949,7 +997,7 @@ class ClientsTableSeeder extends Seeder
             'birth_date' => '1981-07-05',
             'type' => 'Titular',
             'holder_id' => null,
-        ]);                
+        ]);
         $holder = Holder::create([
             'cpf' => '17493838453',
             'place' => 'Rua Crateús',
@@ -965,13 +1013,15 @@ class ClientsTableSeeder extends Seeder
             'work_phone' => '8121272000',
             'client_id' => $client->id,
         ]);
+        $client->holder_id = $holder->id;
+        $client->save();
         // ---- Dependentes do titular 25:
         Client::create([
             'name' => 'Arthur Galvão',
             'email' => 'arthurhenrynovaes..arthurhenrynovaes@akaer.com.br',
             'gender' => 'Masculino',
             'birth_date' => '1985-10-27',
-            'type' => 'Titular',
+            'type' => 'Dependente',
             'holder_id' => $holder->id,
         ]);
         // -- Titular 26:
@@ -982,7 +1032,7 @@ class ClientsTableSeeder extends Seeder
             'birth_date' => '1987-02-04',
             'type' => 'Titular',
             'holder_id' => null,
-        ]);                
+        ]);
         $holder = Holder::create([
             'cpf' => '76699922475',
             'place' => 'Rua Gilmar de Oliveira Cassiano',
@@ -998,13 +1048,15 @@ class ClientsTableSeeder extends Seeder
             'work_phone' => '8132292000',
             'client_id' => $client->id,
         ]);
+        $client->holder_id = $holder->id;
+        $client->save();
         // ---- Dependentes do titular 26:
         Client::create([
             'name' => 'Vitor Assis',
             'email' => 'vitornelsonviana__vitornelsonviana@edu.uniso.br',
             'gender' => 'Masculino',
             'birth_date' => '1985-02-07',
-            'type' => 'Titular',
+            'type' => 'Dependente',
             'holder_id' => $holder->id,
         ]);
         Client::create([
@@ -1012,7 +1064,7 @@ class ClientsTableSeeder extends Seeder
             'email' => 'amandabeneditadepaula..amandabeneditadepaula@munhozengenharia.com.br',
             'gender' => 'Feminino',
             'birth_date' => '2004-02-03',
-            'type' => 'Titular',
+            'type' => 'Dependente',
             'holder_id' => $holder->id,
         ]);
         // -- Titular 27:
@@ -1023,7 +1075,7 @@ class ClientsTableSeeder extends Seeder
             'birth_date' => '1963-05-22',
             'type' => 'Titular',
             'holder_id' => null,
-        ]);                
+        ]);
         $holder = Holder::create([
             'cpf' => '34865977449',
             'place' => 'Rua São Tomaz',
@@ -1039,13 +1091,15 @@ class ClientsTableSeeder extends Seeder
             'work_phone' => '8140625465',
             'client_id' => $client->id,
         ]);
+        $client->holder_id = $holder->id;
+        $client->save();
         // ---- Dependentes do titular 27:
         Client::create([
             'name' => 'Maria Nogueira',
             'email' => 'mariapietraporto..mariapietraporto@peopleside.com.br',
             'gender' => 'Feminino',
             'birth_date' => '1958-06-02',
-            'type' => 'Titular',
+            'type' => 'Dependente',
             'holder_id' => $holder->id,
         ]);
         Client::create([
@@ -1053,7 +1107,7 @@ class ClientsTableSeeder extends Seeder
             'email' => 'ricardoenzoruanfogaca_@alkbrasil.com.br',
             'gender' => 'Masculino',
             'birth_date' => '2000-11-03',
-            'type' => 'Titular',
+            'type' => 'Dependente',
             'holder_id' => $holder->id,
         ]);
         Client::create([
@@ -1061,7 +1115,7 @@ class ClientsTableSeeder extends Seeder
             'email' => 'franciscarosaallanaoliveira_@prifree.fr',
             'gender' => 'Feminino',
             'birth_date' => '2005-03-06',
-            'type' => 'Titular',
+            'type' => 'Dependente',
             'holder_id' => $holder->id,
         ]);
         // -- Titular 28:
@@ -1072,7 +1126,7 @@ class ClientsTableSeeder extends Seeder
             'birth_date' => '1984-11-04',
             'type' => 'Titular',
             'holder_id' => null,
-        ]);                
+        ]);
         $holder = Holder::create([
             'cpf' => '97352867422',
             'place' => 'Rua Ibernon Wanderley',
@@ -1088,13 +1142,15 @@ class ClientsTableSeeder extends Seeder
             'work_phone' => '8130341105',
             'client_id' => $client->id,
         ]);
+        $client->holder_id = $holder->id;
+        $client->save();
         // ---- Dependentes do titular 28:
         Client::create([
             'name' => 'Camila Ribeiro',
             'email' => 'ccamilamaitesilveira@zyb.com.br',
             'gender' => 'Feminino',
             'birth_date' => '1982-06-12',
-            'type' => 'Titular',
+            'type' => 'Dependente',
             'holder_id' => $holder->id,
         ]);
         // -- Titular 29:
@@ -1105,7 +1161,7 @@ class ClientsTableSeeder extends Seeder
             'birth_date' => '1994-10-04',
             'type' => 'Titular',
             'holder_id' => null,
-        ]);                
+        ]);
         $holder = Holder::create([
             'cpf' => '81681078457',
             'place' => 'Rua Barão de Souza Leão',
@@ -1121,6 +1177,8 @@ class ClientsTableSeeder extends Seeder
             'work_phone' => '8132724444',
             'client_id' => $client->id,
         ]);
+        $client->holder_id = $holder->id;
+        $client->save();
         // ---- Dependentes do titular 29:
         // -- Titular 30:
         $client = Client::create([
@@ -1130,7 +1188,7 @@ class ClientsTableSeeder extends Seeder
             'birth_date' => '1961-08-01',
             'type' => 'Titular',
             'holder_id' => null,
-        ]);                
+        ]);
         $holder = Holder::create([
             'cpf' => '34261739488',
             'place' => 'Beco São Gonçalo',
@@ -1146,13 +1204,15 @@ class ClientsTableSeeder extends Seeder
             'work_phone' => '8134134611',
             'client_id' => $client->id,
         ]);
+        $client->holder_id = $holder->id;
+        $client->save();
         // ---- Dependentes do titular 30:
         Client::create([
             'name' => 'Nelson da Mota',
             'email' => 'nnelsonhenryassuncao@velc.com.br',
             'gender' => 'Masculino',
             'birth_date' => '1959-12-23',
-            'type' => 'Titular',
+            'type' => 'Dependente',
             'holder_id' => $holder->id,
         ]);
         Client::create([
@@ -1160,7 +1220,7 @@ class ClientsTableSeeder extends Seeder
             'email' => 'ggiovannamaitecortereal@kimmay.com.br',
             'gender' => 'Feminino',
             'birth_date' => '2006-12-26',
-            'type' => 'Titular',
+            'type' => 'Dependente',
             'holder_id' => $holder->id,
         ]);
         Client::create([
@@ -1168,7 +1228,7 @@ class ClientsTableSeeder extends Seeder
             'email' => 'luisvitorbarros-89@planicoop.com.br',
             'gender' => 'Masculino',
             'birth_date' => '2001-12-05',
-            'type' => 'Titular',
+            'type' => 'Dependente',
             'holder_id' => $holder->id,
         ]);
         // -- Titular 31:
@@ -1179,7 +1239,7 @@ class ClientsTableSeeder extends Seeder
             'birth_date' => '1961-11-14',
             'type' => 'Titular',
             'holder_id' => null,
-        ]);                
+        ]);
         $holder = Holder::create([
             'cpf' => '81453382470',
             'place' => 'Rua Benjamin Constant',
@@ -1195,13 +1255,15 @@ class ClientsTableSeeder extends Seeder
             'work_phone' => '8130497171',
             'client_id' => $client->id,
         ]);
+        $client->holder_id = $holder->id;
+        $client->save();
         // ---- Dependentes do titular 31:
         Client::create([
             'name' => 'Bruno Cláudio Novaes',
             'email' => 'bbrunoclaudiodaconceicao@band.com',
             'gender' => 'Masculino',
             'birth_date' => '1960-03-21',
-            'type' => 'Titular',
+            'type' => 'Dependente',
             'holder_id' => $holder->id,
         ]);
         Client::create([
@@ -1209,7 +1271,7 @@ class ClientsTableSeeder extends Seeder
             'email' => 'sophieaylapinto-87@uol.om.br',
             'gender' => 'Feminino',
             'birth_date' => '2008-08-25',
-            'type' => 'Titular',
+            'type' => 'Dependente',
             'holder_id' => $holder->id,
         ]);
         Client::create([
@@ -1217,7 +1279,7 @@ class ClientsTableSeeder extends Seeder
             'email' => 'nicolasvicentecortereal-75@eletrotex.com.br',
             'gender' => 'Masculino',
             'birth_date' => '2002-02-18',
-            'type' => 'Titular',
+            'type' => 'Dependente',
             'holder_id' => $holder->id,
         ]);
         // -- Titular 32:
@@ -1228,7 +1290,7 @@ class ClientsTableSeeder extends Seeder
             'birth_date' => '1986-07-16',
             'type' => 'Titular',
             'holder_id' => null,
-        ]);                
+        ]);
         $holder = Holder::create([
             'cpf' => '62828172422',
             'place' => 'Praça da Bandeira',
@@ -1244,13 +1306,15 @@ class ClientsTableSeeder extends Seeder
             'work_phone' => '8132176000',
             'client_id' => $client->id,
         ]);
+        $client->holder_id = $holder->id;
+        $client->save();
         // ---- Dependentes do titular 32:
         Client::create([
             'name' => 'Natália Alícia Costa',
             'email' => 'nataliaaliciasebastianaalmeida-93@flexchange.com.br',
             'gender' => 'Feminino',
             'birth_date' => '1982-10-05',
-            'type' => 'Titular',
+            'type' => 'Dependente',
             'holder_id' => $holder->id,
         ]);
         // -- Titular 33:
@@ -1261,7 +1325,7 @@ class ClientsTableSeeder extends Seeder
             'birth_date' => '1995-04-08',
             'type' => 'Titular',
             'holder_id' => null,
-        ]);                
+        ]);
         $holder = Holder::create([
             'cpf' => '41932390472',
             'place' => 'Avenida General Demétrios Ribeiro',
@@ -1277,6 +1341,8 @@ class ClientsTableSeeder extends Seeder
             'work_phone' => '8125445058',
             'client_id' => $client->id,
         ]);
+        $client->holder_id = $holder->id;
+        $client->save();
         // ---- Dependentes do titular 33:
         // -- Titular 34:
         $client = Client::create([
@@ -1286,7 +1352,7 @@ class ClientsTableSeeder extends Seeder
             'birth_date' => '1989-08-18',
             'type' => 'Titular',
             'holder_id' => null,
-        ]);                
+        ]);
         $holder = Holder::create([
             'cpf' => '19983561409',
             'place' => 'Rua Padre João Antônio Rodrigues',
@@ -1302,13 +1368,15 @@ class ClientsTableSeeder extends Seeder
             'work_phone' => '8130033030',
             'client_id' => $client->id,
         ]);
+        $client->holder_id = $holder->id;
+        $client->save();
         // ---- Dependentes do titular 34:
         Client::create([
             'name' => 'Mateus Severino Fernandes',
             'email' => 'mateusseverinojosedacunha__mateusseverinojosedacunha@technicolor.com',
             'gender' => 'Masculino',
             'birth_date' => '1993-11-14',
-            'type' => 'Titular',
+            'type' => 'Dependente',
             'holder_id' => $holder->id,
         ]);
         Client::create([
@@ -1316,7 +1384,7 @@ class ClientsTableSeeder extends Seeder
             'email' => 'carolinelivialuizalopes-89@nextel.com.br',
             'gender' => 'Feminino',
             'birth_date' => '2001-06-20',
-            'type' => 'Titular',
+            'type' => 'Dependente',
             'holder_id' => $holder->id,
         ]);
         // -- Titular 35:
@@ -1327,7 +1395,7 @@ class ClientsTableSeeder extends Seeder
             'birth_date' => '1992-12-23',
             'type' => 'Titular',
             'holder_id' => null,
-        ]);                
+        ]);
         $holder = Holder::create([
             'cpf' => '46055092409',
             'place' => 'Rua José Deca Filho',
@@ -1343,6 +1411,8 @@ class ClientsTableSeeder extends Seeder
             'work_phone' => '8130033030',
             'client_id' => $client->id,
         ]);
+        $client->holder_id = $holder->id;
+        $client->save();
         // ---- Dependentes do titular 35:
         // -- Titular 36:
         $client = Client::create([
@@ -1352,7 +1422,7 @@ class ClientsTableSeeder extends Seeder
             'birth_date' => '1971-10-26',
             'type' => 'Titular',
             'holder_id' => null,
-        ]);                
+        ]);
         $holder = Holder::create([
             'cpf' => '69907685410',
             'place' => 'Rua Anadia',
@@ -1368,13 +1438,15 @@ class ClientsTableSeeder extends Seeder
             'work_phone' => '8121377000',
             'client_id' => $client->id,
         ]);
+        $client->holder_id = $holder->id;
+        $client->save();
         // ---- Dependentes do titular 36:
         Client::create([
             'name' => 'Nina Adriana Corte Real',
             'email' => 'nninaadrianaanalopes@heineken.com.br',
             'gender' => 'Feminino',
             'birth_date' => '1970-11-08',
-            'type' => 'Titular',
+            'type' => 'Dependente',
             'holder_id' => $holder->id,
         ]);
         // -- Titular 37:
@@ -1385,7 +1457,7 @@ class ClientsTableSeeder extends Seeder
             'birth_date' => '1998-08-19',
             'type' => 'Titular',
             'holder_id' => null,
-        ]);                
+        ]);
         $holder = Holder::create([
             'cpf' => '07694747480',
             'place' => 'Rua Getúlio Vargas',
@@ -1401,13 +1473,15 @@ class ClientsTableSeeder extends Seeder
             'work_phone' => '8121272000',
             'client_id' => $client->id,
         ]);
+        $client->holder_id = $holder->id;
+        $client->save();
         // ---- Dependentes do titular 37:
         Client::create([
             'name' => 'Fábio Levi Dias',
             'email' => 'fabioleviaugustoalves-88@landovale.com.br',
             'gender' => 'Masculino',
             'birth_date' => '2001-01-23',
-            'type' => 'Titular',
+            'type' => 'Dependente',
             'holder_id' => $holder->id,
         ]);
         // -- Titular 38:
@@ -1418,7 +1492,7 @@ class ClientsTableSeeder extends Seeder
             'birth_date' => '1997-10-08',
             'type' => 'Titular',
             'holder_id' => null,
-        ]);                
+        ]);
         $holder = Holder::create([
             'cpf' => '17413956403',
             'place' => 'Travessa Adolfo Bezerra',
@@ -1434,6 +1508,8 @@ class ClientsTableSeeder extends Seeder
             'work_phone' => '8138780000',
             'client_id' => $client->id,
         ]);
+        $client->holder_id = $holder->id;
+        $client->save();
         // ---- Dependentes do titular 38:
         // -- Titular 39:
         $client = Client::create([
@@ -1443,7 +1519,7 @@ class ClientsTableSeeder extends Seeder
             'birth_date' => '1960-01-21',
             'type' => 'Titular',
             'holder_id' => null,
-        ]);                
+        ]);
         $holder = Holder::create([
             'cpf' => '20285205404',
             'place' => 'Avenida Brasil',
@@ -1459,13 +1535,15 @@ class ClientsTableSeeder extends Seeder
             'work_phone' => '8121272000',
             'client_id' => $client->id,
         ]);
+        $client->holder_id = $holder->id;
+        $client->save();
         // ---- Dependentes do titular 39:
         Client::create([
             'name' => 'Sara Porto',
             'email' => 'ssaraluziajesus@gringa360.com.br',
             'gender' => 'Feminino',
             'birth_date' => '1956-04-12',
-            'type' => 'Titular',
+            'type' => 'Dependente',
             'holder_id' => $holder->id,
         ]);
         Client::create([
@@ -1473,7 +1551,7 @@ class ClientsTableSeeder extends Seeder
             'email' => 'rrenatopedrohenriquedarosa@andressamelo.com.br',
             'gender' => 'Masculino',
             'birth_date' => '2007-07-08',
-            'type' => 'Titular',
+            'type' => 'Dependente',
             'holder_id' => $holder->id,
         ]);
         Client::create([
@@ -1481,7 +1559,7 @@ class ClientsTableSeeder extends Seeder
             'email' => 'bbetinaandreiajessicagoncalves@whgames.com.br',
             'gender' => 'Feminino',
             'birth_date' => '2010-12-01',
-            'type' => 'Titular',
+            'type' => 'Dependente',
             'holder_id' => $holder->id,
         ]);
         // -- Titular 40:
@@ -1492,7 +1570,7 @@ class ClientsTableSeeder extends Seeder
             'birth_date' => '1991-12-15',
             'type' => 'Titular',
             'holder_id' => null,
-        ]);                
+        ]);
         $holder = Holder::create([
             'cpf' => '57501908460',
             'place' => 'Rua Tapirana',
@@ -1508,13 +1586,15 @@ class ClientsTableSeeder extends Seeder
             'work_phone' => '8130341105',
             'client_id' => $client->id,
         ]);
+        $client->holder_id = $holder->id;
+        $client->save();
         // ---- Dependentes do titular 40:
         Client::create([
             'name' => 'Marli Duarte',
             'email' => 'marliemillyaragao__marliemillyaragao@asproplastic.com.br',
             'gender' => 'Feminino',
             'birth_date' => '1986-03-21',
-            'type' => 'Titular',
+            'type' => 'Dependente',
             'holder_id' => $holder->id,
         ]);
         // -- Titular 41:
@@ -1525,7 +1605,7 @@ class ClientsTableSeeder extends Seeder
             'birth_date' => '1988-03-19',
             'type' => 'Titular',
             'holder_id' => null,
-        ]);                
+        ]);
         $holder = Holder::create([
             'cpf' => '64736353430',
             'place' => 'Rua Senador Nilo Coelho',
@@ -1541,13 +1621,15 @@ class ClientsTableSeeder extends Seeder
             'work_phone' => '8130497171',
             'client_id' => $client->id,
         ]);
+        $client->holder_id = $holder->id;
+        $client->save();
         // ---- Dependentes do titular 41:
         Client::create([
             'name' => 'Kaique Anthony Alves',
             'email' => 'kaiqueanthonypedrohenriqueviana..kaiqueanthonypedrohenriqueviana@steadyoffice.com.br',
             'gender' => 'Masculino',
             'birth_date' => '1992-03-07',
-            'type' => 'Titular',
+            'type' => 'Dependente',
             'holder_id' => $holder->id,
         ]);
         Client::create([
@@ -1555,7 +1637,7 @@ class ClientsTableSeeder extends Seeder
             'email' => 'aparecidaisabellagabrielacavalcanti-71@jci.com',
             'gender' => 'Feminino',
             'birth_date' => '2006-04-06',
-            'type' => 'Titular',
+            'type' => 'Dependente',
             'holder_id' => $holder->id,
         ]);
         // -- Titular 42:
@@ -1566,7 +1648,7 @@ class ClientsTableSeeder extends Seeder
             'birth_date' => '1970-01-22',
             'type' => 'Titular',
             'holder_id' => null,
-        ]);                
+        ]);
         $holder = Holder::create([
             'cpf' => '15635638430',
             'place' => 'Praça Doutor Júlio de Melo',
@@ -1582,13 +1664,15 @@ class ClientsTableSeeder extends Seeder
             'work_phone' => '8132724444',
             'client_id' => $client->id,
         ]);
+        $client->holder_id = $holder->id;
+        $client->save();
         // ---- Dependentes do titular 42:
         Client::create([
             'name' => 'Alice Sandra Oliveira',
             'email' => 'alicesandrarenatadarocha_@sfranconsultoria.com.br',
             'gender' => 'Feminino',
             'birth_date' => '1968-11-26',
-            'type' => 'Titular',
+            'type' => 'Dependente',
             'holder_id' => $holder->id,
         ]);
         Client::create([
@@ -1596,7 +1680,7 @@ class ClientsTableSeeder extends Seeder
             'email' => 'thomassamueldavicaldeira..thomassamueldavicaldeira@lubeka.com.br',
             'gender' => 'Masculino',
             'birth_date' => '2008-04-26',
-            'type' => 'Titular',
+            'type' => 'Dependente',
             'holder_id' => $holder->id,
         ]);
         Client::create([
@@ -1604,7 +1688,7 @@ class ClientsTableSeeder extends Seeder
             'email' => 'isisisabelbrunaoliveira..isisisabelbrunaoliveira@expressoforte.com.br',
             'gender' => 'Feminino',
             'birth_date' => '2011-08-20',
-            'type' => 'Titular',
+            'type' => 'Dependente',
             'holder_id' => $holder->id,
         ]);
         // -- Titular 43:
@@ -1615,7 +1699,7 @@ class ClientsTableSeeder extends Seeder
             'birth_date' => '1995-07-09',
             'type' => 'Titular',
             'holder_id' => null,
-        ]);                
+        ]);
         $holder = Holder::create([
             'cpf' => '73550613482',
             'place' => 'Avenida Piedade',
@@ -1631,6 +1715,8 @@ class ClientsTableSeeder extends Seeder
             'work_phone' => '8140203538',
             'client_id' => $client->id,
         ]);
+        $client->holder_id = $holder->id;
+        $client->save();
         // ---- Dependentes do titular 43:
         // -- Titular 44:
         $client = Client::create([
@@ -1640,7 +1726,7 @@ class ClientsTableSeeder extends Seeder
             'birth_date' => '1975-08-03',
             'type' => 'Titular',
             'holder_id' => null,
-        ]);                
+        ]);
         $holder = Holder::create([
             'cpf' => '87314946418',
             'place' => 'Rua Henrique Dias',
@@ -1656,13 +1742,15 @@ class ClientsTableSeeder extends Seeder
             'work_phone' => '8130342657',
             'client_id' => $client->id,
         ]);
+        $client->holder_id = $holder->id;
+        $client->save();
         // ---- Dependentes do titular 44:
         Client::create([
             'name' => 'Anderson da Cruz',
             'email' => 'andersonmartinlima..andersonmartinlima@cafefrossard.com',
             'gender' => 'Masculino',
             'birth_date' => '1980-11-24',
-            'type' => 'Titular',
+            'type' => 'Dependente',
             'holder_id' => $holder->id,
         ]);
         // -- Titular 45:
@@ -1673,7 +1761,7 @@ class ClientsTableSeeder extends Seeder
             'birth_date' => '1976-09-18',
             'type' => 'Titular',
             'holder_id' => null,
-        ]);                
+        ]);
         $holder = Holder::create([
             'cpf' => '52581465450',
             'place' => 'Alameda do Ipê Amarelo',
@@ -1689,13 +1777,15 @@ class ClientsTableSeeder extends Seeder
             'work_phone' => '8140203538',
             'client_id' => $client->id,
         ]);
+        $client->holder_id = $holder->id;
+        $client->save();
         // ---- Dependentes do titular 45:
         Client::create([
             'name' => 'Pedro César Gomes',
             'email' => 'pedrocesarbryanlopes__pedrocesarbryanlopes@iblojas.com.br',
             'gender' => 'Masculino',
             'birth_date' => '1975-06-23',
-            'type' => 'Titular',
+            'type' => 'Dependente',
             'holder_id' => $holder->id,
         ]);
     }
