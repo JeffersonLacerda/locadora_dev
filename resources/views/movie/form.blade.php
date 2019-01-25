@@ -45,7 +45,15 @@
         <div class="box-header">
             <a href="{{ redirect()->back()->getTargetUrl() }}" class="btn btn-primary"><i class="fa fa-fw fa-arrow-left"></i> Voltar</a>
             <div class="pull-right">
-                <a class="btn btn-primary" style="background-color: #081E25; border-color: #081E25; color: #02B067;"><i class="fa fa-fw fa-search"></i> <img src="{{ asset('img/tmdb.PNG')}}" style="height: 2em;"></a>
+                <form class="form-inline" style="background-color: #081E25;  border-radius: 1em;">
+                    <img src="{{ asset('img/tmdb.PNG')}}" style="height: 4em; margin-left: 1em;">
+                    <div class="form-group">
+                        {{-- <label for="exampleInputName2">Name</label> --}}
+                        <input type="text" class="form-control" id="exampleInputName2" placeholder="Nome do filme">
+                    </div>
+                    <button type="submit" class="btn" style="background-color: #02B067; margin-right: 1em;"><i class="fa fa-fw fa-search"></i></button>
+                </form>
+                {{-- <a class="btn btn-primary" style="background-color: #081E25; border-color: #081E25; color: #02B067;"><i class="fa fa-fw fa-search"></i> <img src="{{ asset('img/tmdb.PNG')}}" style="height: 2em;"></a> --}}
             </div>
         </div>
         <div class="box-body">
@@ -77,10 +85,16 @@
                 {{-- Imagem com laravel file manager --}}
                 <label for="holder">Capa</label>
                 <br>
-                {{-- <div class="col-md-3 col-xs-12" style="border: 2px solid black;"> --}}
-                    <img id="holder" style="margin-top:15px;max-height:100px;">
-                {{-- </div> --}}
-                <br><br>
+                <div class="container">
+                    <div class="row">
+                        <div id="imgBackground" class="col-md-3 col-sm-6 col-xs-12" style="border: 0px solid black;">
+                            <div id="image-holder"></div>
+                            <img id="imgPreview" src="">
+                        </div>
+                    </div>
+                </div>
+                <br>
+                <input id="filePoster" type="file" name="poster" style="display: none;">
                 <div class="input-group">
                     <span class="input-group-btn">
                       <a id="lfm" data-input="thumbnail" data-preview="holder" class="btn btn-primary">
@@ -209,7 +223,6 @@
 
 @section('js')
     <script src="{{ asset('vendor/select2-4.0.5/dist/js/select2.min.js')}}"></script>
-    <script src="{{ asset('vendor/laravel-filemanager/js/lfm.js')}}"></script>
     <script>
         $(document).ready( function () {
             $('#selectCountries').select2({
@@ -221,7 +234,36 @@
             $('#selectDistributor').select2({
                 placeholder: "Selecione a distribuidora"
             });
-            $('#lfm').filemanager('image');
+            $('#lfm').click( function (){
+                $('#filePoster').click();
+            });
+            $('form').on('change', '#filePoster', function(){
+                $('#thumbnail').val($('#filePoster').val().replace(/C:\\fakepath\\/i, ""));
+            });
+            //Atualizar imagem PREVIEW
+            $("#filePoster").on('change', function () {
+                if (typeof (FileReader) != "undefined") {
+                    var image_holder = $("#image-holder");
+                    image_holder.empty();
+                    var reader = new FileReader();
+                    reader.onload = function (e) {
+                        $("<img />", {
+                            "src": e.target.result,
+                            "class": "thumb-image",
+                            "style": "max-width: 100%; max-height: 100%;"
+                        }).appendTo(image_holder);
+                    }
+                    image_holder.show();
+                    reader.readAsDataURL($(this)[0].files[0]);
+                } else{
+                    alert("Este navegador nao suporta FileReader.");
+                }
+            });
+
+            //$('#imgBackground').height($('#imgBackground').width());
+            //$('#image-holder').height($('#imgBackground').height());
+            $('#image-holder').width($('#imgBackground').width());
+
         });
     </script>
 @stop
