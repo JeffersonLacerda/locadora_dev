@@ -1,9 +1,34 @@
 <?php
 
 namespace App\Services;
+use Illuminate\Support\Facades\File;
+use Intervention\Image\Facades\Image;
+use Illuminate\Support\Facades\Storage;
 
 class Util
 {
+
+
+    public static function saveImage ($image, $size){
+        if (!is_null($image))
+        {
+            $file = $image;
+            $extension = $image->getClientOriginalExtension();
+            $fileName = time() .  random_int(100, 999) . '.' . $extension; 
+            
+            $image = Image::make($file)
+                ->resize($size, null, function ($constraint) {
+                    $constraint->aspectRatio();
+                })->encode('jpg');
+            
+            Storage::put('posters/' . $fileName, $image->stream()->__toString());
+            $url = Storage::url('posters/' . $fileName);
+            return $url;
+        } else {
+            return '';
+        }
+    }
+
     public static function array_to_string($array, $key = "", $filter = null){
         $str = "";
         try {

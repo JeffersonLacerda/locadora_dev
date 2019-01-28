@@ -13,6 +13,7 @@
         "fideloper/proxy": "^4.0",
         "gladcodes/keygen": "^1.1",
         "guzzlehttp/guzzle": "^6.3",
+        "intervention/image": "^2.4",
         "jeroennoten/laravel-adminlte": "^1.24",
         "laravel/framework": "5.7.*",
         "laravel/tinker": "^1.0",

@@ -21,6 +21,11 @@
         a {
             cursor: pointer;
         }
+
+        .select2-container--default .select2-selection--single, .select2-selection .select2-selection--single{
+            padding: 3px !important;
+        }
+    
     </style>
 @stop
 
@@ -44,6 +49,8 @@
     <div class="box">
         <div class="box-header">
             <a href="{{ redirect()->back()->getTargetUrl() }}" class="btn btn-primary"><i class="fa fa-fw fa-arrow-left"></i> Voltar</a>
+            @isset($movie)
+            @else
             <div class="pull-right">
                 <form class="form-inline" style="background-color: #081E25;  border-radius: 1em;">
                     <img src="{{ asset('img/tmdb.PNG')}}" style="height: 4em; margin-left: 1em;">
@@ -55,6 +62,7 @@
                 </form>
                 {{-- <a class="btn btn-primary" style="background-color: #081E25; border-color: #081E25; color: #02B067;"><i class="fa fa-fw fa-search"></i> <img src="{{ asset('img/tmdb.PNG')}}" style="height: 2em;"></a> --}}
             </div>
+            @endisset
         </div>
         <div class="box-body">
             @if (session('erro'))
@@ -73,35 +81,26 @@
             @endisset
                 {{ csrf_field() }}
                 <input type="hidden" class="form-control" id="tmdb_id" name="tmdb_id" value="{{ isset($movie) ? old('tmdb_id', $movie->tmdb_id) : old('tmdb_id') }}">
-                {{-- <div class="form-group {{ $errors->has('tmdb_id') ? 'has-error' : '' }}">
-                    <label for="tmdb_id">código TMDb:</label>
-                    <input type="text" class="form-control" id="tmdb_id" name="tmdb_id" placeholder="Informe o código do filme conforme a THE MOVIE DB (https://www.themoviedb.org/)" value="{{ isset($movie) ? old('tmdb_id', $movie->tmdb_id) : old('tmdb_id') }}">
-                    @if ($errors->has('tmdb_id'))
-                        <span class="help-block">
-                            <strong>{{ $errors->first('tmdb_id') }}</strong>
-                        </span>
-                    @endif
-                </div> --}}
-                {{-- Imagem com laravel file manager --}}
+                
                 <label for="holder">Capa</label>
                 <br>
                 <div class="container">
                     <div class="row">
                         <div id="imgBackground" class="col-md-3 col-sm-6 col-xs-12" style="border: 0px solid black;">
                             <div id="image-holder"></div>
-                            <img id="imgPreview" src="">
+                            <img id="imgPreview" style="max-width: 100%" src="{{ isset($movie) ? old('poster', $movie->poster) : old('poster') }}">
                         </div>
                     </div>
                 </div>
                 <br>
-                <input id="filePoster" type="file" name="poster" style="display: none;">
+                <input id="filePoster" type="file" name="file" accept="image/*" style="display: none;">
                 <div class="input-group">
                     <span class="input-group-btn">
                       <a id="lfm" data-input="thumbnail" data-preview="holder" class="btn btn-primary">
                         <i class="far fa-image"></i> Escolher imagem
                       </a>
                     </span>
-                    <input id="thumbnail" class="form-control" type="text" name="filepath">
+                    <input id="thumbnail" class="form-control" type="text" name="poster" value="{{ isset($movie) ? old('poster', $movie->poster) : old('poster') }}" disabled>
                 </div>
                 <br>
                 {{-- Imagem com laravel file manager --}}
@@ -123,11 +122,26 @@
                         </span>
                     @endif
                 </div>
+                <div class="form-group {{ $errors->has('genres') ? 'has-error' : '' }}">
+                    <label for="genres">Gênero</label>
+                    <select class="form-control select2" name="genres[]" id="selectGenres" multiple="multiple" style="width: 100%;">
+                    @foreach($genres as $g)
+                        <option value="{{ $g->id }}" @if(isset($movie) && $movie->genres->contains($g)) selected  @endif>
+                            {{ $g->description }} 
+                        </option>
+                    @endforeach
+                    </select>
+                    @if ($errors->has('genres'))
+                        <span class="help-block">
+                            <strong>{{ $errors->first('genres') }}</strong>
+                        </span>
+                    @endif
+                </div>
                 <div class="form-group {{ $errors->has('country') ? 'has-error' : '' }}">
                     <label for="country">País</label>
                     <select class="form-control select2" name="country[]" id="selectCountries" multiple="multiple" style="width: 100%;">
                     @foreach($countries as $c)
-                        <option value="{{ $c->sigla2 }}">
+                        <option value="{{ $c->sigla2 }}" @if(isset($movie) && in_array($c->sigla2 ,explode(", ", $movie->country))) selected  @endif>
                             {{ $c->sigla2 }} - {{ $c->nome }} 
                         </option>
                     @endforeach
@@ -183,36 +197,38 @@
                         </span>
                     @endif
                 </div>
-                <div class="form-group {{ $errors->has('type') ? 'has-error' : '' }}">
-                    <label for="type">Tipo</label>
-                    <select class="form-control select2" name="type" id="selectType" style="width: 100%;">
+                <div class="form-group {{ $errors->has('type_id') ? 'has-error' : '' }}">
+                    <label for="type_id">Tipo</label>
+                    <select class="form-control select2" name="type_id" id="selectType" style="width: 100%;">
+                        <option disabled selected value> -- selecione o tipo -- </option>
                     @foreach($types as $t)
                         <option value="{{ $t->id }}">
                             {{ $t->description }} 
                         </option>
                     @endforeach
                     </select>
-                    @if ($errors->has('type'))
+                    @if ($errors->has('type_id'))
                         <span class="help-block">
-                            <strong>{{ $errors->first('type') }}</strong>
+                            <strong>{{ $errors->first('type_id') }}</strong>
                         </span>
                     @endif
                 </div>
-                <div class="form-group {{ $errors->has('distributor') ? 'has-error' : '' }}">
-                    <label for="distributor">Distribuidora</label>
-                    <select class="form-control select2" name="distributor" id="selectDistributor" style="width: 100%;">
+                {{-- <div class="form-group {{ $errors->has('distributor_id') ? 'has-error' : '' }}">
+                    <label for="distributor_id">Distribuidora</label>
+                    <select class="form-control select2" name="distributor_id" id="selectDistributor" style="width: 100%;">
+                        <option disabled selected value> -- selecione uma distribuidora -- </option>
                     @foreach($distributors as $d)
                         <option value="{{ $d->id }}">
                             {{ $d->corporate_name }} 
                         </option>
                     @endforeach
                     </select>
-                    @if ($errors->has('distributor'))
+                    @if ($errors->has('distributor_id'))
                         <span class="help-block">
-                            <strong>{{ $errors->first('distributor') }}</strong>
+                            <strong>{{ $errors->first('distributor_id') }}</strong>
                         </span>
                     @endif
-                </div>
+                </div> --}}
                 <div class="col-md-2 col-md-offset-10">
                     <button type="submit" class="btn btn-success btn-block"><i class="fa fa-fw fa-save"></i> Salvar</button>
                 </div>
@@ -231,8 +247,8 @@
             $('#selectType').select2({
                 placeholder: "Selecione o tipo"
             });
-            $('#selectDistributor').select2({
-                placeholder: "Selecione a distribuidora"
+            $('#selectGenres').select2({
+                placeholder: "Selecione os gêneros"
             });
             $('#lfm').click( function (){
                 $('#filePoster').click();
@@ -245,6 +261,7 @@
                 if (typeof (FileReader) != "undefined") {
                     var image_holder = $("#image-holder");
                     image_holder.empty();
+                    $('#imgPreview').hide();
                     var reader = new FileReader();
                     reader.onload = function (e) {
                         $("<img />", {
@@ -259,9 +276,6 @@
                     alert("Este navegador nao suporta FileReader.");
                 }
             });
-
-            //$('#imgBackground').height($('#imgBackground').width());
-            //$('#image-holder').height($('#imgBackground').height());
             $('#image-holder').width($('#imgBackground').width());
 
         });

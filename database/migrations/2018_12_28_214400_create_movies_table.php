@@ -15,7 +15,7 @@ class CreateMoviesTable extends Migration
     {
         Schema::create('movies', function (Blueprint $table) {
             $table->increments('id');
-            $table->integer('tmdb_id')->unsigned()->unique();
+            $table->integer('tmdb_id')->unsigned()->nullable();
             $table->string('title');
             $table->string('original_title');
             $table->string('poster');
@@ -26,9 +26,9 @@ class CreateMoviesTable extends Migration
             $table->text('synopsis');
             $table->integer('duraction');
             $table->integer('type_id')->unsigned();
-            $table->integer('distributor_id')->unsigned();
+            /* $table->integer('distributor_id')->unsigned(); */
             $table->foreign('type_id')->references('id')->on('types')->onUpdate('cascade')->onDelete('restrict');
-            $table->foreign('distributor_id')->references('id')->on('distributors')->onUpdate('cascade')->onDelete('restrict');
+            /* $table->foreign('distributor_id')->references('id')->on('distributors')->onUpdate('cascade')->onDelete('restrict'); */
             $table->timestamps();
         });
 
@@ -54,7 +54,7 @@ class CreateMoviesTable extends Migration
         Schema::table('movies', function (Blueprint $table) {    
             $table->dropForeign(['genre_id']);
             $table->dropForeign(['type_id']);
-            $table->dropForeign(['distributor_id']);
+            /* $table->dropForeign(['distributor_id']); */
         });
 
         Schema::dropIfExists('genre_movie');
