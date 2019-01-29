@@ -157,6 +157,18 @@ return [
         'media_id'                  => 'mídia',
         'user'                      => 'usuário',
         'profile'                   => 'perfil',
+
+        'title'                     => 'título',
+        'original_title'            => 'título original',
+        'genres'                    => 'gênero',
+        'year'                      => 'ano',
+        'direction'                 => 'direção',
+        'cast'                      => 'elenco',
+        'synopsis'                  => 'sinopse',
+        'duraction'                 => 'duração',
+        'type_id'                   => 'tipo',
+
+
     ],
 
 ];

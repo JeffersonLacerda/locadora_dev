@@ -163,7 +163,7 @@
                 </div>
                 <div class="form-group {{ $errors->has('direction') ? 'has-error' : '' }}">
                     <label for="direction">Direção</label>
-                    <textarea class="form-control" rows="5" id="direction" name="direction" placeholder="Informe a direção"></textarea>
+                    <textarea class="form-control" rows="5" id="direction" name="direction" placeholder="Informe a direção">{{ isset($movie) ? old('direction', $movie->direction) : old('direction') }}</textarea>
                     @if ($errors->has('direction'))
                         <span class="help-block">
                             <strong>{{ $errors->first('direction') }}</strong>
@@ -172,7 +172,7 @@
                 </div>
                 <div class="form-group {{ $errors->has('cast') ? 'has-error' : '' }}">
                     <label for="cast">Elenco</label>
-                    <textarea class="form-control" rows="5" id="cast" name="cast" placeholder="Informe o elenco"></textarea>
+                    <textarea class="form-control" rows="5" id="cast" name="cast" placeholder="Informe o elenco">{{ isset($movie) ? old('cast', $movie->cast) : old('cast') }}</textarea>
                     @if ($errors->has('cast'))
                         <span class="help-block">
                             <strong>{{ $errors->first('cast') }}</strong>
@@ -181,7 +181,7 @@
                 </div>
                 <div class="form-group {{ $errors->has('synopsis') ? 'has-error' : '' }}">
                     <label for="synopsis">Sinopse</label>
-                    <textarea class="form-control" rows="5" id="synopsis" name="synopsis" placeholder="Informe a sinopse"></textarea>
+                    <textarea class="form-control" rows="5" id="synopsis" name="synopsis" placeholder="Informe a sinopse">{{ isset($movie) ? old('synopsis', $movie->synopsis) : old('synopsis') }}</textarea>
                     @if ($errors->has('synopsis'))
                         <span class="help-block">
                             <strong>{{ $errors->first('synopsis') }}</strong>
@@ -202,7 +202,7 @@
                     <select class="form-control select2" name="type_id" id="selectType" style="width: 100%;">
                         <option disabled selected value> -- selecione o tipo -- </option>
                     @foreach($types as $t)
-                        <option value="{{ $t->id }}">
+                        <option value="{{ $t->id }}" @if(isset($movie) && $movie->type_id == $t->id) selected  @endif>
                             {{ $t->description }} 
                         </option>
                     @endforeach

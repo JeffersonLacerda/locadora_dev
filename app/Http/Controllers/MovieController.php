@@ -46,7 +46,7 @@ class MovieController extends Controller
     {
         $request->validate([
             'poster' => 'required',
-            'title' => 'required',
+            'title' => 'required|max:20',
             'original_title' => 'required',
             'country' => 'required',
             'year' => 'required',
