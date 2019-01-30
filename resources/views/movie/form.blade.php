@@ -52,13 +52,13 @@
             @isset($movie)
             @else
             <div class="pull-right">
-                <form class="form-inline" style="background-color: #081E25;  border-radius: 1em;">
+                <form id="formTmdb" class="form-inline" style="background-color: #081E25;  border-radius: 1em;">
                     <img src="{{ asset('img/tmdb.PNG')}}" style="height: 4em; margin-left: 1em;">
                     <div class="form-group">
                         {{-- <label for="exampleInputName2">Name</label> --}}
-                        <input type="text" class="form-control" id="exampleInputName2" placeholder="Nome do filme">
+                        <input type="text" class="form-control" id="txtTmdb" placeholder="Nome do filme">
                     </div>
-                    <button type="submit" class="btn" style="background-color: #02B067; margin-right: 1em;"><i class="fa fa-fw fa-search"></i></button>
+                    <button id="searchTmdb" type="button" class="btn" style="background-color: #02B067; margin-right: 1em;"><i class="fa fa-fw fa-search"></i></button>
                 </form>
                 {{-- <a class="btn btn-primary" style="background-color: #081E25; border-color: #081E25; color: #02B067;"><i class="fa fa-fw fa-search"></i> <img src="{{ asset('img/tmdb.PNG')}}" style="height: 2em;"></a> --}}
             </div>
@@ -79,28 +79,71 @@
             @else
             <form method="post" action="{{ route('movie.create') }}" enctype="multipart/form-data">
             @endisset
+            @php
+                if (isset($movie_tmdb) && isset($credits_tmdb)){
+                    $array['tmdb_id'] = $movie_tmdb->id;
+                    $array['poster'] = 'http://image.tmdb.org/t/p/original' . $movie_tmdb->poster_path;
+                    $array['title'] = $movie_tmdb->title;
+                    $array['original_title'] = $movie_tmdb->original_title;
+                    $array['genres'] = null;
+                    $array['country'] = App\Services\Util::array_to_string($movie_tmdb->production_countries, 'iso_3166_1');
+                    $array['year'] = substr($movie_tmdb->release_date, 0, 4) == "" ? "1970" : substr($movie_tmdb->release_date, 0, 4);
+                    $array['duraction'] = $movie_tmdb->runtime;
+                    $array['synopsis'] = addslashes($movie_tmdb->overview);
+                    $array['cast'] = App\Services\Util::array_to_string($credits_tmdb->cast, 'name');
+                    $array['direction'] = App\Services\Util::array_to_string($credits_tmdb->crew, 'name', ['job','Director']);
+                    $now = Carbon\Carbon::now();
+                    $release_date = Carbon\Carbon::createFromFormat('Y-m-d', $movie_tmdb->release_date);
+                    if ($now->diffInDays($release_date) > 180){
+                        $type_id = 1; // Catálogo
+                    } else {
+                        $type_id = 2; // Lançamento
+                    }
+                    $array['type_id'] = $type_id;
+
+                    $movie = json_decode(json_encode($array));
+
+                    $array_genres = array();
+                    foreach ($movie_tmdb->genres as $genre) {
+                        $g = \App\Models\Genre::where('tmdb_id', $genre->id)->first();
+                        array_push($array_genres, $g);
+                    }
+                    $movie->genres = collect($array_genres);
+
+                    /* dd($movie); */
+                }
+            @endphp
+
                 {{ csrf_field() }}
                 <input type="hidden" class="form-control" id="tmdb_id" name="tmdb_id" value="{{ isset($movie) ? old('tmdb_id', $movie->tmdb_id) : old('tmdb_id') }}">
                 
-                <label for="holder">Capa</label>
-                <br>
-                <div class="container">
-                    <div class="row">
-                        <div id="imgBackground" class="col-md-3 col-sm-6 col-xs-12" style="border: 0px solid black;">
-                            <div id="image-holder"></div>
-                            <img id="imgPreview" style="max-width: 100%" src="{{ isset($movie) ? old('poster', $movie->poster) : old('poster') }}">
+                <div class="form-group {{ $errors->has('poster') ? 'has-error' : '' }}">
+                    <label for="holder">Capa</label>
+                    <br>
+                    <div class="container">
+                        <div class="row">
+                            <div id="imgBackground" class="col-md-3 col-sm-6 col-xs-12" style="border: 0px solid black;">
+                                <div id="image-holder"></div>
+                                <img id="imgPreview" style="max-width: 100%" src="{{ isset($movie) ? old('poster', $movie->poster) : old('poster') }}">
+                            </div>
                         </div>
                     </div>
-                </div>
-                <br>
-                <input id="filePoster" type="file" name="file" accept="image/*" style="display: none;">
-                <div class="input-group">
-                    <span class="input-group-btn">
-                      <a id="lfm" data-input="thumbnail" data-preview="holder" class="btn btn-primary">
-                        <i class="far fa-image"></i> Escolher imagem
-                      </a>
-                    </span>
-                    <input id="thumbnail" class="form-control" type="text" name="poster" value="{{ isset($movie) ? old('poster', $movie->poster) : old('poster') }}" disabled>
+                    <br>
+                    <input id="filePoster" type="file" name="file" accept="image/*" style="display: none;">
+                    <div class="input-group">
+                        <span class="input-group-btn">
+                        <a id="lfm" data-input="thumbnail" data-preview="holder" class="btn btn-primary">
+                            <i class="far fa-image"></i> Escolher imagem
+                        </a>
+                        </span>
+                        <input id="thumbnail" class="form-control" type="text" name="thumbnail" value="{{ isset($movie) ? old('poster', $movie->poster) : old('poster') }}" disabled>
+                    </div>
+                    <input id="poster" type="hidden" name="poster" value="{{ isset($movie) ? old('poster', $movie->poster) : old('poster') }}">
+                    @if ($errors->has('poster'))
+                        <span class="help-block">
+                            <strong>{{ $errors->first('poster') }}</strong>
+                        </span>
+                    @endif
                 </div>
                 <br>
                 {{-- Imagem com laravel file manager --}}
@@ -126,7 +169,10 @@
                     <label for="genres">Gênero</label>
                     <select class="form-control select2" name="genres[]" id="selectGenres" multiple="multiple" style="width: 100%;">
                     @foreach($genres as $g)
-                        <option value="{{ $g->id }}" @if(isset($movie) && $movie->genres->contains($g)) selected  @endif>
+                        <option value="{{ $g->id }}" 
+                        @if( (isset($movie) && $movie->genres->contains($g)) || (old('genres') != null && in_array($g->id, old('genres')))  ) 
+                            selected  
+                        @endif>
                             {{ $g->description }} 
                         </option>
                     @endforeach
@@ -141,7 +187,10 @@
                     <label for="country">País</label>
                     <select class="form-control select2" name="country[]" id="selectCountries" multiple="multiple" style="width: 100%;">
                     @foreach($countries as $c)
-                        <option value="{{ $c->sigla2 }}" @if(isset($movie) && in_array($c->sigla2 ,explode(", ", $movie->country))) selected  @endif>
+                        <option value="{{ $c->sigla2 }}" 
+                        @if( (isset($movie) && in_array($c->sigla2 ,explode(", ", $movie->country))) || (old('country') != null && in_array($c->sigla2, old('country'))) ) 
+                            selected  
+                        @endif>
                             {{ $c->sigla2 }} - {{ $c->nome }} 
                         </option>
                     @endforeach
@@ -202,7 +251,10 @@
                     <select class="form-control select2" name="type_id" id="selectType" style="width: 100%;">
                         <option disabled selected value> -- selecione o tipo -- </option>
                     @foreach($types as $t)
-                        <option value="{{ $t->id }}" @if(isset($movie) && $movie->type_id == $t->id) selected  @endif>
+                        <option value="{{ $t->id }}" 
+                        @if( (isset($movie) && $movie->type_id == $t->id) ||  ($t->id == old('type_id')) ) 
+                            selected  
+                        @endif>
                             {{ $t->description }} 
                         </option>
                     @endforeach
@@ -235,6 +287,25 @@
             </form>
         </div>
     </div>
+
+    <!-- Modal listar filmes do TMDb -->
+    <div class="modal fade" id="dialog_list_tmdb">
+        <div class="modal-dialog" role="document" style="width:80vw;">
+            <div class="modal-content">
+                <div class="modal-header" style="background-color: #081E25">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close" style="color: #fff;"><span aria-hidden="true">&times;</span></button>
+                    <h4 class="modal-title" style="color: #02B067;"><img src="{{ asset('img/tmdb.PNG')}}" style="height: 4em; margin-left: 1em;">  The Movie Database</h4>
+                </div>
+                <div class="modal-body">
+                
+                </div>
+                <div class="modal-footer">
+                    <a class="btn btn-danger" data-dismiss="modal" aria-label="Close"><i class="fas fa-times"></i> Fechar</a>
+                </div>
+            </div>
+        </div>
+    </div>
+
 @stop
 
 @section('js')
@@ -255,6 +326,7 @@
             });
             $('form').on('change', '#filePoster', function(){
                 $('#thumbnail').val($('#filePoster').val().replace(/C:\\fakepath\\/i, ""));
+                $('#poster').val($('#filePoster').val().replace(/C:\\fakepath\\/i, ""));
             });
             //Atualizar imagem PREVIEW
             $("#filePoster").on('change', function () {
@@ -277,7 +349,14 @@
                 }
             });
             $('#image-holder').width($('#imgBackground').width());
-
+            $("#formTmdb").on("click", "#searchTmdb", function() {
+                var href = "{{ route('movie.tmdb_list', '') }}";
+                var search = encodeURI($("#txtTmdb").val());
+                var key = href + "/" + search;
+                $("#dialog_list_tmdb .modal-body").load(key, function(){
+                    $("#dialog_list_tmdb").modal({show:true});
+                });
+            });
         });
     </script>
 @stop

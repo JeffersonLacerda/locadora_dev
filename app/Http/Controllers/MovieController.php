@@ -10,6 +10,7 @@ use App\Models\Genre;
 use App\Services\Util;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Storage;
+use App\Services\TMDB;
 
 class MovieController extends Controller
 {
@@ -32,6 +33,16 @@ class MovieController extends Controller
         return view('movie.form', compact('countries','types','genres'));
     }
 
+    public function create_tmdb($id)
+    {
+        $movie_tmdb = TMDb::getMovie($id);
+        $credits_tmdb = TMDB::getCredits($id);
+        $countries = Util::iso3166();
+        $types = Type::all();
+        $genres = Genre::all();
+        return view('movie.form', compact('movie_tmdb', 'credits_tmdb', 'countries','types','genres'));
+    }
+
     public function edit($id)
     {
         $movie = Movie::findOrFail($id);
@@ -44,9 +55,10 @@ class MovieController extends Controller
 
     public function store(Request $request)
     {
+        /* dd($request->all()); */
         $request->validate([
             'poster' => 'required',
-            'title' => 'required|max:20',
+            'title' => 'required',
             'original_title' => 'required',
             'country' => 'required',
             'year' => 'required',
@@ -63,7 +75,6 @@ class MovieController extends Controller
         }
         $request['country'] = implode(", ", $request->country);
 
-        /* dd($request->all()); */
         try {
             DB::transaction(function () use ($request){
                 $movie = Movie::create($request->all());
@@ -79,6 +90,44 @@ class MovieController extends Controller
         return redirect()->route('movie.index');
     }
 
+    public function update(Request $request, $id)
+    {
+        /* dd($request->all()); */
+        $request->validate([
+            'poster' => 'required',
+            'title' => 'required',
+            'original_title' => 'required',
+            'country' => 'required',
+            'year' => 'required',
+            'direction' => 'required',
+            'cast' => 'required',
+            'synopsis' => 'required',
+            'duraction' => 'required',
+            'type_id' => 'required',
+            'genres' => 'required',
+        ]);
+        if ($request->hasFile('file')) {
+            $url = Util::saveImage($request->file, 300);
+            $request['poster'] = $url;
+        }
+        $request['country'] = implode(", ", $request->country);
+
+        try {
+            DB::transaction(function () use ($request, $id){
+                $movie = Movie::findOrFail($id);
+                $movie->genres()->sync([]); 
+                foreach ($request->genres as $g) {
+                    $genre = Genre::findOrFail($g);
+                    $movie->genres()->attach($genre->id);
+                }
+                $movie->update($request->all());
+            });
+        }catch (\Exception $e) {
+            return redirect()->route('movie.create')->with('erro', 'Erro na tentativa de alterar o registro no banco de dados.');
+        }
+        return redirect()->route('movie.index');
+    }
+
     public function destroy($id)
     {
         $movie = Movie::findOrFail($id);
@@ -90,4 +139,13 @@ class MovieController extends Controller
         }
         return redirect()->route('movie.index');
     }
+
+    public function tmdb_list($search)
+    {
+        $tmdb = TMDB::searchMovie($search);
+        $qtde = $tmdb->total_results;
+        $movies = $tmdb->results;
+        return view('movie.tmdb_list', compact('qtde', 'movies'));
+    }
+
 }

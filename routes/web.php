@@ -91,9 +91,11 @@ Route::put('/usuario/{id}/editar','UserController@update');
 Route::delete('/usuario/{id}/remover','UserController@destroy')->name('user.destroy');
 
 /* Rotas do model Movie */
+Route::get('/filme/tmdb/{search}','MovieController@tmdb_list')->name('movie.tmdb_list');
 Route::get('/filme','MovieController@index')->name('movie.index');
 Route::get('/filme/adicionar','MovieController@create')->name('movie.create');
 Route::post('/filme/adicionar','MovieController@store');
+Route::get('/filme/adicionar/{id}','MovieController@create_tmdb')->name('movie.create_tmdb');
 Route::get('/filme/{id}/editar','MovieController@edit')->name('movie.edit');
 Route::put('/filme/{id}/editar','MovieController@update');
 Route::delete('/filme/{id}/remover','MovieController@destroy')->name('movie.destroy');
@@ -106,3 +108,4 @@ Route::post('/cliente/adicionar','ClientController@store');
 Route::get('/cliente/{id}/editar','ClientController@edit')->name('client.edit');
 Route::put('/cliente/{id}/editar','ClientController@update');
 Route::delete('/cliente/{id}/remover','ClientController@destroy')->name('client.destroy');
+

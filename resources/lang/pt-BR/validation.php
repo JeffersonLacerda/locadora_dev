@@ -158,6 +158,7 @@ return [
         'user'                      => 'usuário',
         'profile'                   => 'perfil',
 
+        'poster'                    => 'capa',
         'title'                     => 'título',
         'original_title'            => 'título original',
         'genres'                    => 'gênero',
