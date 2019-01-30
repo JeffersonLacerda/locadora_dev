@@ -3,8 +3,10 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use App\Models\Client;
 use App\Models\Holder;
+use App\Services\Util;
 
 class ClientController extends Controller
 {
@@ -20,55 +22,140 @@ class ClientController extends Controller
     }
     public function create()
     {
-        return view('client.form');
+        $countries = Util::iso3166();
+        $state = Holder::groupBy('state')->pluck('state');
+        $city = Holder::groupBy('city')->pluck('city');
+        $district = Holder::groupBy('district')->pluck('district');
+        return view('client.form', compact('countries', 'state', 'city', 'district'));
+    }
+    public function dependent_create($id)
+    {
+        $countries = Util::iso3166();
+        $state = Holder::groupBy('state')->pluck('state');
+        $city = Holder::groupBy('city')->pluck('city');
+        $district = Holder::groupBy('district')->pluck('district');
+        return view('client.include.dependents_form', compact('id','countries', 'state', 'city', 'district'));
+    }
+    public function dependent_store(Request $request)
+    {
+        $request->validate([
+            "name" => "required",
+            "email" => "required|unique:clients",
+            "birth_date" => "required",
+            "gender" => "required",
+            "type" => "required",
+            "holder_id" => "required",
+        ]);
+        Client::create($request->all());
+        $holder = Holder::findOrFail($request->holder_id);
+        return redirect()->route('client.edit', $holder->client_id);
     }
     public function store(Request $request)
     {
         $request->validate([
-            'cnpj'=> 'required|numeric|unique:distributors',
-            'corporate_name'=> 'required',
-            'contact_name'=> 'required',
-            'contact_phone'=> 'required',
-            'place'=> 'required',
-            'number'=> 'nullable|numeric',
-            'district'=> 'required',
-            'city'=> 'required',
-            'state'=> 'required',
-            'country'=> 'required',
-            'cep'=> 'required|numeric',
+            "name" => "required",
+            "email" => "required|unique:clients",
+            "birth_date" => "required",
+            "gender" => "required",
+            "type" => "required",
+            "cpf" => "required|unique:holders",
+            "place" => "required",
+            "complement" => "",
+            "number" => "",
+            "district" => "required",
+            "city" => "required",
+            "state" => "required",
+            "country" => "required",
+            "workplace" => "",
+            "home_phone" => "",
+            "cell_phone" => "required",
+            "work_phone" => "",
         ]);
-        Distributor::create($request->all());
-        return redirect()->route('distributor.index');
+        DB::beginTransaction();
+        try{
+            $request['type'] = 'Titular';
+            $client = Client::create($request->all());
+            $request['client_id'] = $client->id;
+            $holder = Holder::create($request->all());
+            $client->holder_id = $holder->id;
+            $client->save();
+            DB::commit();
+        }catch(\Exception $e){
+            return redirect()->route('client.index')->with('erro', 'Falha na inserção dos dados.');
+            DB::rollback();
+        }
+        return redirect()->route('client.index');
     }
     public function edit($id)
     {
         $client = Client::with('holder.dependents')->where('id',$id)->first();
-        return view('client.form', compact('client'));
+        $countries = Util::iso3166();
+        $state = Holder::groupBy('state')->pluck('state');
+        $city = Holder::groupBy('city')->pluck('city');
+        $district = Holder::groupBy('district')->pluck('district');
+        return view('client.form', compact('client','countries', 'state', 'city', 'district'));
+    }
+    public function dependent_edit($id)
+    {
+        $dependent = Client::findOrFail($id);
+        return view('client.include.dependents_form', compact('dependent','id'));
     }
     public function update(Request $request, $id)
     {
         $request->validate([
-            'cnpj'=> 'required|numeric',
-            'corporate_name'=> 'required',
-            'contact_name'=> 'required',
-            'contact_phone'=> 'required',
-            'place'=> 'required',
-            'number'=> 'numeric',
-            'district'=> 'required',
-            'city'=> 'required',
-            'state'=> 'required',
-            'country'=> 'required',
-            'cep'=> 'required|numeric',
+            "name" => "required",
+            "email" => "required",
+            "birth_date" => "required",
+            "gender" => "required",
+            "type" => "required",
+            "cpf" => "required",
+            "place" => "required",
+            "complement" => "",
+            "number" => "",
+            "district" => "required",
+            "city" => "required",
+            "state" => "required",
+            "country" => "required",
+            "workplace" => "",
+            "home_phone" => "",
+            "cell_phone" => "required",
+            "work_phone" => "",
         ]);
-
-        $client = Distributor::findOrFail($id);
-        $client->update($request->all());
-        return redirect()->route('distributor.index');
+        DB::beginTransaction();
+        try{
+            $client = Client::findOrFail($id);
+            $client->update($request->all());
+            $holder = Holder::findOrFail($client->holder->id);
+            $holder->update($request->all());
+            DB::commit();
+        }catch(\Exception $e){
+            return redirect()->route('client.index')->with('erro', 'Falha na atualização dos dados.');
+            DB::rollback();
+        }
+        return redirect()->route('client.index');
     }
     public function destroy($id)
     {
-        $client = Distributor::findOrFail($id);
-        $client->delete();
-        return redirect()->route('distributor.index');
+        $client = Client::findOrFail($id);
+        $holder = Holder::findOrfail($client->holder_id);
+        DB::beginTransaction();
+        try{
+            if($client->type == "Titular"){
+                $client->holder_id = null;
+                $client->save();
+                $holder->delete();
+                $client->delete();
+                $saida =  redirect()->route('client.index');
+            }else{
+                $client->delete();
+                $saida = redirect()->route('client.edit', $holder->client_id);
+            }
+            DB::commit();
+        }catch(\Exception $e){
+            return redirect()->route('client.index')->with('erro', 'Falha na exlusão, este cliente possui vinculos ativos.');
+            DB::rollback();
+        }
+        return $saida;
+
     }
 }

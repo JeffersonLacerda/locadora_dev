@@ -170,6 +170,7 @@ return [
             'text' => 'Cliente',
             'icon' => 'male',
             'can'  => 'customer_service',
+            'route' => 'client.index',
         ],
         [
             'text' => 'Usuário',

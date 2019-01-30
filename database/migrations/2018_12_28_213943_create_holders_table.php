@@ -17,17 +17,18 @@ class CreateHoldersTable extends Migration
             $table->increments('id');
             $table->string('cpf', 11)->unique();
             $table->string('place');
-            $table->integer('number')->unsigned();
-            $table->string('complement');
+            $table->integer('number')->unsigned()->nullable();
+            $table->string('complement')->nullable();
             $table->string('district');
             $table->string('city');
             $table->string('state');
             $table->string('country');
-            $table->string('workplace');
-            $table->string('home_phone', 14);
+            $table->string('workplace')->nullable();
+            $table->string('home_phone', 14)->nullable();
             $table->string('cell_phone', 14);
-            $table->string('work_phone', 14);
+            $table->string('work_phone', 14)->nullable();
             $table->integer('client_id')->unsigned();
+            $table->boolean('active')->default(true);
             $table->timestamps();
         });
     }

@@ -16,7 +16,7 @@
 @section('content')
     <div class="box">
         <div class="box-header">
-            <a href="{{ route('client.create') }}" class="btn btn-primary"><i class="fas fa-box"></i> Adicionar Cliente</a>
+            <a href="{{ route('client.create') }}" class="btn btn-primary"><i class="fas fa-male"></i> Adicionar Cliente</a>
         </div>
         <div class="box-body" style="min-height: 70vh">
             @if (session('erro'))
@@ -44,14 +44,14 @@
                         <td>{{ $c->holder->cpf }}</td>
                         <td>{{ $c->holder->cell_phone }}</td>
                         <td>{{ $c->email }}</td>
-                        <td>{{ $c->holder->dependents->count() }}</td>
+                        <td>{{ $c->holder->dependents->count()-1 }}</td>
                         <td style="text-align: center;">
                             <form action="{{ route('client.destroy', $c->id) }}" class="form-inline" method="POST" >
                                 {{ csrf_field() }}
                                 {{ method_field('DELETE')}}
                                 <div class="btn-group">
-                                    <abbr title="Modificar item"><a href="{{ route('client.edit', $c->id) }}" class="btn btn-default btn-sm" style="color: darkgreen"><i class="fas fa-edit"></i></a></abbr>
-                                    <abbr title="Remover item"><button type="submit" class="btn btn-default btn-sm form-delete"><i class="fas fa-trash-alt" style="color: darkred"></i></button></abbr>
+                                    <abbr title="Modificar cliente"><a href="{{ route('client.edit', $c->id) }}" class="btn btn-default btn-sm" style="color: darkgreen"><i class="fas fa-edit"></i></a></abbr>
+                                    <abbr title="Remover cliente"><button type="submit" class="btn btn-default btn-sm form-delete"><i class="fas fa-trash-alt" style="color: darkred"></i></button></abbr>
                                 </div>
                             </form>
                         </td>
@@ -67,10 +67,10 @@
             <div class="modal-content">
                 <div class="modal-header">
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                    <h4 class="modal-title">Remover o item?</h4>
+                    <h4 class="modal-title">Remover o cliente?</h4>
                 </div>
                 <div class="modal-body">
-                <p>Tem certeza que deseja remover o item?</p>
+                <p>Tem certeza que deseja remover o cliente?</p>
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-default" data-dismiss="modal">Cancelar</button>
@@ -89,13 +89,13 @@
             $('.table').DataTable({
                 language: {
                     "decimal":        "",
-                    "emptyTable":     "Nenhum item cadastrado.",
-                    "info":           "Exibindo _START_ até _END_ de _TOTAL_ itens.",
-                    "infoEmpty":      "Nenhum item para exibir.",
-                    "infoFiltered":   "(filtrado de _MAX_ total de itens.)",
+                    "emptyTable":     "Nenhum cliente cadastrado.",
+                    "info":           "Exibindo _START_ até _END_ de _TOTAL_ clientes.",
+                    "infoEmpty":      "Nenhum cliente para exibir.",
+                    "infoFiltered":   "(filtrado de _MAX_ total de clientes.)",
                     "infoPostFix":    "",
                     "thousands":      ",",
-                    "lengthMenu":     "Exibindo _MENU_ itens.",
+                    "lengthMenu":     "Exibindo _MENU_ clientes.",
                     "loadingRecords": "Carregando...",
                     "processing":     "Processando...",
                     "search":         "Buscar:",
