@@ -7,7 +7,6 @@ class TMDB
 
     private static $client;
     private static $base_uri = 'https://api.themoviedb.org/';
-    private static $api_key = '3b11754aa4e2998854c053ef0e8b8866';
     private static $language = 'pt-BR';
     public static $config = [
         "images"=>[
@@ -33,7 +32,7 @@ class TMDB
 
     public static function searchMovie(String $query, $page = 1){
         $options = ['query' => [
-            'api_key' => self::$api_key,
+            'api_key' => env('TMDB_KEY', ''),
             'language' => self::$language,
             'query' => $query,
             'page' => $page,
@@ -50,7 +49,7 @@ class TMDB
 
     public static function discoverMovie($page = 1, $year = 2018){
         $options = ['query' => [
-            'api_key' => self::$api_key,
+            'api_key' => env('TMDB_KEY', ''),
             'language' => self::$language,
             'sort_by' => 'popularity.desc',
             'page' => $page,
@@ -68,7 +67,7 @@ class TMDB
 
     public static function getMovie($id){
         $options = ['query' => [
-            'api_key' => self::$api_key,
+            'api_key' => env('TMDB_KEY', ''),
             'language' => self::$language,
         ]];
         $response = self::getClient()->request('GET', "/3/movie/$id", $options);
@@ -83,7 +82,7 @@ class TMDB
 
     public static function getCredits($id){
         $options = ['query' => [
-            'api_key' => self::$api_key,
+            'api_key' => env('TMDB_KEY', ''),
         ]];
         $response = self::getClient()->request('GET', "/3/movie/$id/credits", $options);
         if ($response->getStatusCode() == 200){
@@ -97,7 +96,7 @@ class TMDB
 
     public static function getGenres(){
         $options = ['query' => [
-            'api_key' => self::$api_key,
+            'api_key' => env('TMDB_KEY', ''),
             'language' => self::$language,
         ]];
         $response = self::getClient()->request('GET', "/3/genre/movie/list", $options);

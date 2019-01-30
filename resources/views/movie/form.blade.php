@@ -21,6 +21,11 @@
         a {
             cursor: pointer;
         }
+
+        .select2-container--default .select2-selection--single, .select2-selection .select2-selection--single{
+            padding: 3px !important;
+        }
+    
     </style>
 @stop
 
@@ -44,17 +49,20 @@
     <div class="box">
         <div class="box-header">
             <a href="{{ redirect()->back()->getTargetUrl() }}" class="btn btn-primary"><i class="fa fa-fw fa-arrow-left"></i> Voltar</a>
+            @isset($movie)
+            @else
             <div class="pull-right">
-                <form class="form-inline" style="background-color: #081E25;  border-radius: 1em;">
+                <form id="formTmdb" class="form-inline" style="background-color: #081E25;  border-radius: 1em;">
                     <img src="{{ asset('img/tmdb.PNG')}}" style="height: 4em; margin-left: 1em;">
                     <div class="form-group">
                         {{-- <label for="exampleInputName2">Name</label> --}}
-                        <input type="text" class="form-control" id="exampleInputName2" placeholder="Nome do filme">
+                        <input type="text" class="form-control" id="txtTmdb" placeholder="Nome do filme">
                     </div>
-                    <button type="submit" class="btn" style="background-color: #02B067; margin-right: 1em;"><i class="fa fa-fw fa-search"></i></button>
+                    <button id="searchTmdb" type="button" class="btn" style="background-color: #02B067; margin-right: 1em;"><i class="fa fa-fw fa-search"></i></button>
                 </form>
                 {{-- <a class="btn btn-primary" style="background-color: #081E25; border-color: #081E25; color: #02B067;"><i class="fa fa-fw fa-search"></i> <img src="{{ asset('img/tmdb.PNG')}}" style="height: 2em;"></a> --}}
             </div>
+            @endisset
         </div>
         <div class="box-body">
             @if (session('erro'))
@@ -71,37 +79,71 @@
             @else
             <form method="post" action="{{ route('movie.create') }}" enctype="multipart/form-data">
             @endisset
+            @php
+                if (isset($movie_tmdb) && isset($credits_tmdb)){
+                    $array['tmdb_id'] = $movie_tmdb->id;
+                    $array['poster'] = 'http://image.tmdb.org/t/p/original' . $movie_tmdb->poster_path;
+                    $array['title'] = $movie_tmdb->title;
+                    $array['original_title'] = $movie_tmdb->original_title;
+                    $array['genres'] = null;
+                    $array['country'] = App\Services\Util::array_to_string($movie_tmdb->production_countries, 'iso_3166_1');
+                    $array['year'] = substr($movie_tmdb->release_date, 0, 4) == "" ? "1970" : substr($movie_tmdb->release_date, 0, 4);
+                    $array['duraction'] = $movie_tmdb->runtime;
+                    $array['synopsis'] = addslashes($movie_tmdb->overview);
+                    $array['cast'] = App\Services\Util::array_to_string($credits_tmdb->cast, 'name');
+                    $array['direction'] = App\Services\Util::array_to_string($credits_tmdb->crew, 'name', ['job','Director']);
+                    $now = Carbon\Carbon::now();
+                    $release_date = Carbon\Carbon::createFromFormat('Y-m-d', $movie_tmdb->release_date);
+                    if ($now->diffInDays($release_date) > 180){
+                        $type_id = 1; // Catálogo
+                    } else {
+                        $type_id = 2; // Lançamento
+                    }
+                    $array['type_id'] = $type_id;
+
+                    $movie = json_decode(json_encode($array));
+
+                    $array_genres = array();
+                    foreach ($movie_tmdb->genres as $genre) {
+                        $g = \App\Models\Genre::where('tmdb_id', $genre->id)->first();
+                        array_push($array_genres, $g);
+                    }
+                    $movie->genres = collect($array_genres);
+
+                    /* dd($movie); */
+                }
+            @endphp
+
                 {{ csrf_field() }}
                 <input type="hidden" class="form-control" id="tmdb_id" name="tmdb_id" value="{{ isset($movie) ? old('tmdb_id', $movie->tmdb_id) : old('tmdb_id') }}">
-                {{-- <div class="form-group {{ $errors->has('tmdb_id') ? 'has-error' : '' }}">
-                    <label for="tmdb_id">código TMDb:</label>
-                    <input type="text" class="form-control" id="tmdb_id" name="tmdb_id" placeholder="Informe o código do filme conforme a THE MOVIE DB (https://www.themoviedb.org/)" value="{{ isset($movie) ? old('tmdb_id', $movie->tmdb_id) : old('tmdb_id') }}">
-                    @if ($errors->has('tmdb_id'))
-                        <span class="help-block">
-                            <strong>{{ $errors->first('tmdb_id') }}</strong>
-                        </span>
-                    @endif
-                </div> --}}
-                {{-- Imagem com laravel file manager --}}
-                <label for="holder">Capa</label>
-                <br>
-                <div class="container">
-                    <div class="row">
-                        <div id="imgBackground" class="col-md-3 col-sm-6 col-xs-12" style="border: 0px solid black;">
-                            <div id="image-holder"></div>
-                            <img id="imgPreview" src="">
+                
+                <div class="form-group {{ $errors->has('poster') ? 'has-error' : '' }}">
+                    <label for="holder">Capa</label>
+                    <br>
+                    <div class="container">
+                        <div class="row">
+                            <div id="imgBackground" class="col-md-3 col-sm-6 col-xs-12" style="border: 0px solid black;">
+                                <div id="image-holder"></div>
+                                <img id="imgPreview" style="max-width: 100%" src="{{ isset($movie) ? old('poster', $movie->poster) : old('poster') }}">
+                            </div>
                         </div>
                     </div>
-                </div>
-                <br>
-                <input id="filePoster" type="file" name="poster" style="display: none;">
-                <div class="input-group">
-                    <span class="input-group-btn">
-                      <a id="lfm" data-input="thumbnail" data-preview="holder" class="btn btn-primary">
-                        <i class="far fa-image"></i> Escolher imagem
-                      </a>
-                    </span>
-                    <input id="thumbnail" class="form-control" type="text" name="filepath">
+                    <br>
+                    <input id="filePoster" type="file" name="file" accept="image/*" style="display: none;">
+                    <div class="input-group">
+                        <span class="input-group-btn">
+                        <a id="lfm" data-input="thumbnail" data-preview="holder" class="btn btn-primary">
+                            <i class="far fa-image"></i> Escolher imagem
+                        </a>
+                        </span>
+                        <input id="thumbnail" class="form-control" type="text" name="thumbnail" value="{{ isset($movie) ? old('poster', $movie->poster) : old('poster') }}" disabled>
+                    </div>
+                    <input id="poster" type="hidden" name="poster" value="{{ isset($movie) ? old('poster', $movie->poster) : old('poster') }}">
+                    @if ($errors->has('poster'))
+                        <span class="help-block">
+                            <strong>{{ $errors->first('poster') }}</strong>
+                        </span>
+                    @endif
                 </div>
                 <br>
                 {{-- Imagem com laravel file manager --}}
@@ -123,11 +165,32 @@
                         </span>
                     @endif
                 </div>
+                <div class="form-group {{ $errors->has('genres') ? 'has-error' : '' }}">
+                    <label for="genres">Gênero</label>
+                    <select class="form-control select2" name="genres[]" id="selectGenres" multiple="multiple" style="width: 100%;">
+                    @foreach($genres as $g)
+                        <option value="{{ $g->id }}" 
+                        @if( (isset($movie) && $movie->genres->contains($g)) || (old('genres') != null && in_array($g->id, old('genres')))  ) 
+                            selected  
+                        @endif>
+                            {{ $g->description }} 
+                        </option>
+                    @endforeach
+                    </select>
+                    @if ($errors->has('genres'))
+                        <span class="help-block">
+                            <strong>{{ $errors->first('genres') }}</strong>
+                        </span>
+                    @endif
+                </div>
                 <div class="form-group {{ $errors->has('country') ? 'has-error' : '' }}">
                     <label for="country">País</label>
                     <select class="form-control select2" name="country[]" id="selectCountries" multiple="multiple" style="width: 100%;">
                     @foreach($countries as $c)
-                        <option value="{{ $c->sigla2 }}">
+                        <option value="{{ $c->sigla2 }}" 
+                        @if( (isset($movie) && in_array($c->sigla2 ,explode(", ", $movie->country))) || (old('country') != null && in_array($c->sigla2, old('country'))) ) 
+                            selected  
+                        @endif>
                             {{ $c->sigla2 }} - {{ $c->nome }} 
                         </option>
                     @endforeach
@@ -149,7 +212,7 @@
                 </div>
                 <div class="form-group {{ $errors->has('direction') ? 'has-error' : '' }}">
                     <label for="direction">Direção</label>
-                    <textarea class="form-control" rows="5" id="direction" name="direction" placeholder="Informe a direção"></textarea>
+                    <textarea class="form-control" rows="5" id="direction" name="direction" placeholder="Informe a direção">{{ isset($movie) ? old('direction', $movie->direction) : old('direction') }}</textarea>
                     @if ($errors->has('direction'))
                         <span class="help-block">
                             <strong>{{ $errors->first('direction') }}</strong>
@@ -158,7 +221,7 @@
                 </div>
                 <div class="form-group {{ $errors->has('cast') ? 'has-error' : '' }}">
                     <label for="cast">Elenco</label>
-                    <textarea class="form-control" rows="5" id="cast" name="cast" placeholder="Informe o elenco"></textarea>
+                    <textarea class="form-control" rows="5" id="cast" name="cast" placeholder="Informe o elenco">{{ isset($movie) ? old('cast', $movie->cast) : old('cast') }}</textarea>
                     @if ($errors->has('cast'))
                         <span class="help-block">
                             <strong>{{ $errors->first('cast') }}</strong>
@@ -167,7 +230,7 @@
                 </div>
                 <div class="form-group {{ $errors->has('synopsis') ? 'has-error' : '' }}">
                     <label for="synopsis">Sinopse</label>
-                    <textarea class="form-control" rows="5" id="synopsis" name="synopsis" placeholder="Informe a sinopse"></textarea>
+                    <textarea class="form-control" rows="5" id="synopsis" name="synopsis" placeholder="Informe a sinopse">{{ isset($movie) ? old('synopsis', $movie->synopsis) : old('synopsis') }}</textarea>
                     @if ($errors->has('synopsis'))
                         <span class="help-block">
                             <strong>{{ $errors->first('synopsis') }}</strong>
@@ -183,42 +246,66 @@
                         </span>
                     @endif
                 </div>
-                <div class="form-group {{ $errors->has('type') ? 'has-error' : '' }}">
-                    <label for="type">Tipo</label>
-                    <select class="form-control select2" name="type" id="selectType" style="width: 100%;">
+                <div class="form-group {{ $errors->has('type_id') ? 'has-error' : '' }}">
+                    <label for="type_id">Tipo</label>
+                    <select class="form-control select2" name="type_id" id="selectType" style="width: 100%;">
+                        <option disabled selected value> -- selecione o tipo -- </option>
                     @foreach($types as $t)
-                        <option value="{{ $t->id }}">
+                        <option value="{{ $t->id }}" 
+                        @if( (isset($movie) && $movie->type_id == $t->id) ||  ($t->id == old('type_id')) ) 
+                            selected  
+                        @endif>
                             {{ $t->description }} 
                         </option>
                     @endforeach
                     </select>
-                    @if ($errors->has('type'))
+                    @if ($errors->has('type_id'))
                         <span class="help-block">
-                            <strong>{{ $errors->first('type') }}</strong>
+                            <strong>{{ $errors->first('type_id') }}</strong>
                         </span>
                     @endif
                 </div>
-                <div class="form-group {{ $errors->has('distributor') ? 'has-error' : '' }}">
-                    <label for="distributor">Distribuidora</label>
-                    <select class="form-control select2" name="distributor" id="selectDistributor" style="width: 100%;">
+                {{-- <div class="form-group {{ $errors->has('distributor_id') ? 'has-error' : '' }}">
+                    <label for="distributor_id">Distribuidora</label>
+                    <select class="form-control select2" name="distributor_id" id="selectDistributor" style="width: 100%;">
+                        <option disabled selected value> -- selecione uma distribuidora -- </option>
                     @foreach($distributors as $d)
                         <option value="{{ $d->id }}">
                             {{ $d->corporate_name }} 
                         </option>
                     @endforeach
                     </select>
-                    @if ($errors->has('distributor'))
+                    @if ($errors->has('distributor_id'))
                         <span class="help-block">
-                            <strong>{{ $errors->first('distributor') }}</strong>
+                            <strong>{{ $errors->first('distributor_id') }}</strong>
                         </span>
                     @endif
-                </div>
+                </div> --}}
                 <div class="col-md-2 col-md-offset-10">
                     <button type="submit" class="btn btn-success btn-block"><i class="fa fa-fw fa-save"></i> Salvar</button>
                 </div>
             </form>
         </div>
     </div>
+
+    <!-- Modal listar filmes do TMDb -->
+    <div class="modal fade" id="dialog_list_tmdb">
+        <div class="modal-dialog" role="document" style="width:80vw;">
+            <div class="modal-content">
+                <div class="modal-header" style="background-color: #081E25">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close" style="color: #fff;"><span aria-hidden="true">&times;</span></button>
+                    <h4 class="modal-title" style="color: #02B067;"><img src="{{ asset('img/tmdb.PNG')}}" style="height: 4em; margin-left: 1em;">  The Movie Database</h4>
+                </div>
+                <div class="modal-body">
+                
+                </div>
+                <div class="modal-footer">
+                    <a class="btn btn-danger" data-dismiss="modal" aria-label="Close"><i class="fas fa-times"></i> Fechar</a>
+                </div>
+            </div>
+        </div>
+    </div>
+
 @stop
 
 @section('js')
@@ -231,20 +318,22 @@
             $('#selectType').select2({
                 placeholder: "Selecione o tipo"
             });
-            $('#selectDistributor').select2({
-                placeholder: "Selecione a distribuidora"
+            $('#selectGenres').select2({
+                placeholder: "Selecione os gêneros"
             });
             $('#lfm').click( function (){
                 $('#filePoster').click();
             });
             $('form').on('change', '#filePoster', function(){
                 $('#thumbnail').val($('#filePoster').val().replace(/C:\\fakepath\\/i, ""));
+                $('#poster').val($('#filePoster').val().replace(/C:\\fakepath\\/i, ""));
             });
             //Atualizar imagem PREVIEW
             $("#filePoster").on('change', function () {
                 if (typeof (FileReader) != "undefined") {
                     var image_holder = $("#image-holder");
                     image_holder.empty();
+                    $('#imgPreview').hide();
                     var reader = new FileReader();
                     reader.onload = function (e) {
                         $("<img />", {
@@ -259,11 +348,15 @@
                     alert("Este navegador nao suporta FileReader.");
                 }
             });
-
-            //$('#imgBackground').height($('#imgBackground').width());
-            //$('#image-holder').height($('#imgBackground').height());
             $('#image-holder').width($('#imgBackground').width());
-
+            $("#formTmdb").on("click", "#searchTmdb", function() {
+                var href = "{{ route('movie.tmdb_list', '') }}";
+                var search = encodeURI($("#txtTmdb").val());
+                var key = href + "/" + search;
+                $("#dialog_list_tmdb .modal-body").load(key, function(){
+                    $("#dialog_list_tmdb").modal({show:true});
+                });
+            });
         });
     </script>
 @stop

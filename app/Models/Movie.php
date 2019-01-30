@@ -18,7 +18,6 @@ class Movie extends Model
         'synopsis', 
         'duraction', 
         'type_id', 
-        'distributor_id', 
     ];
 
     public function medias(){
