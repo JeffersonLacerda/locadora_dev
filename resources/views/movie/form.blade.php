@@ -14,9 +14,14 @@
             width: 100% !important;
         }
 
-        .select2-search, .select2-search--inline{
+        /* .select2-search, .select2-search--inline{
             width: 300px!important;
+        } */
+
+        .select2-search, .select2-search--inline{
+            width: 100% !important;
         }
+
 
         a {
             cursor: pointer;
@@ -56,7 +61,7 @@
                     <img src="{{ asset('img/tmdb.PNG')}}" style="height: 4em; margin-left: 1em;">
                     <div class="form-group">
                         {{-- <label for="exampleInputName2">Name</label> --}}
-                        <input type="text" class="form-control" id="txtTmdb" placeholder="Nome do filme">
+                        <input type="text" class="form-control" id="txtTmdb" name="txtTmdb" placeholder="Nome do filme">
                     </div>
                     <button id="searchTmdb" type="button" class="btn" style="background-color: #02B067; margin-right: 1em;"><i class="fa fa-fw fa-search"></i></button>
                 </form>
