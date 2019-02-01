@@ -67,7 +67,11 @@ class DistributorController extends Controller
     public function destroy($id)
     {
         $distributor = Distributor::findOrFail($id);
-        $distributor->delete();
+        try{
+            $distributor->delete();
+        }catch (\Exception $e) {
+            return redirect()->route('distributor.index')->with('erro', 'Este registro não pode ser removido afim de garantir a integridade do banco de dados.');
+        }
         return redirect()->route('distributor.index');
     }
 }
