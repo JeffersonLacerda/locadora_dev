@@ -65,13 +65,14 @@ class Us018Test extends DuskTestCase
         ]);
 
         $this->browse(function (Browser $browser) {
+            $href = route('movie.create_tmdb', 38575);
             $browser->loginAs(User::find(1))
                     ->visit('/filme/adicionar')
                     ->waitForText('Adicionar Filme')
                     ->type('txtTmdb', 'Karate kid')
                     ->click("#searchTmdb")
                     ->waitForText('The Movie Database')
-                    ->click("a[href='http://locadora/filme/adicionar/38575']")
+                    ->click("a[href='$href']")
                     ->waitForText('Adicionar Filme')
                     ->assertPathIs('/filme/adicionar/38575')
                     ->click('button[type=submit]')
