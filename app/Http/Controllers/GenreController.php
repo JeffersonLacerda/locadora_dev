@@ -25,7 +25,6 @@ class GenreController extends Controller
     public function store(Request $request)
     {
         $request->validate([
-            'tmdb_id' => 'required|numeric|gt:0|unique:genres',
             'description' => 'required|unique:genres|max:255',
         ]);
         Genre::create($request->all());
@@ -39,9 +38,7 @@ class GenreController extends Controller
     public function update(Request $request, $id)
     {
         $request->validate([
-            'tmdb_id' => ['required', 'numeric', 'gt:0',Rule::unique('genres')->ignore($id)],
             'description' => ['required', 'max:255', Rule::unique('genres')->ignore($id)],
-            
         ]);
         $genre = Genre::findOrFail($id);
         $genre->update($request->all());
@@ -50,7 +47,11 @@ class GenreController extends Controller
     public function destroy($id)
     {
         $genre = Genre::findOrFail($id);
-        $genre->delete();
+        try{
+            $genre->delete();
+        }catch (\Exception $e) {
+            return redirect()->route('genre.index')->with('erro', 'Este registro não pode ser removido afim de garantir a integridade do banco de dados.');
+        }
         return redirect()->route('genre.index');
     }
 }

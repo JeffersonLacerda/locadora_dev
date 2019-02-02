@@ -37,15 +37,6 @@
             <form method="post" action="{{ route('genre.create') }}" enctype="multipart/form-data">
             @endisset
                 {{ csrf_field() }}
-                <div class="form-group {{ $errors->has('tmdb_id') ? 'has-error' : '' }}">
-                    <label for="tmdb_id">Código TMDb</label>
-                    <input type="number" class="form-control" id="tmdb_id" name="tmdb_id" placeholder="Código do gênero no The Movies Database (TMDb)" value="{{ isset($genre) ? old('tmdb_id', $genre->tmdb_id) : old('tmdb_id') }}">
-                    @if ($errors->has('tmdb_id'))
-                        <span class="help-block">
-                            <strong>{{ $errors->first('tmdb_id') }}</strong>
-                        </span>
-                    @endif
-                </div>
                 <div class="form-group {{ $errors->has('description') ? 'has-error' : '' }}">
                     <label for="description">Descrição</label>
                     <input type="text" class="form-control" id="description" name="description" placeholder="Descriçao do gênero" value="{{ isset($genre) ? old('description', $genre->description) : old('description') }}">

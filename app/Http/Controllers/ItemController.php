@@ -60,7 +60,11 @@ class ItemController extends Controller
     public function destroy($id)
     {
         $item = Item::findOrFail($id);
-        $item->delete();
+        try{
+            $item->delete();
+        }catch (\Exception $e) {
+            return redirect()->route('item.index')->with('erro', 'Este registro não pode ser removido afim de garantir a integridade do banco de dados.');
+        }
         return redirect()->route('item.index');
     }
 }

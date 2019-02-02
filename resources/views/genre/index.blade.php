@@ -29,7 +29,6 @@
             <table class="table table-striped table-remove-modal">
                 <thead>
                     <tr>
-                        <th style="text-align: center;">Código TMDb</th>
                         <th style="text-align: center;">Descrição</th>
                         <th style="text-align: center;">Ações</th>
                     </tr>
@@ -37,7 +36,6 @@
                 <tbody>
                     @foreach ($genres as $g)
                     <tr>
-                        <td>{{ $g->tmdb_id }}</td>
                         <td>{{ $g->description }}</td>
                         <td style="text-align: center;">
                             <form action="{{ route('genre.destroy', $g->id) }}" class="form-inline" method="POST" >

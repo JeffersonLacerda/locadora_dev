@@ -20,11 +20,8 @@ class Us008Test extends DuskTestCase
             $browser->loginAs(User::find(1))
                     ->visit('/genero')
                     ->waitForText('Gênero')
-                    ->assertSee('12')
                     ->assertSee('Aventura')
-                    ->assertSee('14')
                     ->assertSee('Fantasia')
-                    ->assertSee('16')
                     ->assertSee('Animação');
         });
     }

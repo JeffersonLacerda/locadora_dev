@@ -53,7 +53,11 @@ class TypeController extends Controller
     public function destroy($id)
     {
         $type = Type::findOrFail($id);
-        $type->delete();
+        try{
+            $type->delete();
+        }catch (\Exception $e) {
+            return redirect()->route('type.index')->with('erro', 'Este registro não pode ser removido afim de garantir a integridade do banco de dados.');
+        }
         return redirect()->route('type.index');
     }
 }

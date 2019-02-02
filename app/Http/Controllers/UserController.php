@@ -61,7 +61,11 @@ class UserController extends Controller
     public function destroy($id)
     {
         $user = User::findOrFail($id);
-        $user->delete();
+        try{
+            $user->delete();
+        }catch (\Exception $e) {
+            return redirect()->route('user.index')->with('erro', 'Este registro não pode ser removido afim de garantir a integridade do banco de dados.');
+        }
         return redirect()->route('user.index');
     }
 }
