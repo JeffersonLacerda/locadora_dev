@@ -168,6 +168,8 @@ return [
         'synopsis'                  => 'sinopse',
         'duraction'                 => 'duração',
         'type_id'                   => 'tipo',
+        'birth_date'                => 'data de nascimento',
+        'cell_phone'                => 'telefone celular',
 
 
     ],

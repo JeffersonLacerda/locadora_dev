@@ -158,4 +158,16 @@ class ClientController extends Controller
         return $saida;
 
     }
+    public function active(Request $request, $id)
+    {
+        $client = Client::findOrFail($id);
+        $holder = Holder::findOrfail($client->holder_id);
+        if(isset($request->active_field)){
+            $holder->active = TRUE;
+        }else{
+            $holder->active = FALSE;
+        }
+        $holder->save();
+        return redirect()->route('client.edit', $id);
+    }
 }

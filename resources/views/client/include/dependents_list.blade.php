@@ -55,8 +55,12 @@
 @section('js')
     <script src="{{ asset('vendor/DataTables/datatables.min.js') }}"></script>
     <script src="{{ asset('vendor/icheck-1.0.2/icheck.js') }}"></script>
+    <script src="{{ asset('vendor/bootstrap-toggle-2.2.0/bootstrap-toggle.min.js')}}"></script>
     <script>
         $(document).ready( function () {
+            $('#active_field').change(function(){
+                $('#active_form').submit();
+            });
             $('.table').DataTable({
                 language: {
                     "decimal":        "",

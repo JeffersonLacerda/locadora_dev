@@ -1,10 +1,15 @@
 {{-- Formulário para adicionar ou modificar Cliente --}}
 @isset($client)
 
-<form method="post" action="{{ route('client.edit', $client->id) }}" enctype="multipart/form-data">
+<form id="cliente_form" method="post" action="{{ route('client.edit', $client->id) }}" enctype="multipart/form-data">
     {{ method_field('PUT')}}
+    @if($client->holder->active)
+        <fieldset>
+    @else
+        <fieldset disabled="disabled">
+    @endif
 @else
-<form method="post" action="{{ route('client.create') }}" enctype="multipart/form-data">
+<form id="cliente_form" method="post" action="{{ route('client.create') }}" enctype="multipart/form-data">
 @endisset
     {{ csrf_field() }}
     <div class="form-group {{ $errors->has('name') ? 'has-error' : '' }}">
@@ -179,4 +184,5 @@
         <option value="{{ $d }}">
         @endforeach
     </datalist>
+</fieldset>
 </form>

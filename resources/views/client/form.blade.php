@@ -1,6 +1,7 @@
 @extends('adminlte::page')
 @section('css')
     <link rel="stylesheet" href="{{ asset('vendor/select2-4.0.5/dist/css/select2.min.css')}}">
+    <link rel="stylesheet" href="{{ asset('vendor/bootstrap-toggle-2.2.0/bootstrap-toggle.min.css')}}">
     <style>
             .select2-container--default .select2-selection--single, .select2-selection .select2-selection--single{
                 padding: 3px !important;
@@ -28,6 +29,14 @@
     <div class="box">
         <div class="box-header">
             <a href="{{ redirect()->back()->getTargetUrl() }}" class="btn btn-primary"><i class="fa fa-fw fa-arrow-left"></i> Voltar</a>
+            @isset($client)
+            <div class="pull-right">
+                <form action="{{ route('client.active', $client->id) }}" method="POST" id="active_form">
+                    {{ csrf_field() }}
+                    <input type="checkbox" name="active_field" id="active_field" data-toggle="toggle" data-on="Ativo" data-off="Inativo" @if($client->holder->active) checked @endif>
+                </form>
+            </div>
+            @endisset
         </div>
         <div class="box-body">
             @if (session('erro'))
@@ -56,3 +65,4 @@
         </div>
     </div>
 @stop
+
