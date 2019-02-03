@@ -170,7 +170,7 @@ return [
         'type_id'                   => 'tipo',
         'birth_date'                => 'data de nascimento',
         'cell_phone'                => 'telefone celular',
-
+        'distributor_id'            => 'distribuidora',
 
     ],
 

@@ -39,6 +39,8 @@ class Us022Test extends DuskTestCase
                     ->keys(".select2-search__field", 'Aquaman', '{enter}')
                     ->click('#select2-media_id-container')
                     ->keys(".select2-search__field", 'Blu-ray', '{enter}')
+                    ->click('#select2-distributor_id-container')
+                    ->keys(".select2-search__field", 'Europa Filmes', '{enter}')
                     ->click('button[type=submit]')
                     ->waitForText('Itens')
                     ->assertPathIs('/item');
@@ -49,6 +51,7 @@ class Us022Test extends DuskTestCase
             'purchase_date' => '2019-01-17',
             'movie_id' => 1,
             'media_id' => 4,
+            'distributor_id' => 7,
         ]);
     }
 
@@ -65,7 +68,8 @@ class Us022Test extends DuskTestCase
                     ->assertSee('O campo número serial é obrigatório')
                     ->assertSee('O campo data da compra é obrigatório.')
                     ->assertSee('O campo filme é obrigatório.')
-                    ->assertSee('O campo mídia é obrigatório.');
+                    ->assertSee('O campo mídia é obrigatório.')
+                    ->assertSee('O campo distribuidora é obrigatório.');
         });
         $this->assertDatabaseMissing('items',
         [
@@ -73,6 +77,7 @@ class Us022Test extends DuskTestCase
             'purchase_date' => '',
             'movie_id' => '',
             'media_id' => '',
+            'distributor_id' => '',
         ]);
     }
 

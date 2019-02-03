@@ -83,7 +83,7 @@
                             </span>
                         @endif
                      </div>
-                 <div class="form-group {{ $errors->has('media_id') ? 'has-error' : '' }}">
+                <div class="form-group {{ $errors->has('media_id') ? 'has-error' : '' }}">
                     <label for="media_id">Mídia</label>
                     <select name="media_id" id="media_id" class="campo_select2 form-control">
                         <option disabled selected value> -- selecione uma mídia -- </option>
@@ -100,7 +100,25 @@
                             <strong>{{ $errors->first('media_id') }}</strong>
                         </span>
                     @endif
-                 </div>
+                </div>
+                <div class="form-group {{ $errors->has('distributor_id') ? 'has-error' : '' }}">
+                    <label for="distributor_id">Distribuidora</label>
+                    <select name="distributor_id" id="distributor_id" class="campo_select2 form-control">
+                        <option disabled selected value> -- selecione uma distribuidora -- </option>
+                        @foreach ($distributors as $d)
+                        <option value="{{ $d->id }}"
+                            {{ isset($item) &&  $item->distributor_id == $d->id ? 'selected' : old('distributor_id') == $d->id ? 'selected' : '' }}
+                            >
+                            {{ $d->corporate_name }}
+                        </option>
+                        @endforeach
+                    </select>
+                    @if ($errors->has('distributor_id'))
+                        <span class="help-block">
+                            <strong>{{ $errors->first('distributor_id') }}</strong>
+                        </span>
+                    @endif
+                </div>
                 <div class="col-md-2 col-md-offset-10">
                     <button type="submit" class="btn btn-success btn-block"><i class="fa fa-fw fa-save"></i> Salvar</button>
                 </div>
@@ -117,6 +135,9 @@
             });
             $('#movie_id').select2({
                 placeholder: "Selecione o filme"
+            });
+            $('#distributor_id').select2({
+                placeholder: "Selecione uma distribuidora"
             });
         });
     </script>

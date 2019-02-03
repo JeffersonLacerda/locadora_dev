@@ -39,6 +39,8 @@ class Us023Test extends DuskTestCase
                     ->keys(".select2-search__field", 'Aquaman', '{enter}')
                     ->click('#select2-media_id-container')
                     ->keys(".select2-search__field", 'HD-DVD', '{enter}')
+                    ->click('#select2-distributor_id-container')
+                    ->keys(".select2-search__field", 'DVD World', '{enter}')
                     ->click('button[type=submit]')
                     ->waitForText('Itens')
                     ->assertPathIs('/item');
@@ -49,6 +51,7 @@ class Us023Test extends DuskTestCase
             'purchase_date' => '2019-01-22',
             'movie_id' => 1,
             'media_id' => 3,
+            'distributor_id' => 8,
         ]);
         $this->browse(function (Browser $browser) {
             $item = Item::where('serial_number', '99999999999999999999')->first();
@@ -61,6 +64,8 @@ class Us023Test extends DuskTestCase
                     ->keys(".select2-search__field", 'Aquaman', '{enter}')
                     ->click('#select2-media_id-container')
                     ->keys(".select2-search__field", 'Blu-ray', '{enter}')
+                    ->click('#select2-distributor_id-container')
+                    ->keys(".select2-search__field", 'Europa Filmes', '{enter}')
                     ->click('button[type=submit]')
                     ->waitForText('Itens')
                     ->assertPathIs('/item');
@@ -71,6 +76,7 @@ class Us023Test extends DuskTestCase
             'purchase_date' => '2019-01-17',
             'movie_id' => 1,
             'media_id' => 4,
+            'distributor_id' => 7,
         ]);
     }
 
@@ -88,11 +94,10 @@ class Us023Test extends DuskTestCase
                     ->assertSee('O campo número serial é obrigatório')
                     ->assertSee('O campo data da compra é obrigatório.');
         });
-        $this->assertDatabaseMissing('types',
+        $this->assertDatabaseMissing('items',
         [
-            'description' => '',
-            'return_deadline' => '',
-            'increase' => '',
+            'serial_number' => '',
+            'purchase_date' => '',
         ]);
 
     }

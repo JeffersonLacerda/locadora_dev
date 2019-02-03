@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Models\Item;
 use App\Models\Movie;
 use App\Models\Media;
+use App\Models\Distributor;
 
 
 class ItemController extends Controller
@@ -24,7 +25,8 @@ class ItemController extends Controller
     {
         $medias = Media::all();
         $movies = Movie::all();
-        return view('item.form', compact('medias','movies'));
+        $distributors = Distributor::all();
+        return view('item.form', compact('medias','movies', 'distributors'));
     }
     public function store(Request $request)
     {
@@ -34,6 +36,7 @@ class ItemController extends Controller
             'purchase_date' => 'required|date',
             'movie_id' => 'required',
             'media_id' => 'required',
+            'distributor_id' => 'required',
         ]);
         Item::create($request->all());
         return redirect()->route('item.index');
@@ -42,8 +45,9 @@ class ItemController extends Controller
     {
         $medias = Media::all();
         $movies = Movie::all();
+        $distributors = Distributor::all();
         $item = Item::findOrFail($id);
-        return view('item.form', compact('item','medias','movies'));
+        return view('item.form', compact('item','medias','movies', 'distributors'));
     }
     public function update(Request $request, $id)
     {
@@ -52,6 +56,7 @@ class ItemController extends Controller
             'purchase_date' => 'required|date',
             'movie_id' => 'required',
             'media_id' => 'required',
+            'distributor_id' => 'required',
         ]);
         $item = Item::findOrFail($id);
         $item->update($request->all());
