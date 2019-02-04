@@ -36,11 +36,11 @@
 
 @section('content')
 <div class="container-fluid">
-    <div class="row">
+    {{-- <div class="row">
         <div class="col-md-12">
             <h2>Consulta ao acervo</h2>
         </div>
-    </div>
+    </div> --}}
     <div class="row">
         <div class="col-md-12">
             @if (count($search) > 0)

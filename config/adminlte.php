@@ -182,6 +182,7 @@ return [
         [
             'text' => 'Consultar',
             'icon' => 'search',
+            'route' => 'search',
         ],
     ],
 
