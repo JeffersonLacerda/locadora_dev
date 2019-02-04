@@ -2,7 +2,11 @@
     <div class="col-md-12">
         <h2>Busca avançada:</h2>
         <p>Você pode realizar consultas por título, título original, gênero, tipo de mídia disponível, elenco, direção, nacionalidade e lançamentos, bem como combinações dessas informações.</p>
-        <form action="{{ route('index') }}" method="POST" id="formSearch">
+        @if(isset($items))
+            <form action="{{ route('search') }}" method="POST" id="formSearch">
+        @else
+            <form action="{{ route('index') }}" method="POST" id="formSearch">
+        @endif
             {{ csrf_field() }}
             {{-- Título --}}
             <div class="form-group {{ $errors->has('title') ? 'has-error' : '' }}">

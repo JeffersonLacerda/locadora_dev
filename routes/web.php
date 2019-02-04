@@ -30,6 +30,8 @@ Route::get('/seedPerson', 'SiteController@seedPerson');
 
 /* Rotas da área administrativa */
 Route::get('/locadora', 'HomeController@index')->name('home');
+Route::get('/consulta', 'HomeController@search')->name('search');
+Route::post('/consulta', 'HomeController@search');
 
 /* Rotas de autenticação */
 Route::get('/entrar', 'Auth\LoginController@showLoginForm')->name('login');
