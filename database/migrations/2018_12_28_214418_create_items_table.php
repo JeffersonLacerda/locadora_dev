@@ -20,6 +20,7 @@ class CreateItemsTable extends Migration
             $table->integer('movie_id')->unsigned();
             $table->integer('media_id')->unsigned();
             $table->integer('distributor_id')->unsigned();
+            $table->enum('status', ['Disponível', 'Locado', 'Indisponível'])->default('Disponível');
             $table->foreign('movie_id')->references('id')->on('movies')->onUpdate('cascade')->onDelete('restrict');
             $table->foreign('media_id')->references('id')->on('media')->onUpdate('cascade')->onDelete('restrict');
             $table->foreign('distributor_id')->references('id')->on('distributors')->onUpdate('cascade')->onDelete('restrict');
