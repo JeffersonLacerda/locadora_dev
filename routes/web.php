@@ -116,3 +116,5 @@ Route::get('/cliente/{id}/dependente/editar','ClientController@dependent_edit')-
 Route::put('/cliente/{id}/dependente/editar','ClientController@dependent_update');
 Route::delete('/cliente/{id}/remover','ClientController@destroy')->name('client.destroy');
 
+/* Rotas RN locadora */
+Route::get('/locacao','RentalController@index')->name('rental.index');
