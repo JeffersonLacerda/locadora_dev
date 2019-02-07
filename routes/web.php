@@ -115,6 +115,7 @@ Route::post('/cliente/{id}/editar/ativo','ClientController@active')->name('clien
 Route::get('/cliente/{id}/dependente/editar','ClientController@dependent_edit')->name('dependent.edit');
 Route::put('/cliente/{id}/dependente/editar','ClientController@dependent_update');
 Route::delete('/cliente/{id}/remover','ClientController@destroy')->name('client.destroy');
+Route::get('/cliente/{id}/carteira','ClientController@identity')->name('client.identity');
 
 /* Rotas RN locadora */
 Route::get('/locacao','RentalController@index')->name('rental.index');

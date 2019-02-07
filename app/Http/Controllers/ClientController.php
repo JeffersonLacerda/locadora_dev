@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use SimpleSoftwareIO\QrCode\Facades\QrCode;
 use App\Models\Client;
 use App\Models\Holder;
 use App\Services\Util;
@@ -30,31 +31,38 @@ class ClientController extends Controller
     }
     public function dependent_create($id)
     {
+        $holder = Holder::with('dependents')->findOrFail($id);
         $countries = Util::iso3166();
         $state = Holder::groupBy('state')->pluck('state');
         $city = Holder::groupBy('city')->pluck('city');
         $district = Holder::groupBy('district')->pluck('district');
+        if($holder->dependents->count() >= 4){
+            return redirect()->route('client.edit', $holder->client_id)->with('erro', 'Foi atingido o limite de 3 dependentes.');
+        }
         return view('client.include.dependents_form', compact('id','countries', 'state', 'city', 'district'));
     }
     public function dependent_store(Request $request)
     {
+        $holder = Holder::findOrFail($request->holder_id);
+        if($holder->dependents->count() >= 4){
+            return redirect()->route('client.edit', $holder->client_id)->with('erro', 'Foi atingido o limite de 3 dependentes.');
+        }
         $request->validate([
             "name" => "required",
-            "email" => "required|unique:clients",
+            "email" => "required",
             "birth_date" => "required",
             "gender" => "required",
             "type" => "required",
             "holder_id" => "required",
         ]);
         Client::create($request->all());
-        $holder = Holder::findOrFail($request->holder_id);
         return redirect()->route('client.edit', $holder->client_id);
     }
     public function store(Request $request)
     {
         $request->validate([
             "name" => "required",
-            "email" => "required|unique:clients",
+            "email" => "required",
             "birth_date" => "required",
             "gender" => "required",
             "type" => "required",
@@ -169,5 +177,10 @@ class ClientController extends Controller
         }
         $holder->save();
         return redirect()->route('client.edit', $id);
+    }
+    public function identity($id)
+    {
+        $clients = Client::whereIn('id', json_decode($id))->get();
+        return view('client.qrcode', compact('clients'));
     }
 }
