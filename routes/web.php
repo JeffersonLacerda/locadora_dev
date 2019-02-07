@@ -117,4 +117,6 @@ Route::put('/cliente/{id}/dependente/editar','ClientController@dependent_update'
 Route::delete('/cliente/{id}/remover','ClientController@destroy')->name('client.destroy');
 
 /* Rotas RN locadora */
-Route::get('/locacao','RentalController@index')->name('rental.index');
+Route::get('/locacao','RentalController@rental_client')->name('rental.client');
+Route::post('/locacao/items','RentalController@rental_items')->name('rental.items');
+Route::get('/locacao/add_qrcode/{id}','RentalController@rental_add_item_qrcode')->name('rental.add_qrcode');

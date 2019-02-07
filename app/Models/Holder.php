@@ -25,4 +25,10 @@ class Holder extends Model
     public function dependents(){
         return $this->hasMany('App\Models\Client');
     }
+
+    public function getNameAttribute(){
+        $client = $this->dependents()->get();
+        $client = $client->where('type', 'Titular')->first();
+        return $client->name;
+    }
 }

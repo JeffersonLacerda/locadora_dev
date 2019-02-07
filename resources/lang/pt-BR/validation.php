@@ -172,6 +172,8 @@ return [
         'cell_phone'                => 'telefone celular',
         'distributor_id'            => 'distribuidora',
 
+        'client_qrcode'            => 'QR Code de cliente',
+
     ],
 
 ];
