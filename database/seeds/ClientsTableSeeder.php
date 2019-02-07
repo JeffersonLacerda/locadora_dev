@@ -1788,5 +1788,195 @@ class ClientsTableSeeder extends Seeder
             'type' => 'Dependente',
             'holder_id' => $holder->id,
         ]);
+        // -- Titular 46:
+        $client = Client::create([
+            'name' => 'Wellyson Fernando Nunes Souza',
+            'email' => 'wfns@cin.ufpe.br',
+            'gender' => 'Masculino',
+            'birth_date' => '1987-05-15',
+            'type' => 'Titular',
+            'holder_id' => null,
+        ]);
+        $holder = Holder::create([
+            'cpf' => '15472678447',
+            'place' => 'Rua Constâncio Dovaizim',
+            'number' => null,
+            'complement' => '',
+            'district' => 'Pedra Redonda',
+            'city' => 'Pesqueira',
+            'state' => 'PE',
+            'country' => 'Brasil',
+            'workplace' => 'IFPE Campus Pesqueira',
+            'home_phone' => '8728710346',
+            'cell_phone' => '87994746065',
+            'work_phone' => '8734011199',
+            'client_id' => $client->id,
+        ]);
+        $client->holder_id = $holder->id;
+        $client->save();
+        // ---- Dependentes do titular 46:
+        Client::create([
+            'name' => 'Celly Mayara Carvalho Cordeiro Souza',
+            'email' => 'contato@celly32.com',
+            'gender' => 'Feminino',
+            'birth_date' => '1989-06-23',
+            'type' => 'Dependente',
+            'holder_id' => $holder->id,
+        ]);
+        // -- Titular 47:
+        $client = Client::create([
+            'name' => 'Jobson Tenorio do Nascimento',
+            'email' => 'jtn@cin.ufpe.br',
+            'gender' => 'Masculino',
+            'birth_date' => '1981-06-14',
+            'type' => 'Titular',
+            'holder_id' => null,
+        ]);
+        $holder = Holder::create([
+            'cpf' => '94962057472',
+            'place' => 'Rua Cícero Santino dos Santos',
+            'number' => '521',
+            'complement' => '',
+            'district' => 'Gameleira',
+            'city' => 'Belo Jardim',
+            'state' => 'PE',
+            'country' => 'Brasil',
+            'workplace' => 'IFPE Campus Pesqueira',
+            'home_phone' => '8128756108',
+            'cell_phone' => '81996958866',
+            'work_phone' => '8734011199',
+            'client_id' => $client->id,
+        ]);
+        $client->holder_id = $holder->id;
+        $client->save();
+        // ---- Dependentes do titular 47:
+        Client::create([
+            'name' => 'Juliene Maria Miranda Tenorio',
+            'email' => 'contato@julienemariamiranda.com',
+            'gender' => 'Feminino',
+            'birth_date' => '1981-08-02',
+            'type' => 'Dependente',
+            'holder_id' => $holder->id,
+        ]);
+        Client::create([
+            'name' => 'Joane Maria Miranda Tenorio',
+            'email' => 'contato@julienemariamiranda.com',
+            'gender' => 'Feminino',
+            'birth_date' => '2011-04-12',
+            'type' => 'Dependente',
+            'holder_id' => $holder->id,
+        ]);
+        Client::create([
+            'name' => 'Lino João Miranda Tenorio',
+            'email' => 'contato@julienemariamiranda.com',
+            'gender' => 'Masculino',
+            'birth_date' => '2016-03-17',
+            'type' => 'Dependente',
+            'holder_id' => $holder->id,
+        ]);
+        // -- Titular 48:
+        $client = Client::create([
+            'name' => 'Jose Fernando da Silva',
+            'email' => 'jsf5@cin.ufpe.br',
+            'gender' => 'Masculino',
+            'birth_date' => '1985-10-07',
+            'type' => 'Titular',
+            'holder_id' => null,
+        ]);
+        $holder = Holder::create([
+            'cpf' => '13606186436',
+            'place' => 'Rua Major Capitu',
+            'number' => '10',
+            'complement' => '',
+            'district' => 'Centro',
+            'city' => 'Lajedo',
+            'state' => 'PE',
+            'country' => 'Brasil',
+            'workplace' => 'IFPE Campus Garanhuns',
+            'home_phone' => '8729552633',
+            'cell_phone' => '87992570182',
+            'work_phone' => '8734011199',
+            'client_id' => $client->id,
+        ]);
+        $client->holder_id = $holder->id;
+        $client->save();
+        // ---- Dependentes do titular 48:
+        Client::create([
+            'name' => 'Libina Oliveira dos Santos',
+            'email' => 'libina@hotmail.com',
+            'gender' => 'Feminino',
+            'birth_date' => '1987-04-16',
+            'type' => 'Dependente',
+            'holder_id' => $holder->id,
+        ]);
+        Client::create([
+            'name' => 'Marina Júlia Oliveira Silva',
+            'email' => 'jsf5@cin.ufpe.br',
+            'gender' => 'Feminino',
+            'birth_date' => '2015-01-12',
+            'type' => 'Dependente',
+            'holder_id' => $holder->id,
+        ]);
+        // -- Titular 49:
+        $client = Client::create([
+            'name' => 'Anderson França Ferreira',
+            'email' => 'aff2@cin.ufpe.br',
+            'gender' => 'Masculino',
+            'birth_date' => '1984-08-01',
+            'type' => 'Titular',
+            'holder_id' => null,
+        ]);
+        $holder = Holder::create([
+            'cpf' => '98832416409',
+            'place' => 'Avenida Professor Andrade Bezerra, s/n Loja 19',
+            'number' => '769',
+            'complement' => '',
+            'district' => 'Salgadinho',
+            'city' => 'Olinda',
+            'state' => 'PE',
+            'country' => 'Brasil',
+            'workplace' => 'IFPE Campus Igarassu',
+            'home_phone' => '8138170424',
+            'cell_phone' => '81997222016',
+            'work_phone' => '8734011199',
+            'client_id' => $client->id,
+        ]);
+        $client->holder_id = $holder->id;
+        $client->save();
+        // ---- Dependentes do titular 49:
+        Client::create([
+            'name' => 'Adelson França Ferreira',
+            'email' => 'aff2@cin.ufpe.br',
+            'gender' => 'Masculino',
+            'birth_date' => '1974-09-19',
+            'type' => 'Dependente',
+            'holder_id' => $holder->id,
+        ]);
+        // -- Titular 50:
+        $client = Client::create([
+            'name' => 'Vinicius Cardoso Garcia',
+            'email' => 'vcg@cin.ufpe.br',
+            'gender' => 'Masculino',
+            'birth_date' => '1985-09-09',
+            'type' => 'Titular',
+            'holder_id' => null,
+        ]);
+        $holder = Holder::create([
+            'cpf' => '93202662473',
+            'place' => 'Avenida Recife',
+            'number' => '900',
+            'complement' => '',
+            'district' => 'Areias',
+            'city' => 'Recife',
+            'state' => 'PE',
+            'country' => 'Brasil',
+            'workplace' => 'CIN UFPE',
+            'home_phone' => '8127478944',
+            'cell_phone' => '81995547646',
+            'work_phone' => null,
+            'client_id' => $client->id,
+        ]);
+        $client->holder_id = $holder->id;
+        $client->save();
     }
 }

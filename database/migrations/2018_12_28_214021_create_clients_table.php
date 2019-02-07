@@ -16,7 +16,7 @@ class CreateClientsTable extends Migration
         Schema::create('clients', function (Blueprint $table) {
             $table->increments('id');
             $table->string('name');
-            $table->string('email', 150)->unique();
+            $table->string('email', 150);
             $table->enum('gender', ['Masculino', 'Feminino']);
             $table->date('birth_date');
             $table->enum('type', ['Titular', 'Dependente']);
@@ -25,7 +25,7 @@ class CreateClientsTable extends Migration
             $table->timestamps();
         });
 
-        Schema::table('holders', function (Blueprint $table) {    
+        Schema::table('holders', function (Blueprint $table) {
             $table->foreign('client_id')->references('id')->on('clients')->onUpdate('cascade')->onDelete('restrict');
         });
     }
@@ -40,7 +40,7 @@ class CreateClientsTable extends Migration
         Schema::table('clients', function (Blueprint $table){
             $table->dropForeign(['holder_id']);
         });
-        Schema::table('holders', function (Blueprint $table) {    
+        Schema::table('holders', function (Blueprint $table) {
             $table->dropForeign(['client_id']);
         });
         Schema::dropIfExists('clients');

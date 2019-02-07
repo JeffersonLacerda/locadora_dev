@@ -50,6 +50,10 @@
                                 {{ csrf_field() }}
                                 {{ method_field('DELETE')}}
                                 <div class="btn-group">
+                                    @php
+
+                                    @endphp
+                                    <abbr title="Impressao de carteira"><a target="_blank" href="{{ route('client.identity', json_encode($c->holder->dependents->pluck('id')->toArray())) }}" class="btn btn-default btn-sm" style="color: darkblue"><i class="fas fa-print"></i></a></abbr>
                                     <abbr title="Modificar cliente"><a href="{{ route('client.edit', $c->id) }}" class="btn btn-default btn-sm" style="color: darkgreen"><i class="fas fa-edit"></i></a></abbr>
                                     <abbr title="Remover cliente"><button type="submit" class="btn btn-default btn-sm form-delete"><i class="fas fa-trash-alt" style="color: darkred"></i></button></abbr>
                                 </div>
