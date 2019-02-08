@@ -101,6 +101,7 @@ Route::get('/filme/adicionar/{id}','MovieController@create_tmdb')->name('movie.c
 Route::get('/filme/{id}/editar','MovieController@edit')->name('movie.edit');
 Route::put('/filme/{id}/editar','MovieController@update');
 Route::delete('/filme/{id}/remover','MovieController@destroy')->name('movie.destroy');
+Route::get('/filme/{id}/qrcode','MovieController@qrcode')->name('movie.qrcode');
 Route::get('/filme/{id}', 'SiteController@movie_details')->name('movie_details');
 
 /* Rotas do model Client/Holder */

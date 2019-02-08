@@ -7,6 +7,7 @@ use Illuminate\Validation\Rule;
 use App\Models\Movie;
 use App\Models\Type;
 use App\Models\Genre;
+use App\Models\Item;
 use App\Services\Util;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Storage;
@@ -115,7 +116,7 @@ class MovieController extends Controller
         try {
             DB::transaction(function () use ($request, $id){
                 $movie = Movie::findOrFail($id);
-                $movie->genres()->sync([]); 
+                $movie->genres()->sync([]);
                 foreach ($request->genres as $g) {
                     $genre = Genre::findOrFail($g);
                     $movie->genres()->attach($genre->id);
@@ -146,6 +147,11 @@ class MovieController extends Controller
         $qtde = $tmdb->total_results;
         $movies = $tmdb->results;
         return view('movie.tmdb_list', compact('qtde', 'movies'));
+    }
+    public function qrcode($id)
+    {
+        $itens = Item::with('movie.type','media')->whereIn('id', json_decode($id))->get();
+        return view('movie.qrcode', compact('itens'));
     }
 
 }
