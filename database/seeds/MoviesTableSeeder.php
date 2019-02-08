@@ -1956,6 +1956,43 @@ class MoviesTableSeeder extends Seeder
         $genre = Genre::where('tmdb_id', 878)->first();
         $movie->genres()->attach($genre->id);
 
+        $movie = Movie::create([
+            'tmdb_id' => '47931', 
+            'title' => 'Tropa de Elite 2: O Inimigo Agora é Outro', 
+            'original_title' => 'Tropa de Elite 2', 
+            'poster' => 'http://image.tmdb.org/t/p/original/jgypIpQ4TU0fjYEnqxmKFp0hUwe.jpg', 
+            'country' => 'BR', 
+            'year' => 2010, 
+            'direction' => 'José Padilha', 
+            'cast' => 'Wagner Moura, Irandhir Santos, André Ramiro, Pedro Van-Held, Maria Ribeiro, Sandro Rocha, Milhem Cortaz, Tainá Müller, Seu Jorge, André Mattos, Adriano Garib, Júlio Adrião, Emílio Orciollo Netto, Charles Fricks, Fabrício Boliveira, Pierre Santos, Cadu Fávero, Luca Bianchi, Juliana Schalch, Rogério Trindade, Luciano Vidigal, Prazeres Barbosa, Roney Villela, Rose Abdallah, Thogun Teixeira, Kikito Junqueira, Marcelo Freixo', 
+            'synopsis' => 'Nascimento (Wagner Moura), agora coronel, foi afastado do BOPE por conta de uma mal sucedida operação. Desta forma, ele vai parar na inteligência da Secretaria de Segurança Pública do Estado. Contudo, ele descobre que o sistema que tanto combate é mais podre do que imagina e que o buraco é bem mais embaixo. Seus problemas só aumentam, porque o filho, Rafael (Pedro Van Held), tornou-se adolescente, Rosane (Maria Ribeiro) não é mais sua esposa e seu arqui-inimigo, Fraga (Irandhir Santos), ocupa posição de destaque no seio de sua família.', 
+            'duraction' => '115', 
+            'type_id' => '1',
+        ]);
+        $genre = Genre::where('tmdb_id', 28)->first();
+        $movie->genres()->attach($genre->id);
+        $genre = Genre::where('tmdb_id', 80)->first();
+        $movie->genres()->attach($genre->id);
+        $genre = Genre::where('tmdb_id', 18)->first();
+        $movie->genres()->attach($genre->id);
+
+        $movie = Movie::create([
+            'tmdb_id' => '58496', 
+            'title' => 'Senna', 
+            'original_title' => 'Senna', 
+            'poster' => 'http://image.tmdb.org/t/p/original/vfiaf7rBWNfxp5erFq9IeGMYbS4.jpg', 
+            'country' => 'FR, GB', 
+            'year' => 2010, 
+            'direction' => 'Asif Kapadia', 
+            'cast' => 'Ayrton Senna, Alain Prost, Frank Williams, Ron Dennis, Viviane Senna, Milton da Silva, Neide Senna, Jackie Stewart, Sid Watkins, Galvão Bueno, Reginaldo Leme, Gerhard Berger, Nelson Piquet, Nigel Mansell, Jean-Marie Balestre, Bernie Ecclestone, John Bisignano, Pierre Van Vliet', 
+            'synopsis' => 'A notável história de Ayrton Senna pontuando suas realizações físicas e espirituais nas pistas e fora delas, sua busca por perfeição e o status de mito que ele alcançou são os temas de SENNA, um documentário que abrange os anos da lenda do automobilismo como piloto de F1 desde sua temporada de estréia em 1984 até sua morte precoce uma década depois.', 
+            'duraction' => '106', 
+            'type_id' => '1',
+        ]);
+        $genre = Genre::where('tmdb_id', 99)->first();
+        $movie->genres()->attach($genre->id);
+        
+
     }
 
 }

@@ -18,7 +18,7 @@ class ItemsTableSeeder extends Seeder
         foreach ($movies as $m) {
             $d1 = random_int(1, 6);
             $d2 = random_int(7, 9);
-            if ($m->year < 2001) {
+            if ($m->year < 2000) {
                 Item::create([
                     'serial_number' => Keygen::numeric(20)->generate(),
                     'purchase_date' => '2019-01-02',
@@ -33,7 +33,7 @@ class ItemsTableSeeder extends Seeder
                     'media_id' => 1,
                     'distributor_id' => $d2,
                 ]);
-            } elseif ($m->year < 2011){
+            } elseif ($m->year < 2010){
                 Item::create([
                     'serial_number' => Keygen::numeric(20)->generate(),
                     'purchase_date' => '2019-01-02',
