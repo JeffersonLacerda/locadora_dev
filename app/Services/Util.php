@@ -4,10 +4,26 @@ namespace App\Services;
 use Illuminate\Support\Facades\File;
 use Intervention\Image\Facades\Image;
 use Illuminate\Support\Facades\Storage;
+use Carbon\Carbon;
 
 class Util
 {
 
+
+    public static function return_date($return_deadline)
+    {
+        $days = 0;
+        $return_date = Carbon::now();
+        $working_days = explode(",", env('WORKING_DAYS','1,2,3,4,5,6'));
+        do{
+            $return_date = $return_date->addDays(1);
+            //Se for dia últil - conta mais um dia
+            if (in_array($return_date->format('N'), $working_days)){
+                $days++;
+            }
+        } while($days != $return_deadline);
+        return $return_date->format('d/m/Y');
+    }
 
     public static function saveImage ($image, $size){
         if (!is_null($image))
