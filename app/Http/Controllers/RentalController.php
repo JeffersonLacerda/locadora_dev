@@ -43,6 +43,10 @@ class RentalController extends Controller
         return view('rental.add_items', compact('items', 'client'));
     }
 
+    public function return_date($days){
+        return Util::return_date($days);
+    }
+
     public function rental_add_item_qrcode($id)
     {
         $id_media = substr($id, 0, 2) * 1;
@@ -68,7 +72,9 @@ class RentalController extends Controller
             $data['type'] = $item->movie->type->description;
             $data['media'] = $item->media->description;
             $data['price'] = $item->media->rental_price * (1 + $item->movie->type->increase);
+            $data['discount'] = 0;
             $data['return_deadline'] = $item->movie->type->return_deadline;
+            $data['return_deadline_extension'] = 0;
             $data['return_date'] = Util::return_date($item->movie->type->return_deadline);
         } 
         $response['data'] = $data;

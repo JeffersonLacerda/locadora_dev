@@ -58,6 +58,9 @@
             @endif
             <div class="container-fluid">
                 <div class="row">
+                    {{-- <div class="col-md-4">
+                    </div> --}}
+                    
                     <div class="col-md-6">
                         <div class="box box-widget widget-user-2">
                             <!-- Add the bg color to the header using any of the bg-* classes -->
@@ -127,10 +130,13 @@
                                     <tr>
                                         <th>TÍTULO</th>
                                         <th>TIPO</th>
+                                        <th>PRAZO</th>
                                         <th>MÍDIA</th>
                                         <th>VALOR</th>
-                                        <th>PRAZO</th>
+                                        <th>DESCONTO</th>
+                                        <th>PRORROGAÇÃO</th>
                                         <th>DATA DE DEVOLUÇÃO</th>
+                                        <th>TOTAL</th>
                                         <th>AÇÕES</th>
                                     </tr>
                                 </thead>
@@ -153,9 +159,40 @@
     <script src="{{ asset('vendor/webcodecamjs/js/qrcodelib.js') }}"></script>
     <script src="{{ asset('vendor/webcodecamjs/js/webcodecamjs.js') }}"></script>
     <script>
-
+        function refreshTable(myMap){
+            $('#tb_items tbody').html('');
+            for (var value of myMap.values()) {
+                var linha = "";
+                var total = value.data.price - value.data.discount;
+                //Calcular data de devolução
+                var prazo = value.data.return_deadline + value.data.return_deadline_extension;
+                var data_de_devolucao = value.data.return_date;
+                var rota = "{{ route('rental.return_date', '') }}/" + prazo;
+                if (value.data.return_deadline_extension != 0){
+                    $.get(rota, function(data, status){
+                        if (status == 'success'){
+                            data_de_devolucao = data;
+                        }
+                    });
+                }
+                //---------------------------
+                linha += "<tr>";
+                linha += "<td>" + value.data.title + "</td>";
+                linha += "<td>" + value.data.type + "</td>";
+                linha += "<td>" + value.data.return_deadline + "</td>";
+                linha += "<td>" + value.data.media + "</td>";
+                linha += "<td>" + value.data.price.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' }) + "</td>";
+                linha += "<td>" + value.data.discount.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' }) + "</td>";
+                linha += "<td>" + value.data.return_deadline_extension + "</td>";
+                linha += "<td>" + data_de_devolucao + "</td>";
+                linha += "<td>" + total.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' }) + "</td>";
+                linha += "<td></td>";
+                linha += "</tr>";
+                $('#tb_items tbody').append(linha);
+            }
+        }
         $(document).ready( function () {
-            var mySet = new Set();
+            var myMap = new Map();
             var txt = "innerText" in HTMLElement.prototype ? "innerText" : "textContent";
             var arg = {
                 resultFunction: function(result) {
@@ -164,23 +201,17 @@
                         if (status == 'success'){
                             var response = $.parseJSON(data);
                             if (response.status == "Available"){
-                                if (!mySet.has(response.data.id)){
-                                    mySet.add(response.data.id);
-                                    var linha = "";
-                                    linha += "<tr>";
-                                    linha += "<td>" + response.data.title + "</td>";
-                                    linha += "<td>" + response.data.type + "</td>";
-                                    linha += "<td>" + response.data.media + "</td>";
-                                    linha += "<td>" + response.data.price + "</td>";
-                                    linha += "<td>" + response.data.return_deadline + "</td>";
-                                    linha += "<td>" + response.data.return_date + "</td>";
-                                    linha += "<td></td>";
-                                    linha += "</tr>";
-                                    $('#tb_items tbody').append(linha);
+                                if (!myMap.has(response.data.id)){
+                                    myMap.set(response.data.id, response);
+                                    console.log(response.data.id);
+                                    refreshTable(myMap);
                                 }
                             } else if(response.status == "Not Found") {
                                 alert("Item não cadastrado!");
+                            } else {
+                                alert("Item indisponível no momento.");
                             }
+
                         }
                     });
                 }
