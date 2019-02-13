@@ -5,8 +5,11 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\Client;
 use App\Models\Item;
+use App\Models\Rental;
+use App\Models\Rental_item;
 use App\Services\Util;
 use Carbon\Carbon;
+use Illuminate\Support\Facades\DB;
 
 class RentalController extends Controller
 {
@@ -14,6 +17,52 @@ class RentalController extends Controller
     public function __construct()
     {
         $this->middleware(['auth', 'can:customer_service']);
+    }
+
+    public function index()
+    {
+        
+    }
+
+    public function rental_save(Request $request)
+    {
+        $request->validate([
+            'client_id' => 'required|exists:clients,id',
+            'data_items' => 'required|json',
+        ]);
+        $client_id = $request->client_id;
+        $items = json_decode($request->data_items);
+        dd($client_id, $items);
+        try {
+            DB::transaction(function () use ($client_id, $items){
+                $rental = Rental::create([
+                    'client_id' => $client_id,
+                    'status' => 'Pendente',
+                    'rental_user' => \Auth::user()->id,
+                ]);
+                foreach ($items as $item) {
+                    $i = json_decode($item);
+                    Rental_item::create([
+                        'rental_id' => $rental->id,
+                        'item_id' => $i->data->id,
+                        'item_price' => $i->data->price,
+                        'discount' => $i->data->discount,
+                        'rental_price' => $i->data->price - $i->data->discount,
+                        'return_deadline' => $i->data->return_deadline,
+                        'return_deadline_extension' => $i->data->return_deadline_extension,
+                        'expected_return_date' => $i->data->price,
+                        'return_date',
+                        'return_user',
+                    ]);
+                }
+                /* $movie->genres()->attach(8000); */
+            });
+        }catch (\Exception $e) {
+            return redirect()->route('movie.create')->with('erro', 'Erro na tentativa de inserir o registro no banco de dados.');
+        }
+
+        dd($items, $request->all());
+        
     }
 
     public function rental_client()
@@ -40,6 +89,17 @@ class RentalController extends Controller
             $client_qrcode = $request->client_qrcode;
             return view('rental.add_items', compact('client_qrcode', 'items', 'client'));
         }
+        return view('rental.add_items', compact('items', 'client'));
+    }
+
+    public function rental_items2($id)
+    {
+        /* $client = Client::findOrFail($id); */
+        $client = Client::with('holder')->whereHas('holder', function ($query){
+            $query->where('active', true);
+        /* })->where('id', $id)->first(); */
+        })->findOrFail($id);
+        $items = Item::with('movie', 'media')->where('status', 'Disponível')->get();
         return view('rental.add_items', compact('items', 'client'));
     }
 

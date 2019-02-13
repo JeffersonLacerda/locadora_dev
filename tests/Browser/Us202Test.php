@@ -47,7 +47,7 @@ class Us202Test extends DuskTestCase
                     ->click('#btnClear')
                     ->keys("input[placeholder='Selecione o tipo de Mídia']", 'VHS', '{enter}')
                     ->click('#btnAdvancedSearch')
-                    ->waitForText('Exibindo 1 até 10 de 24 registros') 
+                    ->waitForText('Exibindo 1 até 10 de 23 registros') 
                     ->assertSee('Coração de Dragão')
                     /* Busca por elenco */
                     ->click('#lblBA')
@@ -71,7 +71,7 @@ class Us202Test extends DuskTestCase
                     ->click('#btnClear')
                     ->keys("input[placeholder='Selecione a nacionalidade']", 'BR', '{enter}')
                     ->click('#btnAdvancedSearch')
-                    ->waitForText('Exibindo 1 até 7 de 7 registros') 
+                    ->waitForText('Exibindo 1 até 8 de 8 registros') 
                     ->assertSee('Até que a Sorte nos Separe')
                     /* Busca por tipo (catálogo ou lançamento) */
                     ->click('#lblBA')
@@ -88,7 +88,7 @@ class Us202Test extends DuskTestCase
                     ->click('#btnClear')
                     ->keys("input[placeholder='Selecione o tipo (Catálogo ou Lançamento)']", 'Catálogo', '{enter}')
                     ->click('#btnAdvancedSearch')
-                    ->waitForText('Exibindo 1 até 10 de 65 registros') 
+                    ->waitForText('Exibindo 1 até 10 de 67 registros') 
                     ->assertSee('Armageddon')
                     /* Busca combinada */
                     /* Nacionalidade: US, Tipo: Catálogo */
@@ -112,7 +112,7 @@ class Us202Test extends DuskTestCase
                     ->waitForText('Busca avançada:')
                     ->keys("input[placeholder='Selecione o tipo de Mídia']", 'Blu-Ray', '{enter}')
                     ->click('#btnAdvancedSearch')
-                    ->waitForText('Exibindo 1 até 10 de 16 registros') 
+                    ->waitForText('Exibindo 1 até 10 de 17 registros') 
                     ->assertSee('Independence Day: O Ressurgimento')
                     /* Busca combinada */
                     /* Titulo: Star Wars, Gênero: Ficção científica, Mídia: Blu-Ray, Nacionalidade: US, Tipo: Catálogo */

@@ -60,11 +60,11 @@
             <div class="container-fluid">
                 <div class="row">
                     <div class="col-md-6 col-md-offset-3" style="text-align: center;">
-                        <form id="form_clientID" method="post" action="{{ route('rental.items') }}">
-                            {{ csrf_field() }}
+                        <form id="form_clientID" method="get" action="{{ route('rental.items', '') }}">
+                            {{-- {{ csrf_field() }} --}}
                             <div class="form-group {{ $errors->has('client_id') ? 'has-error' : '' }}">
                                 <label for="client_id">Cliente</label>
-                                <select class="form-control select2" name="client_id" id="client_id" style="width: 100%;">
+                                <select class="form-control select2" id="client_id" style="width: 100%;">
                                     <option disabled selected value> -- selecione o cliente -- </option>
                                 @foreach($clients as $c)
                                     <option value="{{ $c->id }}">
@@ -72,16 +72,10 @@
                                     </option>
                                 @endforeach
                                 </select>
-                                @if ($errors->has('client_id'))
-                                    <span class="help-block">
-                                        <strong>{{ $errors->first('client_id') }}</strong>
-                                    </span>
-                                @endif
                             </div>
                             {{-- <div class="col-md-6 col-md-offset-3">
                                 <button type="submit" class="btn btn-primary btn-block"><i class="fas fa-arrow-right"></i> Próximo</button>
                             </div> --}}
-                            <input type="hidden" name="type" value="id">
                         </form>
                     </div>
                 </div>
@@ -90,21 +84,20 @@
                 </div>
                 <div class="row">
                     <div class="col-md-4 col-md-offset-4" style="text-align: center;">
-                        <form id="form_clientQR" method="post" action="{{ route('rental.items') }}">
-                            {{ csrf_field() }}
+                        <form id="form_clientQR" method="get" action="{{ route('rental.items', '') }}">
+                            {{-- {{ csrf_field() }} --}}
                             <div class="form-group {{ $errors->has('client_qrcode') ? 'has-error' : '' }}">
                                 <label for="client_qrcode">
                                     <i id="img_qrcode" class="fas fa-qrcode"></i> Leitor de qrcode:
                                 </label>
                                 <canvas style="width: 100%;"></canvas>
-                                <input type="hidden" name="client_qrcode" id="client_qrcode" >
+                                {{-- <input type="hidden" name="client_qrcode" id="client_qrcode" > --}}
                                 @if ($errors->has('client_qrcode'))
                                     <span class="help-block">
                                         <strong>{{ $errors->first('client_qrcode') }}</strong>
                                     </span>
                                 @endif
                             </div>
-                            <input type="hidden" name="type" value="qrcode">
                         </form>
                     </div>
                 </div>
@@ -128,7 +121,9 @@
             var txt = "innerText" in HTMLElement.prototype ? "innerText" : "textContent";
             var arg = {
                 resultFunction: function(result) {
-                    $('#client_qrcode').val(result.code);
+                    /* $('#client_qrcode').val(result.code); */
+                    var rota = "{{ route('rental.items', '') }}/" + result.code * 1;
+                    $('#form_clientQR').attr('action', rota);
                     $('#form_clientQR').submit();
                     /* alert(result.code); */
                 }
@@ -140,6 +135,8 @@
             });
 
             $('#client_id').change(function (){
+                var rota = "{{ route('rental.items', '') }}/" + $('#client_id').val();
+                $('#form_clientID').attr('action', rota);
                 $('#form_clientID').submit();
             });
         });
