@@ -21,7 +21,9 @@ class RentalController extends Controller
 
     public function index()
     {
-        
+        $rentals = Rental::with('client.holder','items')->get();
+        /* dd($rentals); */
+        return view('rental.index', compact('rentals'));
     }
 
     public function rental_save(Request $request)
@@ -32,7 +34,6 @@ class RentalController extends Controller
         ]);
         $client_id = $request->client_id;
         $items = json_decode($request->data_items);
-        dd($client_id, $items);
         try {
             DB::transaction(function () use ($client_id, $items){
                 $rental = Rental::create([
@@ -42,27 +43,27 @@ class RentalController extends Controller
                 ]);
                 foreach ($items as $item) {
                     $i = json_decode($item);
+                    /* dd($i->data->price * 1 - $i->data->discount * 1); */
                     Rental_item::create([
                         'rental_id' => $rental->id,
                         'item_id' => $i->data->id,
-                        'item_price' => $i->data->price,
-                        'discount' => $i->data->discount,
-                        'rental_price' => $i->data->price - $i->data->discount,
-                        'return_deadline' => $i->data->return_deadline,
-                        'return_deadline_extension' => $i->data->return_deadline_extension,
-                        'expected_return_date' => $i->data->price,
-                        'return_date',
-                        'return_user',
+                        'item_price' => $i->data->price * 1,
+                        'discount' => $i->data->discount * 1,
+                        'rental_price' => ($i->data->price * 1 - $i->data->discount * 1),
+                        'return_deadline' => $i->data->return_deadline * 1,
+                        'return_deadline_extension' => $i->data->return_deadline_extension * 1,
+                        'expected_return_date' => Carbon::createFromFormat('d/m/Y', Util::return_date($i->data->return_deadline * 1 + $i->data->return_deadline_extension *1))->format('Y-m-d'),
+                        'return_date' => null,
+                        'return_user' => null,
                     ]);
                 }
-                /* $movie->genres()->attach(8000); */
             });
         }catch (\Exception $e) {
-            return redirect()->route('movie.create')->with('erro', 'Erro na tentativa de inserir o registro no banco de dados.');
+            dd($e);
+            return redirect()->route('rental.items', $client_id)->with('erro', 'Erro na tentativa de registrar a locação.');
         }
-
-        dd($items, $request->all());
-        
+        return redirect()->route('rental.index');
+        /* dd($items, $request->all()); */
     }
 
     public function rental_client()
@@ -140,6 +141,16 @@ class RentalController extends Controller
         $response['data'] = $data;
         return json_encode($response);
 
+    }
+
+    public function edit()
+    {
+        
+    }
+
+    public function cancel()
+    {
+        
     }
 
 }

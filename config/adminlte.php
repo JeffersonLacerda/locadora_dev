@@ -118,6 +118,7 @@ return [
             'text' => 'Locação',
             'icon' => 'sign-out-alt',
             'can'  => 'customer_service',
+            'route'=> 'rental.index',
         ],
         [
             'text' => 'Reserva',

@@ -122,10 +122,8 @@ Route::get('/cliente/{id}/carteira','ClientController@identity')->name('client.i
 Route::get('/return_date/{days}','RentalController@return_date')->name('rental.return_date');
 Route::get('/locacao/listar','RentalController@index')->name('rental.index');
 Route::post('/locacao/gravar','RentalController@rental_save')->name('rental.save');
-Route::get('/locacao','RentalController@rental_client')->name('rental.client');
+Route::get('/locacao/cliente','RentalController@rental_client')->name('rental.client');
 Route::get('/locacao/items/{id}', 'RentalController@rental_items2')->name('rental.items');
-/* Route::get('/locacao/items', function(){
-    return redirect()->route('rental.client');
-});
-Route::post('/locacao/items','RentalController@rental_items')->name('rental.items'); */
+Route::put('/locacao/editar/{id}','RentalController@edit')->name('rental.edit');
+Route::put('/locacao/cancelar/{id}','RentalController@cancel')->name('rental.cancel');
 Route::get('/locacao/add_qrcode/{id}','RentalController@rental_add_item_qrcode')->name('rental.add_qrcode');

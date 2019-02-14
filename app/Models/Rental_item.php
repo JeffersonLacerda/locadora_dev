@@ -11,6 +11,7 @@ class Rental_item extends Model
         'item_id',
         'item_price',
         'discount',
+        'surcharge',
         'rental_price',
         'return_deadline',
         'return_deadline_extension',

@@ -40,7 +40,8 @@
     <h1>Locação (Selecione o cliente)</h1>
     <ol class="breadcrumb">
         <li><a href="{{ route('home') }}"><i class="fas fa-home"></i></a></li>
-        <li><a href="{{ route('rental.client') }}">Locação</a></li>
+        <li><a href="{{ route('rental.index') }}">Locações</a></li>
+        <li><a href="{{ route('rental.client') }}">Selecionar o Cliente</a></li>
     </ol>
 @stop
 

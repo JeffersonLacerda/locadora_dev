@@ -13,7 +13,12 @@ class Rental extends Model
         'rental_user',
     ];
 
+
+    public function client(){
+        return $this->belongsTo('App\Models\Client');
+    }
+
     public function items(){
-        return $this->belongsToMany('App\Models\Rental_item');
+        return $this->hasMany('App\Models\Rental_item');
     }
 }
