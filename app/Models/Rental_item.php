@@ -20,4 +20,8 @@ class Rental_item extends Model
         'return_user',
     ];
 
+    public function item(){
+        return $this->belongsTo('App\Models\Item');
+    }
+
 }

@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\Client;
 use App\Models\Item;
+use App\Models\Movie;
 use App\Models\Rental;
 use App\Models\Rental_item;
 use App\Services\Util;
@@ -22,7 +23,6 @@ class RentalController extends Controller
     public function index()
     {
         $rentals = Rental::with('client.holder','items')->get();
-        /* dd($rentals); */
         return view('rental.index', compact('rentals'));
     }
 
@@ -56,10 +56,12 @@ class RentalController extends Controller
                         'return_date' => null,
                         'return_user' => null,
                     ]);
+                    $item = Item::findOrFail($i->data->id);
+                    $item->status = 'Locado';
+                    $item->save();
                 }
             });
         }catch (\Exception $e) {
-            dd($e);
             return redirect()->route('rental.items', $client_id)->with('erro', 'Erro na tentativa de registrar a locação.');
         }
         return redirect()->route('rental.index');
@@ -148,9 +150,24 @@ class RentalController extends Controller
         
     }
 
-    public function cancel()
+    public function cancel($id)
     {
-        
+        $rental = Rental::findOrFail($id);
+        try {
+            DB::transaction(function () use ($rental){
+                $rental->status = 'Cancelada';
+                $rental->save();
+                $items = $rental->items;
+                foreach ($items as $i) {
+                    $item = Item::findOrFail($i->item_id);
+                    $item->status = 'Disponível';
+                    $item->save();
+                }
+            });    
+        } catch (\Exception $e) {
+            return redirect()->route('rental.index', $client_id)->with('erro', 'Erro na tentativa de cancelar a locação.');
+        }
+        return redirect()->route('rental.index');
     }
 
 }
