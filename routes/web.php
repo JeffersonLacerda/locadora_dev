@@ -127,3 +127,4 @@ Route::get('/locacao/items/{id}', 'RentalController@rental_items2')->name('renta
 Route::put('/locacao/editar/{id}','RentalController@edit')->name('rental.edit');
 Route::put('/locacao/cancelar/{id}','RentalController@cancel')->name('rental.cancel');
 Route::get('/locacao/add_qrcode/{id}','RentalController@rental_add_item_qrcode')->name('rental.add_qrcode');
+Route::get('/locacao/reserva', 'RentalController@reservation')->name('rental.reservation');

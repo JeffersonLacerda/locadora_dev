@@ -127,7 +127,7 @@ class RentalController extends Controller
         } else {
             $response['status'] = 'Available';
         }
-        
+
         $data = array();
         if ($item != null) {
             $data['id'] = $item->id;
@@ -139,15 +139,16 @@ class RentalController extends Controller
             $data['return_deadline'] = $item->movie->type->return_deadline;
             $data['return_deadline_extension'] = 0;
             $data['return_date'] = Util::return_date($item->movie->type->return_deadline);
-        } 
+        }
         $response['data'] = $data;
         return json_encode($response);
 
     }
 
-    public function edit()
+    public function reservation()
     {
-        
+        $items = Item::with('movie', 'media')->where('status', 'Disponível')->get();
+        return view('rental.reservation', compact('items'));
     }
 
     public function cancel($id)
@@ -163,11 +164,12 @@ class RentalController extends Controller
                     $item->status = 'Disponível';
                     $item->save();
                 }
-            });    
+            });
         } catch (\Exception $e) {
             return redirect()->route('rental.index', $client_id)->with('erro', 'Erro na tentativa de cancelar a locação.');
         }
         return redirect()->route('rental.index');
     }
+
 
 }
