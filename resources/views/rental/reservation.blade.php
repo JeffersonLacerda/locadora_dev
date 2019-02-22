@@ -147,7 +147,58 @@
                                     </tr>
                                 </thead>
                                 <tbody>
-
+                                    <tr>
+                                        <td>Bohemian Rhapsody</td>
+                                        <td>Lançamento</td>
+                                        <td>1</td>
+                                        <td>Blu-Ray</td>
+                                        <td>R$&nbsp;11,25</td>
+                                        <td>R$&nbsp;0,00</td>
+                                        <td>0</td>
+                                        <td>22/02/2019</td>
+                                        <td>R$&nbsp;11,25</td>
+                                        <td><div class="btn-group"><abbr title="Alterar"><a cod="67" class="btn btn-default btn-sm btn_editar" style="color: black"><i class="fas fa-edit"></i></a></abbr><abbr title="Remover"><a cod="67" class="btn btn-default btn-sm btn_remover" style="color: red"><i class="fas fa-times"></i></a></abbr></div></td>
+                                        <td></td>
+                                    </tr>
+                                    <tr>
+                                        <td>Robin Hood - A Origem</td>
+                                        <td>Lançamento</td>
+                                        <td>1</td>
+                                        <td>Blu-Ray</td>
+                                        <td>R$&nbsp;11,25</td>
+                                        <td>R$&nbsp;0,00</td>
+                                        <td>0</td>
+                                        <td>22/02/2019</td>
+                                        <td>R$&nbsp;11,25</td>
+                                        <td><div class="btn-group"><abbr title="Alterar"><a cod="75" class="btn btn-default btn-sm btn_editar" style="color: black"><i class="fas fa-edit"></i></a></abbr><abbr title="Remover"><a cod="75" class="btn btn-default btn-sm btn_remover" style="color: red"><i class="fas fa-times"></i></a></abbr></div></td>
+                                        <td></td>
+                                    </tr>
+                                    <tr>
+                                        <td>Missão Impossível - Efeito Fallout</td>
+                                        <td>Lançamento</td>
+                                        <td>1</td>
+                                        <td>HD-DVD</td>
+                                        <td>R$&nbsp;7,50</td>
+                                        <td>R$&nbsp;0,00</td>
+                                        <td>0</td>
+                                        <td>22/02/2019</td>
+                                        <td>R$&nbsp;7,50</td>
+                                        <td><div class="btn-group"><abbr title="Alterar"><a cod="106" class="btn btn-default btn-sm btn_editar" style="color: black"><i class="fas fa-edit"></i></a></abbr><abbr title="Remover"><a cod="106" class="btn btn-default btn-sm btn_remover" style="color: red"><i class="fas fa-times"></i></a></abbr></div></td>
+                                        <td></td>
+                                    </tr>
+                                    <tr>
+                                        <td>Os Incríveis 2</td>
+                                        <td>Catálogo</td>
+                                        <td>3</td>
+                                        <td>Blu-Ray</td>
+                                        <td>R$&nbsp;7,50</td>
+                                        <td>R$&nbsp;0,00</td>
+                                        <td>0</td>
+                                        <td>25/02/2019</td>
+                                        <td>R$&nbsp;7,50</td>
+                                        <td><div class="btn-group"><abbr title="Alterar"><a cod="115" class="btn btn-default btn-sm btn_editar" style="color: black"><i class="fas fa-edit"></i></a></abbr><abbr title="Remover"><a cod="115" class="btn btn-default btn-sm btn_remover" style="color: red"><i class="fas fa-times"></i></a></abbr></div></td>
+                                        <td></td>
+                                    </tr>
                                 </tbody>
                             </table>
                             <button class="btn btn-success btn-block"><i class="fa fa-fw fa-save"></i> Registrar Reserva</button>
@@ -173,6 +224,6 @@
                 }
             };
             new WebCodeCamJS("canvas").init(arg).play();
-        }
+        });
     </script>
 @stop
