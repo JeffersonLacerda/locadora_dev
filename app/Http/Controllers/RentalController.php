@@ -150,6 +150,17 @@ class RentalController extends Controller
         $items = Item::with('movie', 'media')->where('status', 'Disponível')->get();
         return view('rental.reservation', compact('items'));
     }
+    public function payment($id)
+    {
+        $this->surcharge_calc($id);
+        $rental = Rental::with('items','client.holder')->findOrFail($id);
+        return view('rental.payment', compact('rental'));
+    }
+    public function payment_store($id, Request $request)
+    {
+        $total = 1* $request->credit_card + $request->debit_card + $request->cash;
+        dd("Total pago R$ " . number_format(( $total ), 2, ",", "") );
+    }
 
     public function cancel($id)
     {
@@ -171,5 +182,19 @@ class RentalController extends Controller
         return redirect()->route('rental.index');
     }
 
-
+    public function surcharge_calc($id)
+    {
+        $rental = Rental::with('items')->findOrfail($id);
+        $msg = array();
+        foreach ($rental->items as $item) {
+            $data = Carbon::parse($item->expected_return_date);
+            $now = Carbon::now();
+            $diff = $data->diffInDays($now, false);
+            array_push($msg,"$item->expected_return_date, diff: $diff");
+            if($diff > 0){
+                $item->surcharge = $diff * $item->item_price;
+                $item->save();
+            }
+        }
+    }
 }

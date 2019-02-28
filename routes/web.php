@@ -128,3 +128,5 @@ Route::put('/locacao/editar/{id}','RentalController@edit')->name('rental.edit');
 Route::put('/locacao/cancelar/{id}','RentalController@cancel')->name('rental.cancel');
 Route::get('/locacao/add_qrcode/{id}','RentalController@rental_add_item_qrcode')->name('rental.add_qrcode');
 Route::get('/locacao/reserva', 'RentalController@reservation')->name('rental.reservation');
+Route::get('/locacao/pagamento/{id}', 'RentalController@payment')->name('rental.payment');
+Route::post('/locacao/pagamento/{id}', 'RentalController@payment_store');

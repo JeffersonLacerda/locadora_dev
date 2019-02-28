@@ -136,13 +136,9 @@
                                     <tr>
                                         <th>TÍTULO</th>
                                         <th>TIPO</th>
-                                        <th>PRAZO</th>
                                         <th>MÍDIA</th>
-                                        <th>VALOR</th>
-                                        <th>DESCONTO</th>
-                                        <th>PRORROGAÇÃO</th>
-                                        <th>DATA DE DEVOLUÇÃO</th>
-                                        <th>TOTAL</th>
+                                        <th>STATUS</th>
+                                        <th>PREVISÃO DE DISPONIBILIDADE</th>
                                         <th>AÇÕES</th>
                                     </tr>
                                 </thead>
@@ -150,54 +146,34 @@
                                     <tr>
                                         <td>Bohemian Rhapsody</td>
                                         <td>Lançamento</td>
-                                        <td>1</td>
                                         <td>Blu-Ray</td>
-                                        <td>R$&nbsp;11,25</td>
-                                        <td>R$&nbsp;0,00</td>
-                                        <td>0</td>
-                                        <td>22/02/2019</td>
-                                        <td>R$&nbsp;11,25</td>
+                                        <td><span class="label bg-red">Expirado</span></td>
+                                        <td>15/02/2019</td>
                                         <td><div class="btn-group"><abbr title="Alterar"><a cod="67" class="btn btn-default btn-sm btn_editar" style="color: black"><i class="fas fa-edit"></i></a></abbr><abbr title="Remover"><a cod="67" class="btn btn-default btn-sm btn_remover" style="color: red"><i class="fas fa-times"></i></a></abbr></div></td>
-                                        <td></td>
                                     </tr>
                                     <tr>
                                         <td>Robin Hood - A Origem</td>
                                         <td>Lançamento</td>
-                                        <td>1</td>
                                         <td>Blu-Ray</td>
-                                        <td>R$&nbsp;11,25</td>
-                                        <td>R$&nbsp;0,00</td>
-                                        <td>0</td>
-                                        <td>22/02/2019</td>
-                                        <td>R$&nbsp;11,25</td>
+                                        <td><span class="label bg-green">Disponível</span></td>
+                                        <td>18/02/2019</td>
                                         <td><div class="btn-group"><abbr title="Alterar"><a cod="75" class="btn btn-default btn-sm btn_editar" style="color: black"><i class="fas fa-edit"></i></a></abbr><abbr title="Remover"><a cod="75" class="btn btn-default btn-sm btn_remover" style="color: red"><i class="fas fa-times"></i></a></abbr></div></td>
-                                        <td></td>
                                     </tr>
                                     <tr>
                                         <td>Missão Impossível - Efeito Fallout</td>
                                         <td>Lançamento</td>
-                                        <td>1</td>
                                         <td>HD-DVD</td>
-                                        <td>R$&nbsp;7,50</td>
-                                        <td>R$&nbsp;0,00</td>
-                                        <td>0</td>
+                                        <td><span class="label bg-yellow">Aguardando</span></td>
                                         <td>22/02/2019</td>
-                                        <td>R$&nbsp;7,50</td>
                                         <td><div class="btn-group"><abbr title="Alterar"><a cod="106" class="btn btn-default btn-sm btn_editar" style="color: black"><i class="fas fa-edit"></i></a></abbr><abbr title="Remover"><a cod="106" class="btn btn-default btn-sm btn_remover" style="color: red"><i class="fas fa-times"></i></a></abbr></div></td>
-                                        <td></td>
                                     </tr>
                                     <tr>
                                         <td>Os Incríveis 2</td>
                                         <td>Catálogo</td>
-                                        <td>3</td>
                                         <td>Blu-Ray</td>
-                                        <td>R$&nbsp;7,50</td>
-                                        <td>R$&nbsp;0,00</td>
-                                        <td>0</td>
+                                        <td><span class="label bg-yellow">Aguardando</span></td>
                                         <td>25/02/2019</td>
-                                        <td>R$&nbsp;7,50</td>
                                         <td><div class="btn-group"><abbr title="Alterar"><a cod="115" class="btn btn-default btn-sm btn_editar" style="color: black"><i class="fas fa-edit"></i></a></abbr><abbr title="Remover"><a cod="115" class="btn btn-default btn-sm btn_remover" style="color: red"><i class="fas fa-times"></i></a></abbr></div></td>
-                                        <td></td>
                                     </tr>
                                 </tbody>
                             </table>
@@ -209,7 +185,24 @@
 
         </div>
     </div>
-
+    <!-- Modal -->
+    <div class="modal fade" id="dialog_del">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    <h4 class="modal-title">Cancelar a reserva?</h4>
+                </div>
+                <div class="modal-body">
+                <p>Tem certeza que deseja Cancelar a reserva?</p>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Cancelar</button>
+                    <button type="button" class="btn btn-danger" id="delete-btn">Confirmar</button>
+                </div>
+            </div>
+        </div>
+    </div>
 @stop
 
 @section('js')
@@ -218,6 +211,9 @@
     <script src="{{ asset('vendor/webcodecamjs/js/webcodecamjs.js') }}"></script>
     <script>
         $(document).ready( function () {
+            $('.btn_remover').on('click', function(e){
+                $('#dialog_del').modal();
+            });
             var arg = {
                 resultFunction: function(result) {
                     console.log("Item adicionado "+result.code);
